@@ -32,7 +32,7 @@ export default function MoodTracker() {
     // Reset form
     setTodayMood(null);
     setNote('');
-    
+
     alert('Mood saved! It will be remembered even if you close the browser.');
   };
 
@@ -45,20 +45,19 @@ export default function MoodTracker() {
   return (
     <div className="max-w-2xl mx-auto p-6 bg-white rounded-xl shadow">
       <h2 className="text-2xl font-bold mb-6">Daily Mood Tracker</h2>
-      
+
       {/* Mood Selection */}
       <div className="mb-8">
         <p className="mb-4 text-gray-700">How are you feeling today?</p>
-        <div className="grid grid-cols-5 gap-2">
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
           {moodOptions.map((mood) => (
             <button
               key={mood.id}
               onClick={() => setTodayMood(mood)}
-              className={`p-4 rounded-lg flex flex-col items-center transition-all ${
-                todayMood?.id === mood.id
+              className={`p-4 rounded-lg flex flex-col items-center transition-all ${todayMood?.id === mood.id
                   ? `${mood.color} border-2 border-current scale-105`
                   : 'bg-gray-100 hover:bg-gray-200'
-              }`}
+                }`}
             >
               <span className="text-3xl mb-2">{mood.emoji}</span>
               <span className="text-sm font-medium">{mood.label}</span>
@@ -82,11 +81,10 @@ export default function MoodTracker() {
       <button
         onClick={saveTodayMood}
         disabled={!todayMood}
-        className={`w-full py-3 rounded-lg font-medium mb-6 ${
-          todayMood
+        className={`w-full py-3 rounded-lg font-medium mb-6 ${todayMood
             ? 'bg-blue-600 text-white hover:bg-blue-700'
             : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-        }`}
+          }`}
       >
         Save Today's Mood
       </button>
@@ -132,8 +130,8 @@ export default function MoodTracker() {
 
       {/* Privacy Note */}
       <div className="mt-6 p-4 bg-blue-50 rounded-lg text-sm text-blue-800">
-        <p><strong>Privacy Note:</strong> All data is stored locally on your device. 
-        It never leaves your browser and is not sent to any server.</p>
+        <p><strong>Privacy Note:</strong> All data is stored locally on your device.
+          It never leaves your browser and is not sent to any server.</p>
       </div>
     </div>
   );
