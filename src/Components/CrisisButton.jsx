@@ -45,7 +45,7 @@ function CrisisModal({ isOpen, onClose }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
-      <div className="bg-white rounded-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+      <div className="bg-white rounded-2xl max-w-[min(28rem,calc(100vw-2rem))] w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
         <div className="sticky top-0 bg-white border-b p-6 rounded-t-2xl">
           <div className="flex justify-between items-center">
@@ -62,7 +62,7 @@ function CrisisModal({ isOpen, onClose }) {
             </button>
           </div>
         </div>
-        
+
         {/* Resources */}
         <div className="p-6">
           <div className="space-y-4">
@@ -75,7 +75,7 @@ function CrisisModal({ isOpen, onClose }) {
                   <div className="flex-1">
                     <h3 className="font-semibold text-gray-900">{resource.name}</h3>
                     <p className="text-sm text-gray-600 mt-1">{resource.description}</p>
-                    
+
                     <div className="mt-4 flex flex-wrap gap-2">
                       {resource.phone && (
                         <a
@@ -92,7 +92,7 @@ function CrisisModal({ isOpen, onClose }) {
                         </button>
                       )}
                     </div>
-                    
+
                     <p className="text-xs text-gray-500 mt-3">
                       <span className="inline-block w-2 h-2 bg-green-500 rounded-full mr-2"></span>
                       Available {resource.hours}
@@ -102,7 +102,7 @@ function CrisisModal({ isOpen, onClose }) {
               </div>
             ))}
           </div>
-          
+
           {/* Local Resources Note */}
           <div className="mt-8 p-4 bg-blue-50 rounded-xl">
             <p className="text-sm text-blue-800">
@@ -110,7 +110,7 @@ function CrisisModal({ isOpen, onClose }) {
               In the US and Canada, that's 911.
             </p>
           </div>
-          
+
           {/* Additional Help */}
           <div className="mt-6 p-4 bg-gray-50 rounded-xl">
             <h4 className="font-medium text-gray-900 mb-2">Other Ways to Get Help</h4>
@@ -121,7 +121,7 @@ function CrisisModal({ isOpen, onClose }) {
             </ul>
           </div>
         </div>
-        
+
         {/* Footer */}
         <div className="sticky bottom-0 bg-white border-t p-6 rounded-b-2xl">
           <p className="text-sm text-gray-500 text-center">
@@ -146,7 +146,7 @@ export default function CrisisButton() {
         <FaPhoneAlt className="w-6 h-6" />
         <span className="sr-only">Emergency Help</span>
       </button>
-      
+
       <CrisisModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
     </>
   );
