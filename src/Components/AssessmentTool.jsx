@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
 import Question from './Question';
 import Results from './Results';
-import { useLocalStorage } from '../../hooks/useLocalStorage';
+import { useLocalStorage } from '../hooks/useLocalStorage';
 import { FaClipboardCheck, FaChartLine } from 'react-icons/fa';
 
 const depressionQuestions = [

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { FaSmile, FaMeh, FaFrown, FaSadTear, FaAngry } from 'react-icons/fa';
-import { useLocalStorage } from '../Hooks/useLocalStorage';
+import { useLocalStorage } from '../hooks/useLocalStorage';
 
 export default function MoodTracker() {
   // Using the hook - just like useState, but persists to localStorage

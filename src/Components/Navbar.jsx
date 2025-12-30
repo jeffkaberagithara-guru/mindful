@@ -28,7 +28,7 @@ export default function Navbar() {
   return (
     <nav className="sticky top-0 z-40 bg-white/95 backdrop-blur-sm border-b border-gray-200 dark:bg-gray-900/95 dark:border-gray-800">
       <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-16 lg:h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 group">
             <div className="relative">
@@ -53,11 +53,10 @@ export default function Navbar() {
               <Link
                 key={link.name}
                 to={link.path}
-                className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-300 ${
-                  isActive(link.path)
+                className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-300 ${isActive(link.path)
                     ? 'bg-linear-to-r from-blue-50 to-purple-50 text-blue-700 dark:from-blue-900/30 dark:to-purple-900/30 dark:text-blue-300'
                     : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800'
-                }`}
+                  }`}
               >
                 <span className="text-lg">{link.icon}</span>
                 <span className="font-medium">{link.name}</span>
@@ -81,14 +80,14 @@ export default function Navbar() {
                 <FaSun className="w-5 h-5 text-yellow-500" />
               )}
             </button>
-            
+
             <Link
               to="/tools/mood-tracker"
               className="flex items-center gap-2 px-4 py-2 bg-linear-to-r from-blue-500 to-purple-500 text-white rounded-lg hover:shadow-lg transition-all duration-300 hover:scale-105"
             >
               <span>Check-in</span>
             </Link>
-            
+
             <Link
               to="/settings"
               className="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 transition-colors"
@@ -119,11 +118,10 @@ export default function Navbar() {
                 <Link
                   key={link.name}
                   to={link.path}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
-                    isActive(link.path)
+                  className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive(link.path)
                       ? 'bg-linear-to-r from-blue-50 to-purple-50 text-blue-700 dark:from-blue-900/30 dark:to-purple-900/30 dark:text-blue-300'
                       : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800'
-                  }`}
+                    }`}
                   onClick={() => setIsMenuOpen(false)}
                 >
                   <span className="text-xl">{link.icon}</span>
@@ -133,7 +131,7 @@ export default function Navbar() {
                   )}
                 </Link>
               ))}
-              
+
               <div className="flex gap-2 pt-4 border-t border-gray-200 dark:border-gray-800">
                 <button
                   onClick={toggleTheme}
@@ -151,7 +149,7 @@ export default function Navbar() {
                     </>
                   )}
                 </button>
-                
+
                 <Link
                   to="/settings"
                   className="flex-1 flex items-center justify-center gap-2 p-3 rounded-lg bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700"

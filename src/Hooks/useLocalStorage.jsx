@@ -1,4 +1,3 @@
-// This is already correct! Keep it exactly as you have it
 import { useState, } from 'react';
 
 export const useLocalStorage = (key, initialValue) => {

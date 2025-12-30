@@ -1,5 +1,5 @@
 import { FaBook, FaVideo, FaHeadphones, FaFileAlt } from 'react-icons/fa';
-import ResourceCard from '../Components/ResourceCard';
+import ResourceCard from '../components/ResourceCard';
 
 export default function Resources() {
   const resources = [

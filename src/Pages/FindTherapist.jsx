@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import TherapistCard from '../components/TherapistCard.jsx';
-import TherapistFilter from '../Components/TherapistFilter.jsx';
+import TherapistFilter from '../components/TherapistFilter.jsx';
 import { FaSearch, FaFilter, FaMapMarkerAlt, FaStar, FaVideo, FaUserCheck } from 'react-icons/fa';
 
 export default function FindTherapist() {

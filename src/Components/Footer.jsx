@@ -8,7 +8,7 @@ export default function Footer() {
     <footer className="bg-linear-to-br from-gray-900 to-gray-950 text-white mt-20">
       {/* Main Footer */}
       <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           {/* Brand & Mission */}
           <div className="space-y-6">
             <Link to="/" className="inline-block group">
@@ -25,11 +25,11 @@ export default function Footer() {
                 </div>
               </div>
             </Link>
-            
+
             <p className="text-gray-300 leading-relaxed">
               Providing compassionate, accessible mental health support to help you thrive in your wellness journey.
             </p>
-            
+
             <div className="flex items-center gap-4 pt-4">
               <div className="flex items-center gap-2 text-sm text-green-400">
                 <FaLock className="w-4 h-4" />
@@ -50,8 +50,8 @@ export default function Footer() {
             </h4>
             <ul className="space-y-3">
               <li>
-                <Link 
-                  to="/crisis" 
+                <Link
+                  to="/crisis"
                   className="text-gray-300 hover:text-white transition-colors flex items-center gap-2 group"
                 >
                   <span className="w-2 h-2 bg-red-500 rounded-full group-hover:animate-pulse"></span>
@@ -99,7 +99,7 @@ export default function Footer() {
             <p className="text-gray-300 mb-6">
               Subscribe for mental wellness tips and updates.
             </p>
-            
+
             <form className="mb-8">
               <div className="flex flex-col sm:flex-row gap-2">
                 <input
@@ -141,7 +141,7 @@ export default function Footer() {
               <p>&copy; {currentYear} MindfulSupport. All rights reserved.</p>
               <p className="mt-1">Made with <FaHeart className="inline w-3 h-3 text-red-500 animate-pulse" /> for mental wellness</p>
             </div>
-            
+
             <div className="flex flex-wrap gap-6 text-sm">
               <Link to="#" className="text-gray-400 hover:text-white transition-colors">
                 Privacy Policy
