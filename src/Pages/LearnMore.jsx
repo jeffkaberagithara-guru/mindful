@@ -88,25 +88,25 @@ export default function LearnMore() {
               <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
               <span className="text-sm font-medium text-indigo-700">Educational Resources</span>
             </div>
-            
+
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
               Mental Health
               <span className="block text-transparent bg-clip-text bg-linear-to-r from-indigo-600 to-purple-600">
                 Education Hub
               </span>
             </h1>
-            
+
             <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
               Evidence-based information, resources, and guides to support your mental wellness journey.
               Knowledge is power in mental health.
             </p>
-            
+
             <div className="flex flex-wrap justify-center gap-4">
-              <a href="#topics" className="btn-primary">
+              <a href="#topics" className="inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none cursor-pointer hover:scale-105 bg-linear-to-r from-blue-500 to-purple-500 text-white shadow-lg hover:shadow-xl focus:ring-blue-500 px-6 py-3">
                 <FaBook className="w-5 h-5 mr-2" />
                 Explore Topics
               </a>
-              <Link to="/resources" className="btn-secondary">
+              <Link to="/resources" className="inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none cursor-pointer hover:scale-105 bg-white text-gray-700 border border-gray-200 hover:bg-gray-50 hover:border-gray-300 focus:ring-gray-300 px-6 py-3">
                 <FaArrowRight className="w-5 h-5 mr-2" />
                 All Resources
               </Link>
@@ -129,11 +129,10 @@ export default function LearnMore() {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-2 px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
-                  activeTab === tab.id
-                    ? 'border-indigo-600 text-indigo-600 font-semibold'
-                    : 'border-transparent text-gray-600 hover:text-gray-900'
-                }`}
+                className={`inline-flex items-center justify-center font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none cursor-pointer gap-2 px-6 py-4 border-b-2 whitespace-nowrap ${activeTab === tab.id
+                  ? 'border-indigo-600 text-indigo-600 font-semibold'
+                  : 'border-transparent text-gray-600 hover:text-gray-900'
+                  }`}
               >
                 <span className="text-xl">{tab.icon}</span>
                 {tab.label}
@@ -183,7 +182,7 @@ export default function LearnMore() {
           <h2 className="text-3xl font-bold text-gray-900 mb-10 text-center">
             Featured Resources
           </h2>
-          
+
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {resources.map((category) => (
               <div key={category.category} className="bg-white rounded-2xl border p-6">
@@ -193,7 +192,7 @@ export default function LearnMore() {
                   </div>
                   {category.category}
                 </h3>
-                
+
                 <div className="space-y-4">
                   {category.items.map((item, index) => (
                     <div
@@ -226,7 +225,7 @@ export default function LearnMore() {
             <FaQuestionCircle className="w-8 h-8 text-indigo-600" />
             Frequently Asked Questions
           </h2>
-          
+
           <div className="max-w-3xl mx-auto space-y-4">
             {faqs.map((faq, index) => (
               <div
@@ -260,13 +259,13 @@ export default function LearnMore() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 to="/resources"
-                className="px-8 py-3 bg-white text-indigo-600 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+                className="inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none cursor-pointer hover:scale-105 px-8 py-3 bg-white text-indigo-600 hover:bg-gray-100"
               >
                 Browse All Resources
               </Link>
               <Link
                 to="/tools/assessment"
-                className="px-8 py-3 bg-transparent border-2 border-white text-white rounded-lg font-semibold hover:bg-white/10 transition-colors"
+                className="inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none cursor-pointer hover:scale-105 px-8 py-3 bg-transparent border-2 border-white text-white hover:bg-white/10"
               >
                 Take Self-Assessment
               </Link>
