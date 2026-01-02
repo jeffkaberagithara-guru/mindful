@@ -132,31 +132,31 @@ export default function FindTherapist() {
 
   const filteredTherapists = therapists.filter(therapist => {
     // Search filter
-    if (filters.search && !therapist.name.toLowerCase().includes(filters.search.toLowerCase()) && 
-        !therapist.specialties.some(s => s.toLowerCase().includes(filters.search.toLowerCase()))) {
+    if (filters.search && !therapist.name.toLowerCase().includes(filters.search.toLowerCase()) &&
+      !therapist.specialties.some(s => s.toLowerCase().includes(filters.search.toLowerCase()))) {
       return false;
     }
-    
+
     // Specialties filter
     if (filters.specialties.length > 0 && !filters.specialties.some(s => therapist.specialties.includes(s))) {
       return false;
     }
-    
+
     // Virtual only filter
     if (filters.virtualOnly && !therapist.virtualAvailable) {
       return false;
     }
-    
+
     // Insurance filter
     if (filters.acceptsInsurance && !therapist.acceptsInsurance) {
       return false;
     }
-    
+
     // Price filter
     if (therapist.price > filters.priceRange[1]) {
       return false;
     }
-    
+
     return true;
   });
 
@@ -166,14 +166,14 @@ export default function FindTherapist() {
       <div className="bg-linear-to-br from-blue-50 via-indigo-50 to-purple-50 py-12 border-b">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4">
               Find Your <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-600 to-purple-600">Therapist</span>
             </h1>
             <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
               Connect with licensed mental health professionals who understand your needs.
               Start your healing journey today.
             </p>
-            
+
             {/* Search Bar */}
             <div className="relative max-w-2xl mx-auto mb-8">
               <div className="relative">
@@ -185,12 +185,12 @@ export default function FindTherapist() {
                     setSearchQuery(e.target.value);
                     handleFilterChange('search', e.target.value);
                   }}
-                  placeholder="Search by name, specialty, or location..."
-                  className="w-full pl-12 pr-40 py-4 text-lg border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="Search..."
+                  className="w-full pl-12 pr-4 py-4 text-lg border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent md:pr-40"
                 />
                 <button
                   onClick={() => setShowFilters(!showFilters)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                  className="mt-4 w-full md:mt-0 md:absolute md:right-3 md:top-1/2 md:transform md:-translate-y-1/2 flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
                 >
                   <FaFilter className="w-4 h-4" />
                   Filters
@@ -227,12 +227,12 @@ export default function FindTherapist() {
           {/* Filters Sidebar */}
           <div className="lg:w-1/4">
             <div className="sticky top-24">
-              <TherapistFilter 
+              <TherapistFilter
                 filters={filters}
                 onFilterChange={handleFilterChange}
                 onClearFilters={clearFilters}
               />
-              
+
               {/* Quick Tips */}
               <div className="mt-8 p-6 bg-linear-to-br from-blue-50 to-purple-50 rounded-xl border border-blue-100">
                 <h4 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
@@ -261,7 +261,7 @@ export default function FindTherapist() {
                   {filteredTherapists.length} therapist{filteredTherapists.length !== 1 ? 's' : ''} match your criteria
                 </p>
               </div>
-              
+
               <div className="flex items-center gap-4">
                 <div className="hidden md:flex items-center gap-2 text-sm">
                   <FaMapMarkerAlt className="w-4 h-4 text-gray-400" />
@@ -278,9 +278,9 @@ export default function FindTherapist() {
             <div className="space-y-6">
               {filteredTherapists.length > 0 ? (
                 filteredTherapists.map(therapist => (
-                  <TherapistCard 
-                    key={therapist.id} 
-                    therapist={therapist} 
+                  <TherapistCard
+                    key={therapist.id}
+                    therapist={therapist}
                   />
                 ))
               ) : (
