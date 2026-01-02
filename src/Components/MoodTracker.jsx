@@ -54,9 +54,9 @@ export default function MoodTracker() {
             <button
               key={mood.id}
               onClick={() => setTodayMood(mood)}
-              className={`p-4 rounded-lg flex flex-col items-center transition-all ${todayMood?.id === mood.id
-                  ? `${mood.color} border-2 border-current scale-105`
-                  : 'bg-gray-100 hover:bg-gray-200'
+              className={`inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none cursor-pointer p-4 flex-col gap-2 ${todayMood?.id === mood.id
+                ? `${mood.color} border-2 border-current scale-105 shadow-md`
+                : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
                 }`}
             >
               <span className="text-3xl mb-2">{mood.emoji}</span>
@@ -81,9 +81,9 @@ export default function MoodTracker() {
       <button
         onClick={saveTodayMood}
         disabled={!todayMood}
-        className={`w-full py-3 rounded-lg font-medium mb-6 ${todayMood
-            ? 'bg-blue-600 text-white hover:bg-blue-700'
-            : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+        className={`inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none cursor-pointer w-full py-3 mb-6 ${todayMood
+          ? 'bg-linear-to-r from-blue-500 to-purple-500 text-white shadow-lg hover:shadow-xl focus:ring-blue-500 hover:scale-105'
+          : 'bg-gray-300 text-gray-500 cursor-not-allowed'
           }`}
       >
         Save Today's Mood
@@ -96,7 +96,7 @@ export default function MoodTracker() {
           {moodHistory.length > 0 && (
             <button
               onClick={clearHistory}
-              className="text-sm text-red-600 hover:text-red-800"
+              className="text-sm font-medium text-red-600 hover:text-red-800 transition-colors focus:outline-none hover:underline"
             >
               Clear All
             </button>
