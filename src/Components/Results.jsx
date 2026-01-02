@@ -106,7 +106,7 @@ export default function Results({ score, assessmentType, assessmentHistory, onRe
           <FaChartLine className="w-5 h-5" />
           <span className="font-medium">Assessment Complete</span>
         </div>
-        
+
         <h2 className="text-3xl font-bold text-gray-900 mb-2">
           Your {assessmentType === 'depression' ? 'Depression' : 'Anxiety'} Assessment Results
         </h2>
@@ -143,10 +143,10 @@ export default function Results({ score, assessmentType, assessmentHistory, onRe
               <div className="w-3 h-3 rounded-full bg-current"></div>
               <span className="font-bold text-lg">{severity.level} Symptoms</span>
             </div>
-            
+
             <h3 className="text-xl font-semibold text-gray-900 mb-3">{recommendations.title}</h3>
             <p className="text-gray-700 mb-4">{recommendations.description}</p>
-            
+
             <div className="bg-blue-50 p-4 rounded-lg border border-blue-100">
               <p className="text-blue-800 font-medium">
                 <FaUserMd className="inline-block w-4 h-4 mr-2" />
@@ -201,9 +201,9 @@ export default function Results({ score, assessmentType, assessmentHistory, onRe
           <p className="text-red-700 mb-3">
             If you're having thoughts of harming yourself or others, please seek immediate help:
           </p>
-          <Link 
-            to="/crisis" 
-            className="inline-flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-red-700 transition-colors"
+          <Link
+            to="/crisis"
+            className="inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none cursor-pointer gap-2 bg-red-600 text-white px-4 py-2 hover:bg-red-700 hover:scale-105 shadow-md"
           >
             <FaHandsHelping className="w-4 h-4" />
             Access Crisis Resources
@@ -252,22 +252,22 @@ export default function Results({ score, assessmentType, assessmentHistory, onRe
       <div className="flex flex-col sm:flex-row gap-4 pt-6 border-t">
         <button
           onClick={onRestart}
-          className="flex-1 flex items-center justify-center gap-2 btn-primary"
+          className="inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none cursor-pointer flex-1 gap-2 bg-linear-to-r from-blue-500 to-purple-500 text-white shadow-lg hover:shadow-xl focus:ring-blue-500 px-6 py-3"
         >
           <FaRedo className="w-4 h-4" />
           Retake This Assessment
         </button>
-        
+
         <button
           onClick={() => onSwitchType(assessmentType === 'depression' ? 'anxiety' : 'depression')}
-          className="flex-1 btn-secondary"
+          className="inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none cursor-pointer flex-1 bg-white text-gray-700 border border-gray-200 hover:bg-gray-50 hover:border-gray-300 focus:ring-gray-300 px-6 py-3"
         >
           Take {assessmentType === 'depression' ? 'Anxiety' : 'Depression'} Assessment
         </button>
-        
+
         <Link
           to="/find-therapist"
-          className="flex-1 flex items-center justify-center gap-2 bg-green-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-green-700 transition-colors"
+          className="inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none cursor-pointer flex-1 gap-2 bg-green-600 text-white px-6 py-3 hover:bg-green-700 shadow-md hover:shadow-lg hover:scale-105"
         >
           <FaUserMd className="w-4 h-4" />
           Find a Therapist
