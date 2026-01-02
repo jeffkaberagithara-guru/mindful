@@ -54,8 +54,8 @@ export default function Navbar() {
                 key={link.name}
                 to={link.path}
                 className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-300 ${isActive(link.path)
-                    ? 'bg-linear-to-r from-blue-50 to-purple-50 text-blue-700 dark:from-blue-900/30 dark:to-purple-900/30 dark:text-blue-300'
-                    : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800'
+                  ? 'bg-linear-to-r from-blue-50 to-purple-50 text-blue-700 dark:from-blue-900/30 dark:to-purple-900/30 dark:text-blue-300'
+                  : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800'
                   }`}
               >
                 <span className="text-lg">{link.icon}</span>
@@ -71,7 +71,7 @@ export default function Navbar() {
           <div className="hidden lg:flex items-center gap-4">
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 transition-colors"
+              className="inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none cursor-pointer hover:scale-105 p-2 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
               aria-label="Toggle theme"
             >
               {theme === 'light' ? (
@@ -83,23 +83,23 @@ export default function Navbar() {
 
             <Link
               to="/tools/mood-tracker"
-              className="flex items-center gap-2 px-4 py-2 bg-linear-to-r from-blue-500 to-purple-500 text-white rounded-lg hover:shadow-lg transition-all duration-300 hover:scale-105"
+              className="inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none cursor-pointer hover:scale-105 bg-linear-to-r from-blue-500 to-purple-500 text-white shadow-lg hover:shadow-xl focus:ring-blue-500 px-4 py-2"
             >
               <span>Check-in</span>
             </Link>
 
             <Link
               to="/settings"
-              className="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 transition-colors"
+              className="inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none cursor-pointer hover:scale-105 p-2 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
             >
-              <FaUser className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+              <FaUser className="w-5 h-5" />
             </Link>
           </div>
 
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
+            className="lg:hidden inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none cursor-pointer p-2 hover:bg-gray-100 dark:hover:bg-gray-800"
             aria-label="Toggle menu"
           >
             {isMenuOpen ? (
@@ -119,8 +119,8 @@ export default function Navbar() {
                   key={link.name}
                   to={link.path}
                   className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive(link.path)
-                      ? 'bg-linear-to-r from-blue-50 to-purple-50 text-blue-700 dark:from-blue-900/30 dark:to-purple-900/30 dark:text-blue-300'
-                      : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800'
+                    ? 'bg-linear-to-r from-blue-50 to-purple-50 text-blue-700 dark:from-blue-900/30 dark:to-purple-900/30 dark:text-blue-300'
+                    : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800'
                     }`}
                   onClick={() => setIsMenuOpen(false)}
                 >
@@ -135,7 +135,7 @@ export default function Navbar() {
               <div className="flex gap-2 pt-4 border-t border-gray-200 dark:border-gray-800">
                 <button
                   onClick={toggleTheme}
-                  className="flex-1 flex items-center justify-center gap-2 p-3 rounded-lg bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700"
+                  className="flex-1 inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none cursor-pointer gap-2 p-3 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
                 >
                   {theme === 'light' ? (
                     <>
@@ -152,7 +152,7 @@ export default function Navbar() {
 
                 <Link
                   to="/settings"
-                  className="flex-1 flex items-center justify-center gap-2 p-3 rounded-lg bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700"
+                  className="flex-1 inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none cursor-pointer gap-2 p-3 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   <FaUser className="w-5 h-5" />
