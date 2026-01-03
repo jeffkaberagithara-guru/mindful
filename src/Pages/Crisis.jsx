@@ -75,9 +75,9 @@ export default function Crisis() {
   ];
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-red-50 via-white to-blue-50">
+    <div className="min-h-screen bg-linear-to-b from-red-50 via-white to-blue-50 dark:from-red-950 dark:via-gray-900 dark:to-blue-950 transition-colors duration-300">
       {/* Hero Section */}
-      <div className="bg-linear-to-br from-red-500 via-orange-500 to-red-600 text-white py-16">
+      <div className="bg-linear-to-br from-red-500 via-orange-500 to-red-600 dark:from-red-800 dark:via-red-700 dark:to-red-900 text-white py-16 transition-colors duration-300">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full mb-6">
@@ -90,7 +90,7 @@ export default function Crisis() {
               <span className="block">Help Is Here</span>
             </h1>
 
-            <p className="text-xl opacity-90 mb-8 max-w-3xl mx-auto">
+            <p className="text-xl opacity-90 mb-8 max-w-3xl mx-auto text-white dark:text-gray-200">
               Immediate, confidential crisis support available 24/7. Your safety and wellbeing are our priority.
             </p>
 
@@ -118,10 +118,10 @@ export default function Crisis() {
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
               Immediate Crisis Resources
             </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
+            <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
               These services are available 24/7 and are completely confidential.
             </p>
           </div>
@@ -129,7 +129,7 @@ export default function Crisis() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
             {emergencyResources.map((section) => (
               <div key={section.category}>
-                <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-2">
                   <FaShieldAlt className="w-5 h-5 text-red-500" />
                   {section.category}
                 </h3>
@@ -138,7 +138,7 @@ export default function Crisis() {
                   {section.items.map((resource, index) => (
                     <div
                       key={index}
-                      className="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow"
+                      className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-lg transition-all duration-300"
                     >
                       <div className="p-6">
                         <div className="flex items-start gap-4">
@@ -146,33 +146,33 @@ export default function Crisis() {
                             {resource.icon}
                           </div>
                           <div className="flex-1">
-                            <h4 className="text-lg font-semibold text-gray-900 mb-1">
+                            <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">
                               {resource.name}
                             </h4>
-                            <p className="text-gray-600 mb-3">{resource.description}</p>
+                            <p className="text-gray-600 dark:text-gray-300 mb-3">{resource.description}</p>
 
                             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                              <div className="text-2xl font-bold text-gray-900">
+                              <div className="text-2xl font-bold text-gray-900 dark:text-white">
                                 {resource.number}
                               </div>
                               <div className="flex items-center gap-4">
-                                <span className="flex items-center gap-1 text-sm text-gray-500">
+                                <span className="flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400">
                                   <FaClock className="w-4 h-4" />
                                   {resource.hours}
                                 </span>
                                 {resource.type === 'call' ? (
                                   <a
                                     href={`tel:${resource.number.replace(/\D/g, '')}`}
-                                    className="inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none cursor-pointer hover:scale-105 px-4 py-2 bg-red-100 text-red-700 hover:bg-red-200"
+                                    className="inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none cursor-pointer hover:scale-105 px-4 py-2 bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300 hover:bg-red-200 dark:hover:bg-red-900/60"
                                   >
                                     Call Now
                                   </a>
                                 ) : resource.type === 'text' ? (
-                                  <button className="inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none cursor-pointer hover:scale-105 px-4 py-2 bg-green-100 text-green-700 hover:bg-green-200">
+                                  <button className="inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none cursor-pointer hover:scale-105 px-4 py-2 bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300 hover:bg-green-200 dark:hover:bg-green-900/60">
                                     Text Now
                                   </button>
                                 ) : (
-                                  <span className="px-4 py-2 bg-blue-100 text-blue-700 rounded-lg font-medium">
+                                  <span className="px-4 py-2 bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 rounded-lg font-medium">
                                     Find Location
                                   </span>
                                 )}
@@ -190,8 +190,8 @@ export default function Crisis() {
 
           {/* Safety Planning */}
           <div className="mb-16">
-            <div className="bg-linear-to-r from-blue-50 to-indigo-50 rounded-2xl p-8">
-              <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+            <div className="bg-linear-to-r from-blue-50 to-indigo-50 dark:from-gray-800 dark:to-indigo-900/30 rounded-2xl p-8 border dark:border-gray-700 transition-colors">
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">
                 Safety Planning Guide
               </h3>
 
@@ -199,13 +199,13 @@ export default function Crisis() {
                 {safetyPlanning.map((plan) => (
                   <div
                     key={plan.step}
-                    className="bg-white rounded-xl p-6 text-center hover:shadow-md transition-shadow"
+                    className="bg-white dark:bg-gray-800 rounded-xl p-6 text-center hover:shadow-md transition-all duration-300"
                   >
                     <div className="w-12 h-12 mx-auto mb-4 bg-linear-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold text-xl">
                       {plan.step}
                     </div>
-                    <h4 className="font-semibold text-gray-900 mb-2">{plan.title}</h4>
-                    <p className="text-sm text-gray-600">{plan.description}</p>
+                    <h4 className="font-semibold text-gray-900 dark:text-white mb-2">{plan.title}</h4>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">{plan.description}</p>
                   </div>
                 ))}
               </div>
@@ -214,34 +214,34 @@ export default function Crisis() {
 
           {/* International Support */}
           <div className="mb-16">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-2">
               <FaGlobe className="w-6 h-6 text-blue-500" />
               International Crisis Lines
             </h3>
 
-            <div className="bg-white rounded-xl border">
+            <div className="bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="w-full">
-                  <thead className="bg-gray-50">
+                  <thead className="bg-gray-50 dark:bg-gray-900/50">
                     <tr>
-                      <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Country</th>
-                      <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Helpline Number</th>
-                      <th className="px6 py-3 text-left text-sm font-semibold text-gray-900">Service</th>
-                      <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Action</th>
+                      <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900 dark:text-white">Country</th>
+                      <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900 dark:text-white">Helpline Number</th>
+                      <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900 dark:text-white">Service</th>
+                      <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900 dark:text-white">Action</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-200">
+                  <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
                     {internationalHelplines.map((line, index) => (
-                      <tr key={index} className="hover:bg-gray-50">
-                        <td className="px-6 py-4 font-medium text-gray-900">{line.country}</td>
+                      <tr key={index} className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                        <td className="px-6 py-4 font-medium text-gray-900 dark:text-white">{line.country}</td>
                         <td className="px-6 py-4">
-                          <div className="text-lg font-semibold text-gray-900">{line.number}</div>
+                          <div className="text-lg font-semibold text-gray-900 dark:text-white">{line.number}</div>
                         </td>
-                        <td className="px-6 py-4 text-gray-600">{line.service}</td>
+                        <td className="px-6 py-4 text-gray-600 dark:text-gray-300">{line.service}</td>
                         <td className="px-6 py-4">
                           <a
                             href={`tel:${line.number.replace(/\D/g, '')}`}
-                            className="inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none cursor-pointer hover:scale-105 gap-2 px-4 py-2 bg-blue-100 text-blue-700 hover:bg-blue-200"
+                            className="inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none cursor-pointer hover:scale-105 gap-2 px-4 py-2 bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 hover:bg-blue-200 dark:hover:bg-blue-900/60"
                           >
                             <FaPhone className="w-4 h-4" />
                             Call
@@ -257,9 +257,9 @@ export default function Crisis() {
 
           {/* Important Information */}
           <div className="space-y-6">
-            <div className="p-6 bg-red-50 border border-red-200 rounded-2xl">
-              <h4 className="font-bold text-red-800 mb-3">⚠️ In Immediate Danger?</h4>
-              <ul className="text-red-700 space-y-2">
+            <div className="p-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-2xl transition-colors">
+              <h4 className="font-bold text-red-800 dark:text-red-300 mb-3">⚠️ In Immediate Danger?</h4>
+              <ul className="text-red-700 dark:text-red-200 space-y-2">
                 <li>• Call your local emergency services immediately (911 in US/Canada)</li>
                 <li>• Go to the nearest hospital emergency room</li>
                 <li>• Do not hesitate to ask for help from people around you</li>
@@ -267,9 +267,9 @@ export default function Crisis() {
               </ul>
             </div>
 
-            <div className="p-6 bg-blue-50 border border-blue-200 rounded-2xl">
-              <h4 className="font-bold text-blue-800 mb-3">What to Expect When Calling</h4>
-              <ul className="text-blue-700 space-y-2">
+            <div className="p-6 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-2xl transition-colors">
+              <h4 className="font-bold text-blue-800 dark:text-blue-300 mb-3">What to Expect When Calling</h4>
+              <ul className="text-blue-700 dark:text-blue-200 space-y-2">
                 <li>• A trained crisis counselor will answer your call</li>
                 <li>• The conversation is completely confidential</li>
                 <li>• You can remain anonymous if you prefer</li>
@@ -279,7 +279,7 @@ export default function Crisis() {
             </div>
 
             <div className="text-center p-8">
-              <p className="text-gray-600 mb-6">
+              <p className="text-gray-600 dark:text-gray-300 mb-6">
                 Remember: Reaching out for help is a sign of strength, not weakness.
                 You deserve support, and people care about your wellbeing.
               </p>
