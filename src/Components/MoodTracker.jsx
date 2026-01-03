@@ -43,12 +43,12 @@ export default function MoodTracker() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-white rounded-xl shadow">
-      <h2 className="text-2xl font-bold mb-6">Daily Mood Tracker</h2>
+    <div className="max-w-2xl mx-auto p-6 bg-white dark:bg-gray-800 rounded-xl shadow transition-colors duration-300">
+      <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Daily Mood Tracker</h2>
 
       {/* Mood Selection */}
       <div className="mb-8">
-        <p className="mb-4 text-gray-700">How are you feeling today?</p>
+        <p className="mb-4 text-gray-700 dark:text-gray-300">How are you feeling today?</p>
         <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
           {moodOptions.map((mood) => (
             <button
@@ -56,7 +56,7 @@ export default function MoodTracker() {
               onClick={() => setTodayMood(mood)}
               className={`inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none cursor-pointer p-4 flex-col gap-2 ${todayMood?.id === mood.id
                 ? `${mood.color} border-2 border-current scale-105 shadow-md`
-                : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
+                : 'bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 border-2 border-transparent'
                 }`}
             >
               <span className="text-3xl mb-2">{mood.emoji}</span>
@@ -72,7 +72,7 @@ export default function MoodTracker() {
           value={note}
           onChange={(e) => setNote(e.target.value)}
           placeholder="Add any notes about your day (optional)..."
-          className="w-full p-3 border rounded-lg"
+          className="w-full p-3 border rounded-lg bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
           rows="3"
         />
       </div>
@@ -83,20 +83,20 @@ export default function MoodTracker() {
         disabled={!todayMood}
         className={`inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none cursor-pointer w-full py-3 mb-6 ${todayMood
           ? 'bg-linear-to-r from-blue-500 to-purple-500 text-white shadow-lg hover:shadow-xl focus:ring-blue-500 hover:scale-105'
-          : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+          : 'bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-500 cursor-not-allowed'
           }`}
       >
         Save Today's Mood
       </button>
 
       {/* History Section */}
-      <div className="border-t pt-6">
+      <div className="border-t dark:border-gray-700 pt-6">
         <div className="flex justify-between items-center mb-4">
-          <h3 className="text-lg font-semibold">Your Mood History</h3>
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Your Mood History</h3>
           {moodHistory.length > 0 && (
             <button
               onClick={clearHistory}
-              className="text-sm font-medium text-red-600 hover:text-red-800 transition-colors focus:outline-none hover:underline"
+              className="text-sm font-medium text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-300 transition-colors focus:outline-none hover:underline"
             >
               Clear All
             </button>
@@ -104,22 +104,22 @@ export default function MoodTracker() {
         </div>
 
         {moodHistory.length === 0 ? (
-          <p className="text-gray-500 text-center py-8">No mood entries yet.</p>
+          <p className="text-gray-500 dark:text-gray-400 text-center py-8">No mood entries yet.</p>
         ) : (
           <div className="space-y-3 max-h-60 overflow-y-auto">
             {moodHistory.map((entry) => {
               const mood = moodOptions.find(m => m.id === entry.mood.id) || moodOptions[2];
               return (
-                <div key={entry.id} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                <div key={entry.id} className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg transition-colors">
                   <span className="text-2xl">{mood.emoji}</span>
                   <div className="flex-1">
-                    <p className="font-medium">{mood.label}</p>
-                    <p className="text-sm text-gray-500">
+                    <p className="font-medium text-gray-900 dark:text-white">{mood.label}</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
                       {new Date(entry.date).toLocaleDateString()}
                     </p>
                   </div>
                   {entry.note && (
-                    <p className="text-sm text-gray-600">{entry.note}</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">{entry.note}</p>
                   )}
                 </div>
               );
@@ -129,7 +129,7 @@ export default function MoodTracker() {
       </div>
 
       {/* Privacy Note */}
-      <div className="mt-6 p-4 bg-blue-50 rounded-lg text-sm text-blue-800">
+      <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg text-sm text-blue-800 dark:text-blue-200 border border-blue-100 dark:border-blue-900/30">
         <p><strong>Privacy Note:</strong> All data is stored locally on your device.
           It never leaves your browser and is not sent to any server.</p>
       </div>
