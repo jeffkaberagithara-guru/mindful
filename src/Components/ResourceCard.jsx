@@ -10,14 +10,14 @@ export default function ResourceCard({ icon, title, description, link, color = '
 
   return (
     <Link to={link} className="block">
-      <div className="card p-6 hover:scale-[1.02] transition-transform duration-300 h-full">
-        <div className={`inline-flex p-3 rounded-lg ${colorClasses[color]} mb-4`}>
+      <div className="card p-6 hover:scale-[1.02] transition-transform duration-300 h-full bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-md">
+        <div className={`inline-flex p-3 rounded-lg ${colorClasses[color]} mb-4 bg-opacity-100 dark:bg-opacity-20`}>
           {icon}
         </div>
-        
-        <h3 className="text-xl font-semibold text-gray-900 mb-3">{title}</h3>
-        <p className="text-gray-600 mb-6">{description}</p>
-        
+
+        <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">{title}</h3>
+        <p className="text-gray-600 dark:text-gray-300 mb-6">{description}</p>
+
         <div className="mt-auto">
           <span className="inline-flex items-center text-primary-600 font-medium hover:text-primary-700">
             Learn More
