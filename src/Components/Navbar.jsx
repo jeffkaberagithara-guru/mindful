@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FaBars, FaTimes, FaUser, FaMoon, FaSun } from 'react-icons/fa';
+import { FaBars, FaTimes, FaUser, FaMoon, FaSun, FaPhoneAlt } from 'react-icons/fa';
 import { useLocalStorage } from '../hooks/useLocalStorage.jsx';
+import { CrisisModal } from './CrisisButton.jsx';
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isCrisisOpen, setIsCrisisOpen] = useState(false);
   const [theme, setTheme] = useLocalStorage('theme', 'light');
   const location = useLocation();
 
@@ -79,6 +81,15 @@ export default function Navbar() {
               ) : (
                 <FaSun className="w-5 h-5 text-yellow-500" />
               )}
+            </button>
+
+            <button
+              onClick={() => setIsCrisisOpen(true)}
+              className="inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none cursor-pointer hover:scale-105 gap-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white shadow-md hover:shadow-lg"
+              title="Emergency Help"
+            >
+              <FaPhoneAlt className="w-4 h-4" />
+              <span>Emergency</span>
             </button>
 
             <Link
@@ -163,6 +174,7 @@ export default function Navbar() {
           </div>
         )}
       </div>
+      <CrisisModal isOpen={isCrisisOpen} onClose={() => setIsCrisisOpen(false)} />
     </nav>
   );
 }
