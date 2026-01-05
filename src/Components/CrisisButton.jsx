@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { FaPhoneAlt, FaComment, FaTimes } from 'react-icons/fa';
 
-function CrisisModal({ isOpen, onClose }) {
+export function CrisisModal({ isOpen, onClose }) {
   const crisisResources = [
     {
       name: 'National Suicide Prevention Lifeline',
