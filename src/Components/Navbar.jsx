@@ -32,7 +32,7 @@ export default function Navbar() {
       <div className="container mx-auto px-4 sm:px-6 max-w-7xl">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 group flex-shrink-0">
+          <Link to="/" className="flex items-center gap-2 group shrink-0">
             <div className="relative">
               <div className="w-10 h-10 bg-linear-to-br from-blue-400 via-purple-500 to-pink-500 rounded-xl flex items-center justify-center group-hover:scale-105 transition-transform duration-300 shadow-md">
                 <span className="text-white font-bold text-xl">M</span>
@@ -81,7 +81,7 @@ export default function Navbar() {
           </div>
 
           {/* Right Side Actions */}
-          <div className="hidden lg:flex items-center gap-2 xl:gap-3 flex-shrink-0">
+          <div className="hidden lg:flex items-center gap-2 xl:gap-3 shrink-0">
             <button
               onClick={toggleTheme}
               className={`inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 cursor-pointer hover:scale-105 w-9 h-9 border ${theme === 'light'
