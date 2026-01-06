@@ -35,9 +35,9 @@ export default function Home() {
   ];
 
   return (
-    <div className="bg-linear-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 min-h-screen transition-colors duration-300">
+    <div className="bg-linear-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 min-h-screen transition-colors duration-500 overflow-x-hidden">
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-linear-to-br from-blue-50 via-white to-indigo-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-12 md:py-16 transition-colors duration-300">
+      <section className="relative overflow-hidden bg-linear-to-br from-blue-50 via-white to-indigo-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-12 md:py-20 transition-colors duration-500">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="max-w-3xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm px-4 py-2 rounded-full mb-8 shadow-sm border border-gray-200 dark:border-gray-700">
@@ -90,7 +90,7 @@ export default function Home() {
                 <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
                   {feature.description}
                 </p>
-                <a 
+                <a
                   href={feature.link}
                   className="inline-flex items-center text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300"
                 >
@@ -118,7 +118,7 @@ export default function Home() {
               </div>
               <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 mb-8">
                 {['😢 Very Low', '😔 Low', '😐 Neutral', '🙂 Good', '😊 Great'].map((mood, index) => (
-                  <button 
+                  <button
                     key={index}
                     className="flex flex-col items-center justify-center p-4 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600 transition-colors bg-white dark:bg-gray-900 hover:bg-blue-50 dark:hover:bg-gray-700"
                   >
@@ -135,7 +135,7 @@ export default function Home() {
                 <div className="flex items-end h-32 gap-1">
                   {[30, 45, 60, 75, 65, 80, 90].map((height, index) => (
                     <div key={index} className="flex-1 flex flex-col items-center">
-                      <div 
+                      <div
                         className="w-full rounded-t-lg bg-linear-to-t from-blue-400 to-blue-500"
                         style={{ height: `${height}%` }}
                       ></div>
