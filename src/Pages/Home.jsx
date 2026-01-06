@@ -35,9 +35,9 @@ export default function Home() {
   ];
 
   return (
-    <div className="bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 min-h-screen transition-colors duration-300">
+    <div className="bg-linear-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 min-h-screen transition-colors duration-300">
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-12 md:py-16 transition-colors duration-300">
+      <section className="relative overflow-hidden bg-linear-to-br from-blue-50 via-white to-indigo-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-12 md:py-16 transition-colors duration-300">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="max-w-3xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm px-4 py-2 rounded-full mb-8 shadow-sm border border-gray-200 dark:border-gray-700">
@@ -55,7 +55,7 @@ export default function Home() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 cursor-pointer hover:scale-[1.02] bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg hover:shadow-xl focus:ring-blue-500 text-base sm:text-lg px-6 py-3.5 sm:px-8 sm:py-4">
+              <button className="inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 cursor-pointer hover:scale-[1.02] bg-linear-to-r from-blue-500 to-purple-500 text-white shadow-lg hover:shadow-xl focus:ring-blue-500 text-base sm:text-lg px-6 py-3.5 sm:px-8 sm:py-4">
                 Check in with yourself
               </button>
               <button className="inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 cursor-pointer hover:scale-[1.02] bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-400 dark:hover:border-gray-600 focus:ring-gray-300 dark:focus:ring-gray-600 text-base sm:text-lg px-6 py-3.5 sm:px-8 sm:py-4">
@@ -81,7 +81,7 @@ export default function Home() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {features.map((feature, index) => (
               <div key={index} className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200 dark:border-gray-700">
-                <div className={`inline-flex items-center justify-center w-12 h-12 rounded-lg mb-4 bg-gradient-to-br ${feature.color === 'blue' ? 'from-blue-500 to-blue-600' : feature.color === 'green' ? 'from-green-500 to-green-600' : feature.color === 'purple' ? 'from-purple-500 to-purple-600' : 'from-orange-500 to-orange-600'} text-white`}>
+                <div className={`inline-flex items-center justify-center w-12 h-12 rounded-lg mb-4 bg-linear-to-br ${feature.color === 'blue' ? 'from-blue-500 to-blue-600' : feature.color === 'green' ? 'from-green-500 to-green-600' : feature.color === 'purple' ? 'from-purple-500 to-purple-600' : 'from-orange-500 to-orange-600'} text-white`}>
                   {feature.icon}
                 </div>
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
@@ -103,7 +103,7 @@ export default function Home() {
       </section>
 
       {/* Mood Tracker Section */}
-      <section className="py-16 md:py-20 bg-gradient-to-r from-blue-50/50 to-indigo-50/50 dark:from-gray-800/50 dark:to-gray-900/50">
+      <section className="py-16 md:py-20 bg-linear-to-r from-blue-50/50 to-indigo-50/50 dark:from-gray-800/50 dark:to-gray-900/50">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="max-w-4xl mx-auto">
             <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 md:p-8 border border-gray-200 dark:border-gray-700">
@@ -112,7 +112,7 @@ export default function Home() {
                   <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">How are you feeling today?</h2>
                   <p className="text-gray-600 dark:text-gray-300">Track your mood and see patterns over time</p>
                 </div>
-                <button className="mt-4 md:mt-0 inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 cursor-pointer bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:shadow-lg px-5 py-2.5 text-sm">
+                <button className="mt-4 md:mt-0 inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 cursor-pointer bg-linear-to-r from-blue-500 to-purple-500 text-white hover:shadow-lg px-5 py-2.5 text-sm">
                   View History
                 </button>
               </div>
@@ -136,7 +136,7 @@ export default function Home() {
                   {[30, 45, 60, 75, 65, 80, 90].map((height, index) => (
                     <div key={index} className="flex-1 flex flex-col items-center">
                       <div 
-                        className="w-full rounded-t-lg bg-gradient-to-t from-blue-400 to-blue-500"
+                        className="w-full rounded-t-lg bg-linear-to-t from-blue-400 to-blue-500"
                         style={{ height: `${height}%` }}
                       ></div>
                       <span className="text-xs text-gray-500 dark:text-gray-400 mt-1">{['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'][index]}</span>
@@ -174,7 +174,7 @@ export default function Home() {
       <section className="py-16 md:py-20">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="max-w-3xl mx-auto text-center">
-            <div className="bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl p-8 md:p-10 shadow-xl">
+            <div className="bg-linear-to-r from-blue-500 to-purple-500 rounded-2xl p-8 md:p-10 shadow-xl">
               <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
                 Ready to start your wellness journey?
               </h2>
