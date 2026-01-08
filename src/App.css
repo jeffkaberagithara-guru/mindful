@@ -4,10 +4,10 @@
   html {
     scroll-behavior: smooth;
   }
-  
+
   body {
     overflow-x: hidden;
-    @apply antialiased text-gray-900 bg-white;
+    @apply antialiased text-gray-900 bg-white transition-colors duration-300;
   }
 
   /* Improve scrollbar aesthetics */
