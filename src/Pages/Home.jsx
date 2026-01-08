@@ -1,21 +1,23 @@
 import { FaHeartbeat, FaUserMd, FaBrain, FaHandsHelping } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 import ResourceCard from '../components/ResourceCard';
 import MoodTracker from '../components/MoodTracker';
 
 export default function Home() {
+  const navigate = useNavigate();
   const features = [
     {
       icon: <FaHeartbeat className="w-7 h-7" />,
       title: "Mood Check-in",
       description: "Track your emotional wellbeing with our gentle, daily check-in tool.",
-      link: "/resources/mood-tracker",
+      link: "/tools/mood-tracker",
       color: "blue"
     },
     {
       icon: <FaBrain className="w-7 h-7" />,
       title: "Self-Assessment",
       description: "Anonymous screening tools to understand your mental health.",
-      link: "/resources/assessment",
+      link: "/tools/assessment",
       color: "green"
     },
     {
@@ -81,9 +83,12 @@ export default function Home() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {features.map((feature, index) => (
               <div key={index} className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200 dark:border-gray-700">
-                <div className={`inline-flex items-center justify-center w-12 h-12 rounded-lg mb-4 bg-linear-to-br ${feature.color === 'blue' ? 'from-blue-500 to-blue-600' : feature.color === 'green' ? 'from-green-500 to-green-600' : feature.color === 'purple' ? 'from-purple-500 to-purple-600' : 'from-orange-500 to-orange-600'} text-white`}>
+                <button
+                  onClick={() => navigate(feature.link)}
+                  className={`inline-flex items-center justify-center w-12 h-12 rounded-lg mb-4 bg-linear-to-br ${feature.color === 'blue' ? 'from-blue-500 to-blue-600' : feature.color === 'green' ? 'from-green-500 to-green-600' : feature.color === 'purple' ? 'from-purple-500 to-purple-600' : 'from-orange-500 to-orange-600'} text-white cursor-pointer hover:scale-110 transition-transform duration-200`}
+                >
                   {feature.icon}
-                </div>
+                </button>
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
                   {feature.title}
                 </h3>
