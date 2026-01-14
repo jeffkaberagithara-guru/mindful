@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { FaPhoneAlt, FaComment, FaTimes } from 'react-icons/fa';
+import { useLocalStorage } from '../hooks/useLocalStorage.jsx';
 
 export function CrisisModal({ isOpen, onClose }) {
   const crisisResources = [
@@ -148,15 +149,28 @@ export function CrisisModal({ isOpen, onClose }) {
 
 export default function CrisisButton() {
   const [isOpen, setIsOpen] = useState(false);
+  const [crisisButtonSize] = useLocalStorage('crisisButtonSize', 'normal');
+
+  const buttonSizes = {
+    small: 'p-3',
+    normal: 'p-4',
+    large: 'p-5 scale-110'
+  };
+
+  const iconSizes = {
+    small: 'w-5 h-5',
+    normal: 'w-6 h-6',
+    large: 'w-7 h-7'
+  };
 
   return (
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 z-50 inline-flex items-center justify-center font-medium transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-red-500/30 active:scale-95 cursor-pointer hover:scale-110 hover:-translate-y-1 bg-linear-to-r from-red-500 to-orange-500 text-white p-4 rounded-full shadow-lg hover:shadow-red-500/40"
+        className={`fixed bottom-6 right-6 z-50 inline-flex items-center justify-center font-medium transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-red-500/30 active:scale-95 cursor-pointer hover:scale-110 hover:-translate-y-1 bg-linear-to-r from-red-500 to-orange-500 text-white rounded-full shadow-lg hover:shadow-red-500/40 ${buttonSizes[crisisButtonSize] || buttonSizes.normal}`}
         aria-label="Emergency help"
       >
-        <FaPhoneAlt className="w-6 h-6" />
+        <FaPhoneAlt className={iconSizes[crisisButtonSize] || iconSizes.normal} />
         <span className="sr-only">Emergency Help</span>
       </button>
 
