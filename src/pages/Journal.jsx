@@ -109,13 +109,13 @@ export default function Journal() {
               description="A calm place to put words to your day. Everything here stays on this device — it\u2019s yours, and yours alone."
             />
             <div className="flex flex-wrap gap-2">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-sage-100 px-3 py-1.5 text-xs font-semibold text-sage-800 dark:bg-sage-300/20 dark:text-sage-200">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-sage-100 px-3 py-1.5 text-sm font-semibold text-sage-800 dark:bg-sage-300/20 dark:text-sage-200">
                 <Flame className="h-3.5 w-3.5" aria-hidden />
                 {streak > 0
                   ? `${streak} day${streak === 1 ? '' : 's'} in a row`
                   : 'Start a streak today'}
               </span>
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-sand px-3 py-1.5 text-xs font-semibold text-sand-800 dark:bg-sand-300/20 dark:text-sand-200">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-sand px-3 py-1.5 text-sm font-semibold text-sand-800 dark:bg-sand-300/20 dark:text-sand-200">
                 <CalendarDays className="h-3.5 w-3.5" aria-hidden />
                 {entries.length} {entries.length === 1 ? 'entry' : 'entries'}
               </span>
@@ -126,7 +126,7 @@ export default function Journal() {
             <button
               type="button"
               onClick={() => setPrompt(randomPrompt(prompt))}
-              className="inline-flex items-center gap-2 rounded-full border border-dashed border-stone-900/15 bg-sage-50/60 px-3 py-1.5 text-xs font-semibold text-forest-800 transition-colors hover:border-forest-600 dark:border-white/15 dark:bg-white/5 dark:text-sage-300"
+              className="inline-flex items-center gap-2 rounded-full border border-dashed border-stone-900/15 bg-sage-50/60 px-3 py-1.5 text-sm font-semibold text-forest-800 transition-colors hover:border-forest-600 dark:border-white/15 dark:bg-white/5 dark:text-sage-300"
             >
               <Sparkles className="h-3.5 w-3.5" aria-hidden aria-label="give me another prompt" />
               Give me a gentle prompt
@@ -148,7 +148,7 @@ export default function Journal() {
 
             <div className="mt-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div className="sm:max-w-sm">
-                <p className="mb-1.5 text-xs font-medium text-stone-400 dark:text-stone-500">
+                <p className="mb-1.5 text-sm font-medium text-stone-400 dark:text-stone-500">
                   Optional mood tag
                 </p>
                 <MoodSelector value={mood} onChange={setMood} />
@@ -202,7 +202,7 @@ export default function Journal() {
                           {entry.mood ? (
                             <span
                               className={cn(
-                                'inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium',
+                                'inline-flex items-center rounded-full px-2 py-0.5 text-sm font-medium',
                                 entry.mood >= 4 && 'bg-peach-100 text-peach-800 dark:bg-peach-300/20 dark:text-peach-200',
                                 entry.mood === 3 && 'bg-sand-100 text-sand-800 dark:bg-sand-300/20 dark:text-sand-200',
                                 entry.mood === 2 && 'bg-mist-100 text-mist-800 dark:bg-mist-300/20 dark:text-mist-200',

@@ -11,7 +11,7 @@ const tones = {
 };
 
 const sizes = {
-  sm: 'px-2.5 py-0.5 text-xs',
+  sm: 'px-2.5 py-0.5 text-sm',
   md: 'px-3 py-1 text-sm',
 };
 

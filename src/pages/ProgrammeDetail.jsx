@@ -40,7 +40,7 @@ function SessionCard({ session, index, total, done, isOpen, onToggle, onComplete
           <span className="block font-display text-lg font-semibold text-forest-950 dark:text-sage-50">
             {session.title}
           </span>
-          <span className="block text-xs font-medium text-stone-400 dark:text-stone-500">
+          <span className="block text-sm font-medium text-stone-400 dark:text-stone-500">
             Session {index + 1} of {total}
           </span>
         </span>
@@ -64,7 +64,7 @@ function SessionCard({ session, index, total, done, isOpen, onToggle, onComplete
                 {session.body}
               </p>
               <div className="mt-5 rounded-soft bg-sage-50/80 p-4 dark:bg-white/5">
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-sage-700 dark:text-sage-400">
+                <p className="text-sm font-semibold uppercase tracking-[0.16em] text-sage-700 dark:text-sage-400">
                   A practice for now
                 </p>
                 <p className="mt-1.5 text-sm leading-relaxed text-stone-700 dark:text-stone-200">

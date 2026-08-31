@@ -38,7 +38,7 @@ export default function ProfessionalAvatar({
         className,
       )}
     >
-      <span className="font-display text-3xl font-semibold tracking-tight [font-size:42%]">
+      <span className="font-display text-3xl font-semibold tracking-tight [font-size:46%]">
         {initials || 'BG'}
       </span>
       <span className="pointer-events-none absolute inset-x-4 bottom-0 h-1/2 rounded-t-full bg-white/30" />

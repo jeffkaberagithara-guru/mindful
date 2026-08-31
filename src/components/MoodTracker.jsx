@@ -28,7 +28,7 @@ function MoodBadge({ mood, className }) {
   return (
     <span
       className={cn(
-        'inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium',
+        'inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-sm font-medium',
         mood >= 4 && 'bg-peach-100 text-peach-800 dark:bg-peach-300/20 dark:text-peach-200',
         mood === 3 && 'bg-sand-100 text-sand-800 dark:bg-sand-300/20 dark:text-sand-200',
         mood === 2 && 'bg-mist-100 text-mist-800 dark:bg-mist-300/20 dark:text-mist-200',
@@ -92,7 +92,7 @@ export default function MoodTracker() {
                 How are you feeling right now?
               </h2>
               {isEditingToday && (
-                <span className="inline-flex items-center gap-1.5 text-xs text-forest-800 dark:text-sage-300">
+                <span className="inline-flex items-center gap-1.5 text-sm text-forest-800 dark:text-sage-300">
                   <PenLine className="h-3.5 w-3.5" aria-hidden />
                   You checked in today
                   {todaysEntry.mood && (
@@ -123,7 +123,7 @@ export default function MoodTracker() {
                 <CheckCircle2 className="ml-1.5 h-4 w-4" aria-hidden />
               </Button>
               {isEditingToday && (
-                <p className="mt-3 text-xs text-stone-500 dark:text-stone-400">
+                <p className="mt-3 text-sm text-stone-500 dark:text-stone-400">
                   You already checked in today — saving will update this entry rather than add a second one.
                 </p>
               )}
@@ -176,12 +176,12 @@ export default function MoodTracker() {
             )}
 
             {moodHistory.length > 30 && (
-              <p className="mt-3 text-xs text-stone-400 dark:text-stone-500">
+              <p className="mt-3 text-sm text-stone-400 dark:text-stone-500">
                 Showing the most recent 30 check-ins.
               </p>
             )}
 
-            <p className="mt-4 text-xs text-stone-500 dark:text-stone-400">
+            <p className="mt-4 text-sm text-stone-500 dark:text-stone-400">
               Your mood history stays on this device. You can clear it any time in Settings, under
               Your data.
             </p>

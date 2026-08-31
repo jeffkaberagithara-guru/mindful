@@ -87,7 +87,7 @@ function ResourceLink({ name, note, href }) {
           href={href}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-forest-700 underline-offset-2 hover:underline dark:text-sage-300"
+          className="inline-flex items-center gap-1.5 text-sm font-semibold text-forest-700 underline-offset-2 hover:underline dark:text-sage-300"
         >
           Visit site <ExternalLink className="h-3 w-3" aria-hidden />
         </a>
@@ -151,7 +151,7 @@ export default function FindTherapist() {
             </h2>
             <div className="flex flex-wrap items-center gap-2">
               <Badge tone="sand">Independent sites</Badge>
-              <span className="text-xs text-stone-400 dark:text-stone-500">
+              <span className="text-sm text-stone-400 dark:text-stone-500">
                 Not vetted or endorsed by MindShift — check they\u2019re current.
               </span>
             </div>

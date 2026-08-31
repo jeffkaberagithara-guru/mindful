@@ -18,7 +18,7 @@ export default function Chip({ selected, tone, size = 'md', className, children,
         'inline-flex items-center gap-1.5 rounded-full border font-medium transition-all duration-200',
         'focus:outline-none focus-visible:ring-2 focus-visible:ring-forest-600/40 focus-visible:ring-offset-2',
         'active:scale-[0.97]',
-        size === 'md' ? 'px-4 py-2 text-sm' : 'px-3 py-1.5 text-xs',
+        size === 'md' ? 'px-4 py-2 text-sm' : 'px-3 py-1.5 text-sm',
         tones[activeTone],
         className,
       )}

@@ -136,7 +136,7 @@ export default function Resources() {
                 </Link>
               ))}
             </div>
-            <p className="mt-4 max-w-2xl text-xs leading-relaxed text-stone-400 dark:text-stone-500">
+            <p className="mt-4 max-w-2xl text-sm leading-relaxed text-stone-400 dark:text-stone-500">
               Crisis helpline numbers live on the crisis page, where they\u2019re kept current and
               verified. If you\u2019re in immediate danger, call 112 (or your local emergency number)
               without waiting to read anything else.

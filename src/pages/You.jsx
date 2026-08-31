@@ -67,18 +67,18 @@ function computeStreak(entries) {
 function Trend({ value }) {
   if (value > 0)
     return (
-      <span className="inline-flex items-center gap-1 text-xs font-semibold text-rose-600 dark:text-rose-400">
+      <span className="inline-flex items-center gap-1 text-sm font-semibold text-rose-600 dark:text-rose-400">
         <TrendingUp className="h-3.5 w-3.5" aria-hidden /> higher than last time
       </span>
     );
   if (value < 0)
     return (
-      <span className="inline-flex items-center gap-1 text-xs font-semibold text-sage-700 dark:text-sage-300">
+      <span className="inline-flex items-center gap-1 text-sm font-semibold text-sage-700 dark:text-sage-300">
         <TrendingDown className="h-3.5 w-3.5" aria-hidden /> lower than last time
       </span>
     );
   return (
-    <span className="inline-flex items-center gap-1 text-xs font-semibold text-stone-500 dark:text-stone-400">
+    <span className="inline-flex items-center gap-1 text-sm font-semibold text-stone-500 dark:text-stone-400">
       <Minus className="h-3.5 w-3.5" aria-hidden /> same as last time
     </span>
   );
@@ -175,7 +175,7 @@ export default function You() {
                 Recent feeling
               </h2>
               {weekDelta !== null && (
-                <span className="text-xs font-medium text-stone-500 dark:text-stone-400">
+                <span className="text-sm font-medium text-stone-500 dark:text-stone-400">
                   Avg this week {avgThisWeek.toFixed(1)}
                   {avgLastWeek !== null && (
                     <>
@@ -201,7 +201,7 @@ export default function You() {
               <>
                 <div className="mt-6 grid gap-6 sm:grid-cols-2">
                   <div className="flex flex-col justify-center rounded-soft bg-ivory p-5 dark:bg-forest-900">
-                    <p className="text-xs uppercase tracking-[0.16em] text-stone-400 dark:text-stone-500">
+                    <p className="text-sm uppercase tracking-[0.16em] text-stone-400 dark:text-stone-500">
                       Latest
                     </p>
                     <p className="mt-1 font-display text-3xl font-semibold text-forest-950 dark:text-sage-50">
@@ -215,7 +215,7 @@ export default function You() {
                   </div>
 
                   <div>
-                    <p className="text-xs uppercase tracking-[0.16em] text-stone-400 dark:text-stone-500">
+                    <p className="text-sm uppercase tracking-[0.16em] text-stone-400 dark:text-stone-500">
                       Last seven days
                     </p>
                     <div className="mt-3 flex h-32 items-end justify-between gap-2">
@@ -224,14 +224,14 @@ export default function You() {
                           key={entry.id}
                           className="group relative flex flex-1 flex-col items-center gap-1.5"
                         >
-                          <span className="text-[11px] font-medium text-stone-500 group-hover:text-stone-700 dark:text-stone-300">
+                          <span className="text-sm font-medium text-stone-500 group-hover:text-stone-700 dark:text-stone-300">
                             {MOOD_LABELS[entry.mood]?.[0] ?? ''}
                           </span>
                           <div
                             className="w-full rounded-full bg-forest-700/20"
                             style={{ height: `${entry.mood * 20}%`, minHeight: '4px' }}
                           />
-                          <span className="text-[11px] text-stone-500 dark:text-stone-300">
+                          <span className="text-sm text-stone-500 dark:text-stone-300">
                             {formatDay(entry.date)}
                           </span>
                         </div>
@@ -240,7 +240,7 @@ export default function You() {
                   </div>
                 </div>
 
-                <p className="mt-6 text-xs leading-relaxed text-stone-400 dark:text-stone-500">
+                <p className="mt-6 text-sm leading-relaxed text-stone-400 dark:text-stone-500">
                   A week of consistently low check-ins is worth raising with a real person — even
                   just to say it out loud.
                 </p>
@@ -275,7 +275,7 @@ export default function You() {
                       {latestDep !== undefined && (
                         <>
                           <div className="flex items-baseline justify-between gap-2">
-                            <span className="text-xs font-medium text-stone-400 dark:text-stone-500">
+                            <span className="text-sm font-medium text-stone-400 dark:text-stone-500">
                               Latest · Depression screen (PHQ-9)
                             </span>
                             <span className="font-display text-xl font-semibold text-forest-950 dark:text-sage-50">
@@ -290,7 +290,7 @@ export default function You() {
                       {latestAnx !== undefined && (
                         <>
                           <div className="mt-3 flex items-baseline justify-between gap-2 border-t border-stone-900/5 pt-3 dark:border-white/10">
-                            <span className="text-xs font-medium text-stone-400 dark:text-stone-500">
+                            <span className="text-sm font-medium text-stone-400 dark:text-stone-500">
                               Latest · Anxiety screen (GAD-7)
                             </span>
                             <span className="font-display text-xl font-semibold text-forest-950 dark:text-sage-50">
@@ -312,7 +312,7 @@ export default function You() {
                   </div>
 
                   {assessmentHistory.length >= 2 && (
-                    <p className="text-xs leading-relaxed text-stone-400 dark:text-stone-500">
+                    <p className="text-sm leading-relaxed text-stone-400 dark:text-stone-500">
                       Repeated or rising scores are a good reason to bring this up with a doctor or
                       therapist.
                     </p>
@@ -341,19 +341,19 @@ export default function You() {
                       <p className="font-display text-xl font-semibold text-forest-950 dark:text-sage-50">
                         {journalEntries.length}
                       </p>
-                      <p className="mt-0.5 text-xs text-stone-500 dark:text-stone-300">entries</p>
+                      <p className="mt-0.5 text-sm text-stone-500 dark:text-stone-300">entries</p>
                     </div>
                     <div className="rounded-soft bg-ivory p-3 text-center dark:bg-forest-900">
                       <p className="font-display text-xl font-semibold text-forest-950 dark:text-sage-50">
                         {journalStreak || '—'}
                       </p>
-                      <p className="mt-0.5 text-xs text-stone-500 dark:text-stone-300">day streak</p>
+                      <p className="mt-0.5 text-sm text-stone-500 dark:text-stone-300">day streak</p>
                     </div>
                     <div className="rounded-soft bg-ivory p-3 text-center dark:bg-forest-900">
                       <p className="font-display text-xl font-semibold text-forest-950 dark:text-sage-50">
                         {thisWeekJournal.length}
                       </p>
-                      <p className="mt-0.5 text-xs text-stone-500 dark:text-stone-300">this week</p>
+                      <p className="mt-0.5 text-sm text-stone-500 dark:text-stone-300">this week</p>
                     </div>
                   </div>
                   <Link

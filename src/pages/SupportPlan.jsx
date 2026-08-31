@@ -246,7 +246,7 @@ export default function SupportPlan() {
           </div>
 
           <div className="mt-8 flex flex-wrap items-center justify-between gap-3">
-            <p className="max-w-md text-xs leading-relaxed text-stone-400 dark:text-stone-500">
+            <p className="max-w-md text-sm leading-relaxed text-stone-400 dark:text-stone-500">
               Bring this with you to a doctor or therapist if you like — it's a shortcut to the
               conversation.
             </p>

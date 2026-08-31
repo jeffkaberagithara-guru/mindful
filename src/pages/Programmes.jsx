@@ -80,7 +80,7 @@ export default function Programmes() {
                           style={{ width: `${(done / total) * 100}%` }}
                         />
                       </div>
-                      <div className="mt-2 flex items-center justify-between text-xs font-medium text-stone-500 dark:text-stone-400">
+                      <div className="mt-2 flex items-center justify-between text-sm font-medium text-stone-500 dark:text-stone-400">
                         <span>
                           {started
                             ? `${done} of ${total} sessions`

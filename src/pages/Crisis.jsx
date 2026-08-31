@@ -92,7 +92,7 @@ export default function Crisis() {
                     </h3>
                     <Clock className="h-4 w-4 shrink-0 text-sage-600 dark:text-sage-400" aria-hidden />
                   </div>
-                  <p className="mt-0.5 text-xs font-medium text-stone-400 dark:text-stone-500">
+                  <p className="mt-0.5 text-sm font-medium text-stone-400 dark:text-stone-500">
                     {line.where}
                   </p>
                   <p className="mt-2 text-sm leading-relaxed text-stone-600 dark:text-stone-300">
@@ -130,7 +130,7 @@ export default function Crisis() {
                     </h3>
                     <Clock className="h-4 w-4 shrink-0 text-sage-600 dark:text-sage-400" aria-hidden />
                   </div>
-                  <p className="mt-0.5 text-xs font-medium text-stone-400 dark:text-stone-500">
+                  <p className="mt-0.5 text-sm font-medium text-stone-400 dark:text-stone-500">
                     {line.where}
                   </p>
                   <p className="mt-2 text-sm leading-relaxed text-stone-600 dark:text-stone-300">
@@ -190,7 +190,7 @@ export default function Crisis() {
                 </tbody>
               </table>
             </div>
-            <p className="mt-3 text-xs leading-relaxed text-stone-400 dark:text-stone-500">
+            <p className="mt-3 text-sm leading-relaxed text-stone-400 dark:text-stone-500">
               MindShift checks these lines carefully, but services move. If one doesn\u2019t go
               through, try another, or call 112 — and please double-check anything before relying
               on it.
@@ -252,7 +252,7 @@ export default function Crisis() {
           </div>
 
           <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
-            <span className="inline-flex items-center gap-2 rounded-full border border-stone-200 px-4 py-2 text-xs text-stone-500 dark:border-white/10 dark:text-stone-400">
+            <span className="inline-flex items-center gap-2 rounded-full border border-stone-200 px-4 py-2 text-sm text-stone-500 dark:border-white/10 dark:text-stone-400">
               <AlertTriangle className="h-3.5 w-3.5 text-rose-500" aria-hidden />
               If someone else is unsafe: stay with them, remove immediate danger if it\u2019s safe to,
               and call 112 — they don\u2019t have to be \u201cdoing it\u201d to get help.

@@ -9,7 +9,7 @@ import { PROFESSIONAL } from '../data/professionalProfile';
 function Section({ eyebrow, title, children }) {
   return (
     <div>
-      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-sage-700 dark:text-sage-400">
+      <p className="text-sm font-semibold uppercase tracking-[0.18em] text-sage-700 dark:text-sage-400">
         {eyebrow}
       </p>
       <h2 className="mt-1 font-display text-2xl font-semibold text-forest-950 dark:text-sage-50">

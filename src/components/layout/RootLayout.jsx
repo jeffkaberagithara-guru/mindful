@@ -29,7 +29,7 @@ export default function RootLayout({ routes }) {
   const openCrisis = () => setCrisisOpen(true);
 
   return (
-    <div className="min-h-dvh overflow-x-clip bg-ivory text-stone-800 dark:bg-forest-950 dark:text-stone-200">
+    <div className="min-h-dvh overflow-x-clip bg-ivory text-forest-950 dark:bg-forest-950 dark:text-sage-100">
       <ScrollToTop />
 
       <aside
@@ -90,7 +90,7 @@ export default function RootLayout({ routes }) {
         <button
           type="button"
           onClick={openCrisis}
-          className="inline-flex items-center gap-1.5 rounded-full border border-stone-900/10 px-3 py-1.5 text-xs font-semibold text-stone-700 transition-colors hover:bg-stone-900/5 dark:border-white/15 dark:text-stone-200 dark:hover:bg-white/5"
+          className="inline-flex items-center gap-1.5 rounded-full border border-stone-900/10 px-3 py-1.5 text-sm font-semibold text-stone-700 transition-colors hover:bg-stone-900/5 dark:border-white/15 dark:text-stone-200 dark:hover:bg-white/5"
         >
           <HeartHandshake className="h-3.5 w-3.5 text-forest-600 dark:text-sage-300" />
           Need help?
@@ -138,7 +138,7 @@ export default function RootLayout({ routes }) {
                 />
                 <span
                   className={cn(
-                    'text-xs leading-none transition-colors',
+                    'text-sm leading-none transition-colors',
                     active ? 'font-semibold text-forest-900 dark:text-sage-100' : 'font-medium text-stone-600 dark:text-stone-300'
                   )}
                 >

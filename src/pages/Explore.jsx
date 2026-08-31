@@ -79,7 +79,7 @@ export default function Explore() {
                   <Card padding="lg" className="h-full transition-shadow hover:shadow-card">
                     <div className="flex items-center gap-2">
                       <Badge tone="sage" size="sm">{article.category}</Badge>
-                      <span className="inline-flex items-center gap-1 text-xs text-stone-400 dark:text-stone-500">
+                      <span className="inline-flex items-center gap-1 text-sm text-stone-400 dark:text-stone-500">
                         <Clock className="h-3 w-3" aria-hidden /> {article.readTime}
                       </span>
                     </div>

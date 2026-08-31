@@ -166,7 +166,7 @@ export default function LearnMore() {
                       <span className="block text-sm font-semibold text-forest-950 dark:text-sage-50">
                         {guide.title}
                       </span>
-                      <span className="block text-xs text-stone-500 dark:text-stone-400">{guide.note}</span>
+                      <span className="block text-sm text-stone-500 dark:text-stone-400">{guide.note}</span>
                     </span>
                   </Link>
                 );

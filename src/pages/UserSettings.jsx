@@ -240,7 +240,7 @@ export default function UserSettings() {
               </p>
 
               <div className="mt-5 rounded-soft bg-ivory p-4 dark:bg-forest-900">
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-stone-400 dark:text-stone-500">
+                <p className="text-sm font-semibold uppercase tracking-[0.16em] text-stone-400 dark:text-stone-500">
                   Stored on this device
                 </p>
                 <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 text-sm sm:grid-cols-3">

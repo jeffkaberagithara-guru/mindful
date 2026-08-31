@@ -223,7 +223,7 @@ export default function Home() {
 
         <div className="relative mx-auto max-w-6xl">
           <div className="mx-auto max-w-3xl text-center">
-            <span className="inline-flex items-center gap-2 rounded-full border border-stone-900/10 bg-white/70 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-forest-800 backdrop-blur-sm dark:border-white/10 dark:bg-white/5 dark:text-sage-300">
+            <span className="inline-flex items-center gap-2 rounded-full border border-stone-900/10 bg-white/70 px-4 py-1.5 text-sm font-semibold uppercase tracking-[0.16em] text-forest-800 backdrop-blur-sm dark:border-white/10 dark:bg-white/5 dark:text-sage-300">
               MindShift · your space for mental wellbeing
             </span>
             <h1 className="mt-6 font-display text-4xl font-semibold leading-[1.1] tracking-tight text-forest-950 sm:text-5xl lg:text-6xl dark:text-sage-50">
@@ -401,7 +401,7 @@ export default function Home() {
                       <ol className="space-y-3.5">
                         {active.steps.map((step, i) => (
                           <li key={i} className="flex items-start gap-3">
-                            <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-forest-800 font-display text-xs font-semibold text-ivory dark:bg-forest-700 dark:text-white">
+                            <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-forest-800 font-display text-sm font-semibold text-ivory dark:bg-forest-700 dark:text-white">
                               {i + 1}
                             </span>
                             <span className="text-base leading-relaxed text-stone-700 dark:text-stone-200">
@@ -494,26 +494,26 @@ export default function Home() {
           <OrganicCircle size={240} tone="sand" />
         </div>
         <div className="relative mx-auto max-w-6xl">
-          <Card padding="lg" className="bg-forest-800 text-ivory shadow-card sm:p-10 dark:bg-forest-900">
+          <Card padding="lg" surface="forest" className="sm:p-10">
             <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] lg:gap-12">
               <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-sage-300">
+                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-sage-200">
                   Meet the founder
                 </p>
                 <h2 className="mt-3 font-display text-3xl font-semibold leading-tight text-ivory sm:text-4xl dark:text-white">
                   Sometimes self-guided tools aren't enough.
                 </h2>
-                  <p className="mt-4 max-w-md text-base leading-relaxed text-ivory/90">
+                  <p className="mt-4 max-w-md text-lg leading-relaxed text-ivory">
                     Professional support is here when you want to speak with a person about what
                     you're experiencing — in a private, respectful and confidential space.
                   </p>
                 <div className="mt-6 flex items-center gap-4">
                   <ProfessionalAvatar name={PROFESSIONAL.name} size="md" tone="forest" />
                   <div className="text-left">
-                    <p className="font-display text-lg font-semibold text-ivory dark:text-white">
+                    <p className="font-display text-xl font-semibold text-ivory dark:text-white">
                       {PROFESSIONAL.name}
                     </p>
-                    <p className="text-sm text-sage-300">{PROFESSIONAL.role}</p>
+                    <p className="text-base text-sage-200">{PROFESSIONAL.role}</p>
                   </div>
                 </div>
                 <div className="mt-7 flex flex-wrap items-center justify-center gap-3 lg:justify-start">
@@ -532,16 +532,16 @@ export default function Home() {
                 </div>
               </div>
               <div className="rounded-card bg-forest-900/40 p-6 sm:p-8 dark:bg-black/20">
-                <h3 className="font-display text-xl font-semibold text-ivory dark:text-white">
+                <h3 className="font-display text-2xl font-semibold text-ivory dark:text-white">
                   A human conversation, when you need one
                 </h3>
-                <p className="mt-3 text-sm leading-relaxed text-ivory/90">
+                <p className="mt-3 text-base leading-relaxed text-ivory">
                   {PROFESSIONAL.shortIntro}
                 </p>
                 <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2">
                   {PROFESSIONAL.areasOfSupport.slice(0, 6).map((area) => (
-                    <span key={area} className="inline-flex items-center gap-2 text-sm text-sage-200">
-                      <span className="h-1.5 w-1.5 rounded-full bg-sage-400" aria-hidden />
+                    <span key={area} className="inline-flex items-center gap-2 text-base text-sage-100">
+                      <span className="h-1.5 w-1.5 rounded-full bg-sage-300" aria-hidden />
                       {area}
                     </span>
                   ))}

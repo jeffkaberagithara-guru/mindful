@@ -130,7 +130,7 @@ export default function Talk() {
 
           <div className="mx-auto mt-14 max-w-4xl">
             <div className="mb-6 flex flex-col gap-2">
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-sage-700 dark:text-sage-400">
+              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-sage-700 dark:text-sage-400">
                 Professional support
               </p>
               <h2 className="font-display text-2xl font-semibold text-forest-950 sm:text-3xl dark:text-sage-50">

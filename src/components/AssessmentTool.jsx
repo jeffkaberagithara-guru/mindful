@@ -65,7 +65,7 @@ function Results({ type, score, flagged, history, date }) {
     <Card padding="lg">
       <div className="flex items-center gap-2">
         <Badge tone="sage">Complete</Badge>
-        <span className="text-xs text-stone-400 dark:text-stone-500">{formatDate(date)}</span>
+        <span className="text-sm text-stone-400 dark:text-stone-500">{formatDate(date)}</span>
       </div>
       <h2 className="mt-4 font-display text-2xl font-semibold text-forest-950 dark:text-sage-50">
         Your {type === 'depression' ? 'PHQ-9' : 'GAD-7'} score: {score} of {type === 'depression' ? 27 : 21}
@@ -244,7 +244,7 @@ export default function AssessmentTool() {
                 </button>
               </div>
               {history.length > 0 && (
-                <p className="mt-5 text-xs text-stone-400 dark:text-stone-500">
+                <p className="mt-5 text-sm text-stone-400 dark:text-stone-500">
                   You\u2019ve completed {history.length} {history.length === 1 ? 'screen' : 'screens'} — results show at the end.
                 </p>
               )}
@@ -255,7 +255,7 @@ export default function AssessmentTool() {
             <Card padding="lg" className="mt-8">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <Badge tone="sage">{type === 'depression' ? 'PHQ-9 · Depression' : 'GAD-7 · Anxiety'}</Badge>
-                <span className="text-xs text-stone-400 dark:text-stone-500">
+                <span className="text-sm text-stone-400 dark:text-stone-500">
                   Question {index + 1} of {questions.length}
                 </span>
               </div>

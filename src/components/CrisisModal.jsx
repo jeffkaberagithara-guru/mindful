@@ -30,7 +30,7 @@ export default function CrisisModal({ isOpen, onClose }) {
         </div>
 
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-stone-600 dark:text-stone-300">
+          <p className="text-sm font-semibold uppercase tracking-[0.16em] text-stone-600 dark:text-stone-300">
             Support in Kenya
           </p>
           <ul className="mt-3 space-y-3">
@@ -42,7 +42,7 @@ export default function CrisisModal({ isOpen, onClose }) {
                 <p className="font-display text-base font-semibold text-forest-950 dark:text-sage-50">
                   {line.name}
                 </p>
-                <p className="mt-0.5 text-xs font-medium text-stone-400 dark:text-stone-500">
+                <p className="mt-0.5 text-sm font-medium text-stone-400 dark:text-stone-500">
                   {line.where}
                 </p>
                 <p className="mt-1.5 text-sm leading-relaxed text-stone-600 dark:text-stone-300">
@@ -64,7 +64,7 @@ export default function CrisisModal({ isOpen, onClose }) {
         </div>
 
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-stone-600 dark:text-stone-300">
+          <p className="text-sm font-semibold uppercase tracking-[0.16em] text-stone-600 dark:text-stone-300">
             US &amp; international lines
           </p>
           <ul className="mt-3 space-y-3">
@@ -76,7 +76,7 @@ export default function CrisisModal({ isOpen, onClose }) {
                 <p className="font-display text-base font-semibold text-forest-950 dark:text-sage-50">
                   {line.name}
                 </p>
-                <p className="mt-0.5 text-xs font-medium text-stone-400 dark:text-stone-500">
+                <p className="mt-0.5 text-sm font-medium text-stone-400 dark:text-stone-500">
                   {line.where}
                 </p>
                 <p className="mt-1.5 text-sm leading-relaxed text-stone-600 dark:text-stone-300">
