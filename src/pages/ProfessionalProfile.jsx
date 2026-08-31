@@ -9,10 +9,13 @@ import { PROFESSIONAL } from '../data/professionalProfile';
 function Section({ eyebrow, title, children }) {
   return (
     <div>
-      <p className="text-sm font-semibold uppercase tracking-[0.18em] text-sage-700 dark:text-sage-400">
-        {eyebrow}
-      </p>
-      <h2 className="mt-1 font-display text-2xl font-semibold text-forest-950 dark:text-sage-50">
+      <div className="flex items-center gap-2">
+        <span className="h-4 w-1 rounded-full bg-sage-500 dark:bg-sage-400" aria-hidden />
+        <p className="text-sm font-semibold uppercase tracking-[0.18em] text-sage-800 dark:text-sage-300">
+          {eyebrow}
+        </p>
+      </div>
+      <h2 className="mt-2 font-display text-2xl font-semibold text-forest-950 dark:text-sage-50">
         {title}
       </h2>
       <div className="mt-4">{children}</div>
@@ -22,13 +25,10 @@ function Section({ eyebrow, title, children }) {
 
 function PillList({ items }) {
   return (
-    <ul className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+    <ul className="grid grid-cols-1 gap-x-6 gap-y-3 sm:grid-cols-2">
       {items.map((item) => (
-        <li
-          key={item}
-          className="flex items-start gap-2.5 rounded-soft border border-stone-900/8 bg-white/60 px-4 py-3 text-sm leading-relaxed text-stone-700 dark:border-white/10 dark:bg-white/5 dark:text-stone-200"
-        >
-          <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-sage-500 dark:bg-sage-400" />
+        <li key={item} className="flex items-center gap-3 text-base text-stone-700 dark:text-stone-200">
+          <span className="h-2 w-2 shrink-0 rounded-full bg-sage-500 dark:bg-sage-400" />
           {item}
         </li>
       ))}
