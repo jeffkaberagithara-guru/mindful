@@ -54,8 +54,8 @@ export default function ProfessionalProfile() {
             <Badge tone="sage" size="md" className="mt-6">
               {PROFESSIONAL.role}
             </Badge>
-            <h1 className="mt-3 font-display text-4xl font-semibold leading-[1.05] tracking-tight text-forest-950 sm:text-5xl dark:text-sage-50">
-              {PROFESSIONAL.name.replace(' ', '\u00A0')}
+            <h1 className="mt-3 text-balance font-display text-4xl font-semibold leading-[1.05] tracking-tight text-forest-950 sm:text-5xl dark:text-sage-50">
+              {PROFESSIONAL.name}
             </h1>
             <p className="mt-4 max-w-sm text-base leading-relaxed text-stone-600 dark:text-stone-300">
               {PROFESSIONAL.shortIntro}

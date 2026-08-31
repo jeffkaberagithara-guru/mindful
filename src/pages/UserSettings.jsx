@@ -141,8 +141,8 @@ export default function UserSettings() {
                 </h2>
               </div>
               <div className="mt-5 space-y-4">
-                <div className="flex items-center justify-between gap-4">
-                  <div>
+                <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+                  <div className="min-w-0">
                     <p className="text-sm font-semibold text-forest-950 dark:text-sage-50">Theme</p>
                     <p className="text-sm text-stone-500 dark:text-stone-400">Light for bright rooms, dark for quiet ones.</p>
                   </div>
@@ -174,8 +174,8 @@ export default function UserSettings() {
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between gap-4">
-                  <div>
+                <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+                  <div className="min-w-0">
                     <p className="text-sm font-semibold text-forest-950 dark:text-sage-50">Text size</p>
                     <p className="text-sm text-stone-500 dark:text-stone-400">Changes how large everything reads.</p>
                   </div>

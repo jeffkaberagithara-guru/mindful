@@ -195,10 +195,10 @@ export default function Journal() {
                         className="flex w-full items-baseline justify-between gap-3 text-left"
                         aria-expanded={open === entry.id}
                       >
-                        <span className="text-sm font-semibold text-forest-800 dark:text-sage-300">
+                        <span className="min-w-0 text-sm font-semibold text-forest-800 dark:text-sage-300">
                           {formatEntryDate(entry.date)}
                         </span>
-                        <span className="flex items-center gap-2">
+                        <span className="flex shrink-0 items-center gap-2">
                           {entry.mood ? (
                             <span
                               className={cn(

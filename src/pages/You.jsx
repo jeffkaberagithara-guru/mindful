@@ -336,8 +336,8 @@ export default function You() {
                 </div>
               ) : (
                 <>
-                  <div className="mt-4 grid grid-cols-3 gap-3">
-                    <div className="rounded-soft bg-ivory p-3 text-center dark:bg-forest-900">
+                  <div className="mt-4 grid grid-cols-3 gap-2 sm:gap-3">
+                    <div className="rounded-soft bg-ivory p-3 text-center sm:p-4 dark:bg-forest-900">
                       <p className="font-display text-xl font-semibold text-forest-950 dark:text-sage-50">
                         {journalEntries.length}
                       </p>

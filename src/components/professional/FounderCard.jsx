@@ -36,15 +36,15 @@ export default function FounderCard({
         </div>
       </div>
 
-      <div className="relative mt-5 flex flex-wrap items-center gap-3 border-t border-stone-900/8 pt-5 dark:border-white/10">
+      <div className="relative mt-5 flex flex-col gap-4 border-t border-stone-900/8 pt-5 dark:border-white/10 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3">
         <Link
           to={`/professionals/${PROFESSIONAL.slug}`}
-          className="inline-flex items-center gap-1.5 text-base font-semibold text-forest-900 hover:underline dark:text-sage-200"
+          className="inline-flex items-center gap-1.5 self-start text-base font-semibold text-forest-900 hover:underline dark:text-sage-200"
         >
           View profile <ArrowRight className="h-3.5 w-3.5" aria-hidden />
         </Link>
         {showContact && (
-          <div className="ml-auto shrink-0">
+          <div className="w-full sm:ml-auto sm:w-auto sm:shrink-0">
             <FounderContactActions showConsult />
           </div>
         )}

@@ -128,8 +128,8 @@ function Results({ type, score, flagged, history, date }) {
       {history.length > 0 && (
         <div className="mt-8">
           <p className="text-sm font-semibold text-forest-950 dark:text-sage-50">Your past screens</p>
-          <div className="mt-3 overflow-hidden rounded-soft border border-stone-200 dark:border-white/10">
-            <table className="w-full text-sm">
+          <div className="mt-3 overflow-x-auto rounded-soft border border-stone-200 dark:border-white/10">
+            <table className="w-full min-w-[24rem] text-sm">
               <thead className="bg-stone-100 text-stone-500 dark:bg-white/5 dark:text-stone-400">
                 <tr>
                   <th className="px-3 py-2 text-left font-medium">Date</th>

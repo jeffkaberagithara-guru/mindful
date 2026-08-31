@@ -148,10 +148,10 @@ export default function Breathing() {
             </p>
 
             <div
-              className="relative mx-auto mt-8 flex h-72 w-72 items-center justify-center sm:h-80 sm:w-80"
+              className="relative mx-auto mt-8 flex h-56 w-56 items-center justify-center sm:h-80 sm:w-80"
               aria-hidden
             >
-              <div className="absolute h-56 w-56 rounded-full bg-forest-800/5 blur-2xl" />
+              <div className="absolute h-44 w-44 rounded-full bg-forest-800/5 blur-2xl sm:h-56 sm:w-56" />
               <motion.div
                 animate={{ scale }}
                 transition={{ duration: running ? phase.sec : 0.3, ease: 'easeInOut' }}

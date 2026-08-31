@@ -10,8 +10,12 @@ const LEVELS = [
 ];
 
 export default function MoodSelector({ value, onChange, size = 'md' }) {
-  const circleSize = size === 'lg' ? 'h-16 w-16 sm:h-20 sm:w-20' : 'h-12 w-12 sm:h-14 sm:w-14';
-  const iconSize = size === 'lg' ? 'h-7 w-7 sm:h-8 sm:w-8' : 'h-6 w-6 sm:h-7 sm:w-7';
+  const circleSize =
+    size === 'lg'
+      ? 'w-full max-w-[4.5rem] aspect-square sm:max-w-[5rem]'
+      : 'w-full max-w-[3.25rem] aspect-square sm:max-w-[3.5rem]';
+  const iconSize =
+    size === 'lg' ? 'h-6 w-6 sm:h-8 sm:w-8' : 'h-5 w-5 sm:h-7 sm:w-7';
 
   return (
     <div

@@ -24,7 +24,7 @@ function PersonList({ items, onChange, title, placeholderName, placeholderContac
   return (
     <div className="space-y-2">
       {items.map((item) => (
-        <div key={item.id} className="flex items-center gap-2">
+        <div key={item.id} className="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center">
           <Input
             className="flex-1"
             aria-label="Name"
@@ -49,7 +49,7 @@ function PersonList({ items, onChange, title, placeholderName, placeholderContac
             label={`Remove ${title.toLowerCase()}`}
             tone="danger"
             size="sm"
-            className="shrink-0 border border-stone-200 dark:border-white/15"
+            className="shrink-0 border border-stone-200 dark:border-white/15 sm:self-center"
           >
             <Trash2 className="h-4 w-4" aria-hidden />
           </IconButton>

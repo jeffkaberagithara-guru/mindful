@@ -508,15 +508,15 @@ export default function Home() {
                     you're experiencing — in a private, respectful and confidential space.
                   </p>
                 <div className="mt-6 flex items-center gap-4">
-                  <ProfessionalAvatar name={PROFESSIONAL.name} size="md" tone="forest" />
-                  <div className="text-left">
-                    <p className="font-display text-xl font-semibold text-ivory dark:text-white">
+                  <ProfessionalAvatar name={PROFESSIONAL.name} size="md" tone="forest" className="shrink-0" />
+                  <div className="min-w-0 flex-1 text-left">
+                    <p className="font-display text-xl font-semibold leading-tight text-ivory dark:text-white">
                       {PROFESSIONAL.name}
                     </p>
                     <p className="text-base text-sage-200">{PROFESSIONAL.role}</p>
                   </div>
                 </div>
-                <div className="mt-7 flex flex-wrap items-center justify-center gap-3 lg:justify-start">
+                <div className="mt-7 flex w-full flex-col items-stretch justify-center gap-3 sm:flex-row lg:justify-start">
                   <Link
                     to={`/professionals/${PROFESSIONAL.slug}`}
                     className="inline-flex items-center justify-center gap-2 rounded-full bg-ivory px-6 py-3 text-base font-medium text-forest-900 shadow-soft transition-all duration-300 hover:bg-sage-100 dark:bg-sage-100 dark:text-forest-900 dark:hover:bg-sage-200"
