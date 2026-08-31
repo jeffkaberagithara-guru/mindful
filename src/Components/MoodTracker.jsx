@@ -1,138 +1,194 @@
 import { useState } from 'react';
-import { FaSmile, FaMeh, FaFrown, FaSadTear, FaAngry } from 'react-icons/fa';
+import { History, PenLine, Trash2, CheckCircle2, Inbox } from 'lucide-react';
+import SectionHeader from '../components/ui/SectionHeader';
+import Card from '../components/ui/Card';
+import Button from '../components/ui/Button';
+import EmptyState from '../components/ui/EmptyState';
+import MoodSelector from '../components/ui/MoodSelector';
+import { Input } from '../components/ui/Field';
+import Landscape from '../components/ui/Landscape';
+import { useToast } from '../components/ui/ToastContext';
 import { useLocalStorage } from '../hooks/useLocalStorage';
+import { cn, formatDate } from '../lib/cn';
+
+const MOOD_LABELS = {
+  5: 'Bright',
+  4: 'Good',
+  3: 'Okay',
+  2: 'Low',
+  1: 'Very low',
+};
+
+function todayStamp(date = new Date()) {
+  const d = date instanceof Date ? date : new Date(date);
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+}
+
+function MoodBadge({ mood, className }) {
+  return (
+    <span
+      className={cn(
+        'inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium',
+        mood >= 4 && 'bg-peach-100 text-peach-800 dark:bg-peach-300/20 dark:text-peach-200',
+        mood === 3 && 'bg-sand-100 text-sand-800 dark:bg-sand-300/20 dark:text-sand-200',
+        mood === 2 && 'bg-mist-100 text-mist-800 dark:bg-mist-300/20 dark:text-mist-200',
+        mood === 1 && 'bg-lilac-100 text-lilac-800 dark:bg-lilac-300/20 dark:text-lilac-200',
+        className,
+      )}
+    >
+      {MOOD_LABELS[mood]}
+    </span>
+  );
+}
 
 export default function MoodTracker() {
-  // Using the hook - just like useState, but persists to localStorage
+  const toast = useToast();
   const [moodHistory, setMoodHistory] = useLocalStorage('moodHistory', []);
-  const [todayMood, setTodayMood] = useState(null);
+  const [mood, setMood] = useState(null);
   const [note, setNote] = useState('');
 
-  const moodOptions = [
-    { id: 5, emoji: '😊', label: 'Great', icon: <FaSmile className="w-8 h-8" />, color: 'bg-green-100 text-green-700' },
-    { id: 4, emoji: '🙂', label: 'Good', icon: <FaSmile className="w-8 h-8" />, color: 'bg-blue-100 text-blue-700' },
-    { id: 3, emoji: '😐', label: 'Okay', icon: <FaMeh className="w-8 h-8" />, color: 'bg-yellow-100 text-yellow-700' },
-    { id: 2, emoji: '😔', label: 'Not Great', icon: <FaFrown className="w-8 h-8" />, color: 'bg-orange-100 text-orange-700' },
-    { id: 1, emoji: '😞', label: 'Struggling', icon: <FaSadTear className="w-8 h-8" />, color: 'bg-red-100 text-red-700' },
-  ];
+  const today = todayStamp();
+  const todaysEntry = moodHistory.find((e) => todayStamp(new Date(e.date)) === today);
+  const isEditingToday = todaysEntry != null;
 
-  const saveTodayMood = () => {
-    if (!todayMood) return;
-
-    const newEntry = {
+  const save = () => {
+    if (!mood) return;
+    const keepOthers = todaysEntry ? moodHistory.filter((e) => e !== todaysEntry) : moodHistory;
+    const entry = {
       id: Date.now(),
-      mood: todayMood,
+      mood,
       note: note.trim(),
       date: new Date().toISOString(),
     };
-
-    // Update localStorage through our hook
-    setMoodHistory([newEntry, ...moodHistory]);
-
-    // Reset form
-    setTodayMood(null);
+    setMoodHistory([entry, ...keepOthers]);
+    toast.success(isEditingToday ? 'Today\u2019s check-in updated.' : 'Checked in — thank you for showing up.');
+    setMood(null);
     setNote('');
-
-    alert('Mood saved! It will be remembered even if you close the browser.');
   };
 
-  const clearHistory = () => {
-    if (window.confirm('Clear all mood history?')) {
-      setMoodHistory([]);
-    }
+  const remove = (entry) => {
+    setMoodHistory(moodHistory.filter((e) => e.id !== entry.id));
+    toast.info('Check-in removed.');
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-white dark:bg-gray-800 rounded-xl shadow transition-colors duration-300">
-      <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Daily Mood Tracker</h2>
-
-      {/* Mood Selection */}
-      <div className="mb-8">
-        <p className="mb-4 text-gray-700 dark:text-gray-300">How are you feeling today?</p>
-        <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
-          {moodOptions.map((mood) => (
-            <button
-              key={mood.id}
-              onClick={() => setTodayMood(mood)}
-              className={`inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none cursor-pointer p-4 flex-col gap-2 ${todayMood?.id === mood.id
-                ? `${mood.color} border-2 border-current scale-105 shadow-md`
-                : 'bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 border-2 border-transparent'
-                }`}
-            >
-              <span className="text-3xl mb-2">{mood.emoji}</span>
-              <span className="text-sm font-medium">{mood.label}</span>
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Note Input */}
-      <div className="mb-6">
-        <textarea
-          value={note}
-          onChange={(e) => setNote(e.target.value)}
-          placeholder="Add any notes about your day (optional)..."
-          className="w-full p-3 border rounded-lg bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-          rows="3"
+    <>
+      <section className="relative overflow-hidden px-6 pb-24 pt-14 sm:pt-20">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -left-28 top-10 h-80 w-80 rounded-blob bg-sage-200/50 blur-3xl dark:bg-sage-300/10"
         />
-      </div>
+        <div className="relative mx-auto max-w-4xl">
+          <SectionHeader
+            eyebrow="Tools"
+            as="h1"
+            title="Mood check-in & history"
+            description="One honest tap about how you feel today — kept entirely on this device. A small trail of days adds up to a clearer picture over time."
+          />
 
-      {/* Save Button */}
-      <button
-        onClick={saveTodayMood}
-        disabled={!todayMood}
-        className={`inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none cursor-pointer w-full py-3 mb-6 ${todayMood
-          ? 'bg-linear-to-r from-blue-500 to-purple-500 text-white shadow-lg hover:shadow-xl focus:ring-blue-500 hover:scale-105'
-          : 'bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-500 cursor-not-allowed'
-          }`}
-      >
-        Save Today's Mood
-      </button>
-
-      {/* History Section */}
-      <div className="border-t dark:border-gray-700 pt-6">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Your Mood History</h3>
-          {moodHistory.length > 0 && (
-            <button
-              onClick={clearHistory}
-              className="text-sm font-medium text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-300 transition-colors focus:outline-none hover:underline"
-            >
-              Clear All
-            </button>
-          )}
-        </div>
-
-        {moodHistory.length === 0 ? (
-          <p className="text-gray-500 dark:text-gray-400 text-center py-8">No mood entries yet.</p>
-        ) : (
-          <div className="space-y-3 max-h-60 overflow-y-auto">
-            {moodHistory.map((entry) => {
-              const mood = moodOptions.find(m => m.id === entry.mood.id) || moodOptions[2];
-              return (
-                <div key={entry.id} className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg transition-colors">
-                  <span className="text-2xl">{mood.emoji}</span>
-                  <div className="flex-1">
-                    <p className="font-medium text-gray-900 dark:text-white">{mood.label}</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                      {new Date(entry.date).toLocaleDateString()}
-                    </p>
-                  </div>
-                  {entry.note && (
-                    <p className="text-sm text-gray-600 dark:text-gray-300">{entry.note}</p>
+          <Card padding="lg" className="mt-8">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <h2 className="font-display text-xl font-semibold text-forest-950 dark:text-sage-50">
+                How are you feeling right now?
+              </h2>
+              {isEditingToday && (
+                <span className="inline-flex items-center gap-1.5 text-xs text-forest-800 dark:text-sage-300">
+                  <PenLine className="h-3.5 w-3.5" aria-hidden />
+                  You checked in today
+                  {todaysEntry.mood && (
+                    <>
+                      {' '}as <MoodBadge mood={todaysEntry.mood} />
+                    </>
                   )}
-                </div>
-              );
-            })}
-          </div>
-        )}
-      </div>
+                </span>
+              )}
+            </div>
 
-      {/* Privacy Note */}
-      <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg text-sm text-blue-800 dark:text-blue-200 border border-blue-100 dark:border-blue-900/30">
-        <p><strong>Privacy Note:</strong> All data is stored locally on your device.
-          It never leaves your browser and is not sent to any server.</p>
-      </div>
-    </div>
+            <div className="mt-6">
+              <MoodSelector value={mood ?? todaysEntry?.mood ?? null} onChange={setMood} size="lg" />
+            </div>
+
+            <div className="mt-6">
+              <Input
+                label="A note (optional)"
+                value={note}
+                onChange={(e) => setNote(e.target.value)}
+                placeholder="One quiet line about today\u2026"
+              />
+            </div>
+
+            <div className="mt-6">
+              <Button onClick={save} disabled={!mood}>
+                {isEditingToday ? 'Update today\u2019s check-in' : 'Save today\u2019s check-in'}
+                <CheckCircle2 className="ml-1.5 h-4 w-4" aria-hidden />
+              </Button>
+              {isEditingToday && (
+                <p className="mt-3 text-xs text-stone-500 dark:text-stone-400">
+                  You already checked in today — saving will update this entry rather than add a second one.
+                </p>
+              )}
+            </div>
+          </Card>
+
+          <div className="mt-10">
+            <div className="flex items-center gap-2">
+              <History className="h-4 w-4 text-forest-700 dark:text-sage-300" aria-hidden />
+              <h2 className="font-display text-xl font-semibold text-forest-950 dark:text-sage-50">
+                Your mood history
+              </h2>
+            </div>
+
+            {moodHistory.length === 0 ? (
+              <Card padding="lg" className="mt-4">
+                <EmptyState
+                  icon={<Inbox className="h-6 w-6" strokeWidth={1.75} />}
+                  title="Nothing here yet"
+                  description="Your check-ins will show up here as a gentle trail of your days."
+                />
+              </Card>
+            ) : (
+              <ul className="mt-4 space-y-2">
+                {moodHistory.slice(0, 30).map((entry) => (
+                  <li
+                    key={entry.id}
+                    className="flex items-center gap-3 rounded-soft border border-stone-900/10 bg-white px-4 py-3 dark:border-white/10 dark:bg-forest-900"
+                  >
+                    <MoodBadge mood={entry.mood} className="shrink-0" />
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm text-stone-400 dark:text-stone-500">
+                        {formatDate(entry.date, { weekday: 'short', day: 'numeric', month: 'short' })}
+                      </p>
+                      {entry.note && (
+                        <p className="mt-0.5 truncate text-sm text-stone-700 dark:text-stone-200">{entry.note}</p>
+                      )}
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => remove(entry)}
+                      aria-label="Remove this check-in"
+                      className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-stone-400 transition-colors hover:bg-rose-50 hover:text-rose-600 dark:hover:bg-rose-400/10"
+                    >
+                      <Trash2 className="h-4 w-4" aria-hidden />
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+
+            {moodHistory.length > 30 && (
+              <p className="mt-3 text-xs text-stone-400 dark:text-stone-500">
+                Showing the most recent 30 check-ins.
+              </p>
+            )}
+
+            <p className="mt-4 text-xs text-stone-500 dark:text-stone-400">
+              Your mood history stays on this device. You can clear it any time in Settings, under
+              Your data.
+            </p>
+          </div>
+        </div>
+      </section>
+      <Landscape className="-mb-px h-24 w-full text-sage-200/80 dark:text-forest-900" aria-hidden />
+    </>
   );
 }
