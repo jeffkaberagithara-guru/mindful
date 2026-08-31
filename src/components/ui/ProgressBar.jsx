@@ -8,7 +8,7 @@ export default function ProgressBar({ value, className, trackClassName }) {
       aria-valuemin={0}
       aria-valuemax={100}
       aria-valuenow={Math.round(value)}
-      className={cn('h-2 w-full overflow-hidden rounded-full bg-stone-900/8 dark:bg-white/10', trackClassName)}
+      className={cn('h-2 w-full overflow-hidden rounded-full bg-stone-900/15 dark:bg-white/15', trackClassName)}
     >
       <motion.div
         className={cn('h-full rounded-full bg-sage-500 dark:bg-sage-400', className)}

@@ -138,7 +138,7 @@ export default function Breathing() {
                     selected={selected}
                     onClick={() => choosePattern(p)}
                   >
-                    {p.name} <span className="opacity-70">· {p.short}</span>
+                    {p.name} <span className="opacity-90">· {p.short}</span>
                   </Chip>
                 );
               })}

@@ -102,6 +102,13 @@
   --color-rose-900: #65352d;
   --color-rose-950: #381b16;
 
+  /* ---------- Semantic grays (text) ----------
+     stone-400/500 are used almost exclusively for text across the app.
+     These values are tuned for comfortable, WCAG-friendly contrast on the
+     warm ivory/white surfaces, while staying a warm neutral. */
+  --color-stone-400: #6b645d;
+  --color-stone-500: #58524c;
+
   /* ---------- Shape ---------- */
   --radius-soft: 0.75rem;
   --radius-card: 1.25rem;
@@ -154,6 +161,13 @@
 
   .dark body {
     @apply bg-forest-950 text-sage-50;
+  }
+
+  /* In dark mode the warm gray text tokens need to be *lighter* to hold
+     contrast against the deep forest surfaces. */
+  .dark {
+    --color-stone-400: #b4afa9;
+    --color-stone-500: #c9c4bf;
   }
 
   ::selection {

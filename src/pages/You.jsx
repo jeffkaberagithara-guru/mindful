@@ -93,7 +93,7 @@ function Stat({ icon: Icon, label, value }) {
       <p className="mt-3 font-display text-3xl font-semibold text-forest-950 dark:text-sage-50">
         {value}
       </p>
-      <p className="mt-0.5 text-xs font-medium text-stone-500 dark:text-stone-400">{label}</p>
+      <p className="mt-0.5 text-sm font-medium text-stone-600 dark:text-stone-300">{label}</p>
     </Card>
   );
 }
@@ -224,14 +224,14 @@ export default function You() {
                           key={entry.id}
                           className="group relative flex flex-1 flex-col items-center gap-1.5"
                         >
-                          <span className="text-[10px] font-medium text-stone-400 group-hover:text-stone-600 dark:text-stone-500">
+                          <span className="text-[11px] font-medium text-stone-500 group-hover:text-stone-700 dark:text-stone-300">
                             {MOOD_LABELS[entry.mood]?.[0] ?? ''}
                           </span>
                           <div
                             className="w-full rounded-full bg-forest-700/20"
                             style={{ height: `${entry.mood * 20}%`, minHeight: '4px' }}
                           />
-                          <span className="text-[10px] text-stone-400 dark:text-stone-500">
+                          <span className="text-[11px] text-stone-500 dark:text-stone-300">
                             {formatDay(entry.date)}
                           </span>
                         </div>
@@ -341,19 +341,19 @@ export default function You() {
                       <p className="font-display text-xl font-semibold text-forest-950 dark:text-sage-50">
                         {journalEntries.length}
                       </p>
-                      <p className="mt-0.5 text-[11px] text-stone-400 dark:text-stone-500">entries</p>
+                      <p className="mt-0.5 text-xs text-stone-500 dark:text-stone-300">entries</p>
                     </div>
                     <div className="rounded-soft bg-ivory p-3 text-center dark:bg-forest-900">
                       <p className="font-display text-xl font-semibold text-forest-950 dark:text-sage-50">
                         {journalStreak || '—'}
                       </p>
-                      <p className="mt-0.5 text-[11px] text-stone-400 dark:text-stone-500">day streak</p>
+                      <p className="mt-0.5 text-xs text-stone-500 dark:text-stone-300">day streak</p>
                     </div>
                     <div className="rounded-soft bg-ivory p-3 text-center dark:bg-forest-900">
                       <p className="font-display text-xl font-semibold text-forest-950 dark:text-sage-50">
                         {thisWeekJournal.length}
                       </p>
-                      <p className="mt-0.5 text-[11px] text-stone-400 dark:text-stone-500">this week</p>
+                      <p className="mt-0.5 text-xs text-stone-500 dark:text-stone-300">this week</p>
                     </div>
                   </div>
                   <Link

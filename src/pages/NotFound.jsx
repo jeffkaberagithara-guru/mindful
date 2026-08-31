@@ -9,7 +9,7 @@ export default function NotFound() {
         className="pointer-events-none absolute -right-28 -top-40 h-96 w-96 rounded-blob bg-sage-200/40 blur-2xl dark:bg-sage-300/10"
       />
       <div className="relative mx-auto max-w-3xl text-center">
-        <p className="font-display text-7xl font-medium text-forest-100 dark:text-forest-800 sm:text-8xl">
+        <p className="font-display text-7xl font-medium text-forest-300 dark:text-forest-800 sm:text-8xl">
           404
         </p>
         <h1 className="font-display text-3xl font-semibold leading-tight text-forest-950 sm:text-4xl dark:text-sage-50">

@@ -202,7 +202,7 @@ export default function Journal() {
                           {entry.mood ? (
                             <span
                               className={cn(
-                                'inline-flex items-center rounded-full px-2 py-0.5 text-[11px] font-medium',
+                                'inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium',
                                 entry.mood >= 4 && 'bg-peach-100 text-peach-800 dark:bg-peach-300/20 dark:text-peach-200',
                                 entry.mood === 3 && 'bg-sand-100 text-sand-800 dark:bg-sand-300/20 dark:text-sand-200',
                                 entry.mood === 2 && 'bg-mist-100 text-mist-800 dark:bg-mist-300/20 dark:text-mist-200',

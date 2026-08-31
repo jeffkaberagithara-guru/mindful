@@ -280,7 +280,7 @@ export default function FindTherapist() {
                 <h2 className="font-display text-xl font-semibold text-ivory dark:text-white">
                   If the search can\u2019t wait
                 </h2>
-                <p className="mt-2 text-sm leading-relaxed text-ivory/80 dark:text-white/70">
+                <p className="mt-2 text-sm leading-relaxed text-ivory/90 dark:text-white/85">
                   For persistent distress, thoughts of harming yourself or others, or moments that
                   feel unbearable, a search can wait — but you shouldn\u2019t. Clinics, emergency
                   departments, and crisis lines exist for exactly this, and using them is strength.

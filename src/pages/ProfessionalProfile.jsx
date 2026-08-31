@@ -143,8 +143,8 @@ export default function ProfessionalProfile() {
                       <Phone className="h-5 w-5" aria-hidden />
                     </span>
                     <div>
-                      <p className="text-xs text-stone-500 dark:text-stone-400">Phone</p>
-                      <a href={PROFESSIONAL.telLink} className="text-sm font-semibold text-forest-950 hover:underline dark:text-sage-50">
+                      <p className="text-sm font-medium text-stone-600 dark:text-stone-300">Phone</p>
+                      <a href={PROFESSIONAL.telLink} className="text-base font-semibold text-forest-950 hover:underline dark:text-sage-50">
                         {PROFESSIONAL.phone}
                       </a>
                     </div>
@@ -154,8 +154,8 @@ export default function ProfessionalProfile() {
                       <Mail className="h-5 w-5" aria-hidden />
                     </span>
                     <div>
-                      <p className="text-xs text-stone-500 dark:text-stone-400">Email</p>
-                      <a href={PROFESSIONAL.mailto} className="text-sm font-semibold text-forest-950 hover:underline dark:text-sage-50">
+                      <p className="text-sm font-medium text-stone-600 dark:text-stone-300">Email</p>
+                      <a href={PROFESSIONAL.mailto} className="text-base font-semibold text-forest-950 hover:underline dark:text-sage-50">
                         {PROFESSIONAL.email}
                       </a>
                     </div>

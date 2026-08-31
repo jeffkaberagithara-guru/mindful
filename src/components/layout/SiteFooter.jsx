@@ -51,7 +51,7 @@ export default function SiteFooter() {
               Privacy & data
             </Link>
           </nav>
-          <p className="text-xs text-stone-400 dark:text-stone-500">
+          <p className="text-sm leading-relaxed text-stone-600 dark:text-stone-300">
             *If you're having thoughts of harming yourself or others, please call 112 now and talk
             to someone.
           </p>

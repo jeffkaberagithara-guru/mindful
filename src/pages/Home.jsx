@@ -360,7 +360,7 @@ export default function Home() {
                 </span>
                 <span
                   className={`text-sm transition-colors ${
-                    activeIntent === intent.id ? 'text-ivory/80' : 'text-stone-500 dark:text-stone-400'
+                    activeIntent === intent.id ? 'text-ivory/90' : 'text-stone-600 dark:text-stone-300'
                   }`}
                 >
                   {intent.kind}
@@ -503,10 +503,10 @@ export default function Home() {
                 <h2 className="mt-3 font-display text-3xl font-semibold leading-tight text-ivory sm:text-4xl dark:text-white">
                   Sometimes self-guided tools aren't enough.
                 </h2>
-                <p className="mt-4 max-w-md text-base leading-relaxed text-ivory/80">
-                  Professional support is here when you want to speak with a person about what
-                  you're experiencing — in a private, respectful and confidential space.
-                </p>
+                  <p className="mt-4 max-w-md text-base leading-relaxed text-ivory/90">
+                    Professional support is here when you want to speak with a person about what
+                    you're experiencing — in a private, respectful and confidential space.
+                  </p>
                 <div className="mt-6 flex items-center gap-4">
                   <ProfessionalAvatar name={PROFESSIONAL.name} size="md" tone="forest" />
                   <div className="text-left">
@@ -535,7 +535,7 @@ export default function Home() {
                 <h3 className="font-display text-xl font-semibold text-ivory dark:text-white">
                   A human conversation, when you need one
                 </h3>
-                <p className="mt-3 text-sm leading-relaxed text-ivory/80">
+                <p className="mt-3 text-sm leading-relaxed text-ivory/90">
                   {PROFESSIONAL.shortIntro}
                 </p>
                 <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2">

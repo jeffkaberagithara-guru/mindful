@@ -73,7 +73,7 @@ export default function RootLayout({ routes }) {
             <HeartHandshake className="h-4 w-4" />
             Need help right now?
           </button>
-          <p className="text-center text-xs leading-relaxed text-stone-500 dark:text-stone-400">
+          <p className="text-center text-sm leading-relaxed text-stone-700 dark:text-stone-200">
             If you're in danger of harming yourself or someone else, call 112 or go to your nearest
             emergency room.
           </p>
@@ -120,19 +120,26 @@ export default function RootLayout({ routes }) {
                 key={item.to}
                 to={item.to}
                 aria-current={active ? 'page' : undefined}
-                className="flex flex-1 flex-col items-center gap-1 py-2.5"
+                className="relative flex flex-1 flex-col items-center gap-1 py-2.5"
               >
+                <span
+                  aria-hidden
+                  className={cn(
+                    'absolute top-0 h-0.5 w-8 rounded-full transition-colors',
+                    active ? 'bg-forest-800 dark:bg-sage-300' : 'bg-transparent',
+                  )}
+                />
                 <item.icon
                   className={cn(
                     'h-5 w-5 transition-colors',
-                    active ? 'text-forest-700 dark:text-sage-300' : 'text-stone-500 dark:text-stone-400'
+                    active ? 'text-forest-800 dark:text-sage-200' : 'text-stone-600 dark:text-stone-300'
                   )}
-                  strokeWidth={active ? 2 : 1.5}
+                  strokeWidth={active ? 2 : 1.75}
                 />
                 <span
                   className={cn(
-                    'text-[11px] leading-none transition-colors',
-                    active ? 'font-semibold text-forest-800 dark:text-sage-200' : 'text-stone-500 dark:text-stone-400'
+                    'text-xs leading-none transition-colors',
+                    active ? 'font-semibold text-forest-900 dark:text-sage-100' : 'font-medium text-stone-600 dark:text-stone-300'
                   )}
                 >
                   {item.label}

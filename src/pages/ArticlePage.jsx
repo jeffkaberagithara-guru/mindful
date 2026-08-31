@@ -14,7 +14,7 @@ export default function ArticlePage() {
   if (!article) {
     return (
       <section className="px-6 py-20 text-center">
-        <p className="font-display text-5xl font-medium text-forest-200 dark:text-forest-800">Hmm</p>
+        <p className="font-display text-5xl font-medium text-forest-300 dark:text-forest-800">Hmm</p>
         <h1 className="mt-3 font-display text-2xl font-semibold text-forest-950 dark:text-sage-50">
           We couldn\u2019t find that article
         </h1>

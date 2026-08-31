@@ -75,7 +75,7 @@ export default function Talk() {
                 <h2 className="mt-4 font-display text-lg font-semibold text-forest-950">
                   Self-guided, on your device
                 </h2>
-                <p className="mt-1.5 text-sm leading-relaxed text-forest-950/80">
+                <p className="mt-1.5 text-sm leading-relaxed text-forest-950/90">
                   These are quiet reflection tools — a guide, not a person. For a human
                   conversation, choose professional support below.
                 </p>

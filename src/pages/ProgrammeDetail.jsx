@@ -20,7 +20,7 @@ const ICONS = {
 
 function SessionCard({ session, index, total, done, isOpen, onToggle, onComplete }) {
   return (
-    <Card padding="lg" className={done ? 'opacity-75' : undefined}>
+    <Card padding="lg" className={done ? 'border-forest-700/25 dark:border-sage-400/25' : undefined}>
       <button
         type="button"
         onClick={onToggle}

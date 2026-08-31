@@ -11,7 +11,7 @@ const LEVELS = [
 
 export default function MoodSelector({ value, onChange, size = 'md' }) {
   const circleSize = size === 'lg' ? 'h-16 w-16 sm:h-20 sm:w-20' : 'h-12 w-12 sm:h-14 sm:w-14';
-  const iconSize = size === 'lg' ? 'h-7 w-7 sm:h-8 sm:w-8' : 'h-5 w-5 sm:h-6 sm:w-6';
+  const iconSize = size === 'lg' ? 'h-7 w-7 sm:h-8 sm:w-8' : 'h-6 w-6 sm:h-7 sm:w-7';
 
   return (
     <div
@@ -39,9 +39,9 @@ export default function MoodSelector({ value, onChange, size = 'md' }) {
                 'flex items-center justify-center rounded-full border transition-all duration-300',
                 circleSize,
                 selected
-                  ? cn(level.chip, 'scale-105 border-transparent text-white shadow-card')
+                  ? cn(level.chip, 'scale-105 border-transparent text-white shadow-card ring-2 ring-forest-900/25 ring-offset-2 ring-offset-white dark:ring-offset-forest-950')
                   : cn(
-                      'border-stone-900/10 bg-white text-stone-500 dark:border-white/15 dark:bg-forest-900 dark:text-stone-400',
+                      'border-stone-900/10 bg-white text-stone-600 dark:border-white/20 dark:bg-forest-900 dark:text-stone-200',
                       level.hover,
                     ),
               )}
@@ -50,8 +50,8 @@ export default function MoodSelector({ value, onChange, size = 'md' }) {
             </span>
             <span
               className={cn(
-                'text-xs font-medium transition-colors duration-200 sm:text-sm',
-                selected ? 'text-forest-800 dark:text-sage-200' : 'text-stone-500 dark:text-stone-400',
+                'text-sm font-medium transition-colors duration-200',
+                selected ? 'text-forest-900 dark:text-sage-100' : 'text-stone-600 dark:text-stone-300',
               )}
             >
               {level.label}

@@ -267,7 +267,7 @@ export default function UserSettings() {
                   <Trash2 className="mr-1.5 h-4 w-4" aria-hidden /> Clear everything
                 </Button>
               </div>
-              <p className="mt-3 text-xs leading-relaxed text-stone-400 dark:text-stone-500">
+              <p className="mt-3 text-sm leading-relaxed text-stone-600 dark:text-stone-300">
                 Export saves a readable copy you could take anywhere. Clear removes everything stored
                 in this browser — including these preferences — and can\u2019t be undone.
               </p>

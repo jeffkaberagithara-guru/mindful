@@ -147,7 +147,7 @@ export default function Resources() {
             <h2 className="font-display text-xl font-semibold text-ivory dark:text-white">
               Can\u2019t decide where to begin?
             </h2>
-            <p className="mx-auto mt-2 max-w-lg text-sm leading-relaxed text-ivory/80 dark:text-white/70">
+            <p className="mx-auto mt-2 max-w-lg text-sm leading-relaxed text-ivory/90 dark:text-white/85">
               Start with one honest mood check-in and a quick grounding exercise. Small, real
               actions beat grand intentions.
             </p>

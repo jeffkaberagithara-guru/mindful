@@ -12,7 +12,7 @@ export default function CrisisModal({ isOpen, onClose }) {
               <AlertTriangle className="h-4 w-4" aria-hidden />
             </span>
             <div>
-              <p className="text-sm font-semibold text-rose-800 dark:text-rose-200">
+              <p className="text-base font-semibold text-rose-800 dark:text-rose-200">
                 If you are unsafe right now
               </p>
               <p className="mt-1 text-sm leading-relaxed text-rose-900/90 dark:text-rose-100/90">
@@ -30,7 +30,7 @@ export default function CrisisModal({ isOpen, onClose }) {
         </div>
 
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-stone-400 dark:text-stone-500">
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-stone-600 dark:text-stone-300">
             Support in Kenya
           </p>
           <ul className="mt-3 space-y-3">
@@ -64,7 +64,7 @@ export default function CrisisModal({ isOpen, onClose }) {
         </div>
 
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-stone-400 dark:text-stone-500">
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-stone-600 dark:text-stone-300">
             US &amp; international lines
           </p>
           <ul className="mt-3 space-y-3">
@@ -106,7 +106,7 @@ export default function CrisisModal({ isOpen, onClose }) {
           </ul>
         </div>
 
-        <p className="text-xs leading-relaxed text-stone-400 dark:text-stone-500">
+        <p className="text-sm leading-relaxed text-stone-600 dark:text-stone-300">
           MindShift checks these lines carefully, but services move. If one doesn’t get through,
           try another — and please double-check anything before relying on it.
         </p>

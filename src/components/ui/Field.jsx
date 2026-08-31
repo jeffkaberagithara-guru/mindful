@@ -19,7 +19,7 @@ function FieldLabel({ id, label, hint, required }) {
         {required ? <span className="text-peach-600"> *</span> : null}
       </label>
       {hint ? (
-        <span className="text-xs text-stone-400 dark:text-stone-500">{hint}</span>
+        <span className="text-sm text-stone-500 dark:text-stone-300">{hint}</span>
       ) : null}
     </div>
   );

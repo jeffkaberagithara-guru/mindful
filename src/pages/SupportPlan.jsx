@@ -127,7 +127,7 @@ export default function SupportPlan() {
               description="A personal support plan is a real, respected tool: you write down warning signs, what calms you, and who to call — before you need it. It lives on this device, and only you decide who sees it."
             />
             <div className="flex flex-wrap gap-x-4 gap-y-2">
-              <p className="text-xs text-stone-400 dark:text-stone-500">
+              <p className="text-sm text-stone-600 dark:text-stone-300">
                 <PhoneCall className="mr-1 inline h-3.5 w-3.5" aria-hidden />
                 Not a substitute for professional advice — but it makes the next moment easier to manage.
               </p>
@@ -158,7 +158,7 @@ export default function SupportPlan() {
 
             <Card padding="lg">
               <p className="text-sm font-semibold text-forest-800 dark:text-sage-300">What calms me</p>
-              <p className="mt-0.5 text-xs text-stone-400 dark:text-stone-500">
+              <p className="mt-0.5 text-sm text-stone-600 dark:text-stone-300">
                 Small things that actually help — breathing, a walk, music, a person, a place.
               </p>
               <div className="mt-3 space-y-2">
@@ -202,7 +202,7 @@ export default function SupportPlan() {
 
             <Card padding="lg">
               <p className="text-sm font-semibold text-forest-800 dark:text-sage-300">People I can reach out to</p>
-              <p className="mt-0.5 text-xs text-stone-400 dark:text-stone-500">
+              <p className="mt-0.5 text-sm text-stone-600 dark:text-stone-300">
                 Ask them first, if you can — the list is stronger when they know they're on it.
               </p>
               <div className="mt-3">
