@@ -1,376 +1,289 @@
-import { useState } from 'react';
-import { useLocalStorage } from '../hooks/useLocalStorage.jsx';
 import {
-  FaUser, FaBell, FaMoon, FaSun, FaEye, FaTrash,
-  FaDownload, FaLock, FaPalette, FaShieldAlt,
-  FaUniversalAccess, FaFont, FaCheck
-} from 'react-icons/fa';
+  Sun,
+  Moon,
+  Type,
+  Accessibility,
+  Eye,
+  Download,
+  Trash2,
+  ShieldCheck,
+  Database,
+} from 'lucide-react';
+import { useState } from 'react';
+import SectionHeader from '../components/ui/SectionHeader';
+import Card from '../components/ui/Card';
+import Button from '../components/ui/Button';
+import Toggle from '../components/ui/Toggle';
+import Landscape from '../components/ui/Landscape';
+import { useLocalStorage } from '../hooks/useLocalStorage';
+import { useToast } from '../components/ui/ToastContext';
+import ConfirmDialog from '../components/ui/ConfirmDialog';
+import { cn } from '../lib/cn';
+
+const TEXT_SIZES = [
+  { value: 'small', label: 'Small', glyph: 'simple' },
+  { value: 'medium', label: 'Medium', glyph: 'Aa' },
+  { value: 'large', label: 'Large', glyph: 'Aa' },
+  { value: 'xlarge', label: 'Extra large', glyph: 'Aa' },
+];
+
+function SettingRow({ icon: Icon, title, body, children }) {
+  return (
+    <div className="flex flex-col gap-4 rounded-soft border border-stone-900/5 p-4 sm:flex-row sm:items-center sm:justify-between dark:border-white/5">
+      <div className="flex items-start gap-3">
+        <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-forest-50 text-forest-800 dark:bg-white/10 dark:text-sage-200">
+          <Icon className="h-4.5 w-4.5" strokeWidth={1.75} aria-hidden />
+        </span>
+        <div>
+          <h3 className="text-sm font-semibold text-forest-950 dark:text-sage-50">{title}</h3>
+          <p className="mt-0.5 text-sm leading-relaxed text-stone-500 dark:text-stone-400">{body}</p>
+        </div>
+      </div>
+      <div className="shrink-0">{children}</div>
+    </div>
+  );
+}
+
+function Segmented({ options, value, onChange, label }) {
+  return (
+    <div role="radiogroup" aria-label={label} className="flex flex-wrap gap-1 rounded-soft bg-stone-900/5 p-1 dark:bg-white/5">
+      {options.map((opt) => (
+        <button
+          key={opt.value}
+          type="button"
+          role="radio"
+          aria-checked={value === opt.value}
+          onClick={() => onChange(opt.value)}
+          className={cn(
+            'rounded-soft px-3 py-1.5 text-sm font-medium transition-colors',
+            value === opt.value
+              ? 'bg-forest-800 text-ivory shadow-sm dark:bg-forest-700 dark:text-white'
+              : 'text-stone-600 hover:text-forest-900 dark:text-stone-300 dark:hover:text-white',
+          )}
+        >
+          {opt.label}
+        </button>
+      ))}
+    </div>
+  );
+}
 
 export default function UserSettings() {
-  // Appearance
+  const toast = useToast();
+  const [confirmClear, setConfirmClear] = useState(false);
   const [theme, setTheme] = useLocalStorage('theme', 'light');
   const [fontSize, setFontSize] = useLocalStorage('fontSize', 'medium');
-
-  // Accessibility
-  const [crisisButtonSize, setCrisisButtonSize] = useLocalStorage('crisisButtonSize', 'normal');
   const [reduceMotion, setReduceMotion] = useLocalStorage('reduceMotion', false);
   const [dyslexiaFont, setDyslexiaFont] = useLocalStorage('dyslexiaFont', false);
   const [highContrast, setHighContrast] = useLocalStorage('highContrast', false);
 
-  // Privacy
-  const [privacyMode, setPrivacyMode] = useLocalStorage('privacyMode', false);
+  const [moodHistory] = useLocalStorage('moodHistory', []);
+  const [assessmentHistory] = useLocalStorage('assessmentHistory', []);
+  const [journalEntries] = useLocalStorage('journalEntries', []);
+  const [programmeProgress] = useLocalStorage('programmeProgress', {});
+  const [supportPlan] = useLocalStorage('supportPlan', {});
 
-  const [activeTab, setActiveTab] = useState('appearance');
-
-  const tabs = [
-    { id: 'appearance', label: 'Appearance', icon: <FaPalette /> },
-    { id: 'accessibility', label: 'Accessibility', icon: <FaUniversalAccess /> },
-    { id: 'privacy', label: 'Privacy', icon: <FaLock /> }
-  ];
-
-  const fontSizeOptions = [
-    { value: 'small', label: 'Small', size: 'text-sm' },
-    { value: 'medium', label: 'Medium', size: 'text-base' },
-    { value: 'large', label: 'Large', size: 'text-lg' },
-    { value: 'xlarge', label: 'Extra Large', size: 'text-xl' }
-  ];
-
-  const clearAllData = () => {
-    if (window.confirm('Are you sure you want to clear all your saved data? This cannot be undone.')) {
-      localStorage.clear();
-      window.location.reload();
-    }
-  };
+  const supportFilled = Object.values(supportPlan).some((v) =>
+    Array.isArray(v) ? v.length > 0 : Boolean(v && String(v).trim()),
+  );
 
   const exportData = () => {
-    const data = {
-      moodHistory: localStorage.getItem('moodHistory'),
-      assessmentHistory: localStorage.getItem('assessmentHistory'),
-      settings: {
-        theme,
-        privacyMode,
-        fontSize,
-        crisisButtonSize,
-        reduceMotion,
-        dyslexiaFont,
-        highContrast
-      }
+    const payload = {
+      app: 'mindshift',
+      exportedAt: new Date().toISOString(),
+      preferences: { theme, fontSize, reduceMotion, dyslexiaFont, highContrast },
+      data: {
+        moodHistory,
+        assessmentHistory,
+        journalEntries,
+        programmeProgress,
+        supportPlan,
+      },
     };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `mindshift-export-${new Date().toISOString().slice(0, 10)}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    toast.success('All your MindShift data exported.');
+  };
 
-    const dataStr = JSON.stringify(data, null, 2);
-    const dataBlob = new Blob([dataStr], { type: 'application/json' });
-    const url = URL.createObjectURL(dataBlob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'mindshift-data-backup.json';
-    link.click();
+  const clearAll = () => {
+    localStorage.clear();
+    window.location.reload();
   };
 
   return (
-    <div className="max-w-6xl mx-auto">
-      {/* Header */}
-      <div className="mb-10 text-center">
-        <div className="inline-flex items-center gap-3 bg-linear-to-r from-blue-50 to-purple-50 dark:from-blue-900/30 dark:to-purple-900/30 px-6 py-3 rounded-full mb-4 border border-blue-100 dark:border-blue-900/30">
-          <FaUser className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-          <span className="font-semibold text-blue-700 dark:text-blue-300">User Profile</span>
-        </div>
+    <>
+      <section className="relative overflow-hidden px-6 pb-24 pt-14 sm:pt-20">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -right-28 -top-16 h-80 w-80 rounded-blob bg-lilac-200/40 blur-3xl dark:bg-lilac-300/10"
+        />
+        <div className="relative mx-auto max-w-3xl">
+          <SectionHeader
+            eyebrow="Settings"
+            as="h1"
+            title="Make it yours, keep it yours"
+            description="Adjust how MindShift looks and feels for you, and stay in full control of everything you've written here."
+          />
 
-        <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-          Settings & Preferences
-        </h1>
-        <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-          Customize your experience to work best for you.
-        </p>
-      </div>
-
-      <div className="flex flex-col lg:flex-row gap-8">
-        {/* Sidebar Tabs */}
-        <div className="lg:w-1/4">
-          <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-4 sticky top-24 transition-colors duration-300">
-            <div className="space-y-2">
-              {tabs.map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none cursor-pointer gap-3 w-full px-4 py-3 ${activeTab === tab.id
-                    ? 'bg-linear-to-r from-blue-50 to-purple-50 dark:from-blue-900/40 dark:to-purple-900/40 text-blue-700 dark:text-blue-300 border border-blue-100 dark:border-blue-800'
-                    : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
-                    }`}
-                >
-                  <span className="text-lg">{tab.icon}</span>
-                  <span className="font-medium">{tab.label}</span>
-                  {activeTab === tab.id && (
-                    <FaCheck className="w-4 h-4 ml-auto text-green-500" />
-                  )}
-                </button>
-              ))}
-            </div>
-
-            {/* User Info */}
-            <div className="mt-8 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 bg-linear-to-br from-blue-400 to-purple-500 rounded-full flex items-center justify-center">
-                  <FaUser className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <p className="font-semibold text-gray-900 dark:text-white">Anonymous User</p>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">Local Session</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
-                <FaShieldAlt className="w-4 h-4 text-green-500" />
-                <span>Data stored locally</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Main Content */}
-        <div className="lg:w-3/4">
-          <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden transition-colors duration-300 min-h-[400px]">
-            {/* Appearance Tab */}
-            {activeTab === 'appearance' && (
-              <div className="p-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-8 flex items-center gap-3">
-                  <FaPalette className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+          <div className="mt-12 space-y-6">
+            <Card padding="lg">
+              <div className="flex items-center gap-3">
+                <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-sage-100 text-forest-800 dark:bg-sage-300/20 dark:text-sage-200">
+                  <Sun className="h-5 w-5" strokeWidth={1.75} aria-hidden />
+                </span>
+                <h2 className="font-display text-xl font-semibold text-forest-950 dark:text-sage-50">
                   Appearance
                 </h2>
-
-                <div className="space-y-8">
-                  {/* Theme */}
+              </div>
+              <div className="mt-5 space-y-4">
+                <div className="flex items-center justify-between gap-4">
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Theme</h3>
-                    <div className="flex gap-4">
-                      <button
-                        onClick={() => setTheme('light')}
-                        className={`inline-flex items-center justify-center font-medium rounded-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none cursor-pointer flex-1 flex-col gap-3 p-6 border-2 ${theme === 'light'
-                          ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
-                          : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-500 bg-white dark:bg-gray-800'
-                          }`}
-                      >
-                        <FaSun className="w-8 h-8 text-yellow-500" />
-                        <span className="font-medium text-gray-900 dark:text-white">Light Mode</span>
-                        {theme === 'light' && (
-                          <div className="w-6 h-6 rounded-full bg-green-500 flex items-center justify-center">
-                            <FaCheck className="w-3 h-3 text-white" />
-                          </div>
-                        )}
-                      </button>
-                      <button
-                        onClick={() => setTheme('dark')}
-                        className={`inline-flex items-center justify-center font-medium rounded-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none cursor-pointer flex-1 flex-col gap-3 p-6 border-2 ${theme === 'dark'
-                          ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
-                          : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-500 bg-white dark:bg-gray-800'
-                          }`}
-                      >
-                        <FaMoon className="w-8 h-8 text-indigo-500" />
-                        <span className="font-medium text-gray-900 dark:text-white">Dark Mode</span>
-                        {theme === 'dark' && (
-                          <div className="w-6 h-6 rounded-full bg-green-500 flex items-center justify-center">
-                            <FaCheck className="w-3 h-3 text-white" />
-                          </div>
-                        )}
-                      </button>
-                    </div>
+                    <p className="text-sm font-semibold text-forest-950 dark:text-sage-50">Theme</p>
+                    <p className="text-sm text-stone-500 dark:text-stone-400">Light for bright rooms, dark for quiet ones.</p>
                   </div>
-
-                  {/* Font Size */}
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                      <FaFont className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-                      Text Size
-                    </h3>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                      {fontSizeOptions.map((option) => (
-                        <button
-                          key={option.value}
-                          onClick={() => setFontSize(option.value)}
-                          className={`inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none cursor-pointer p-4 border text-center ${fontSize === option.value
-                            ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20 text-gray-900 dark:text-white'
-                            : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-500 text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800'
-                            } ${option.size}`}
-                        >
-                          <div className="font-medium mb-1">{option.label}</div>
-                          <div className="text-sm text-gray-500">Aa</div>
-                        </button>
-                      ))}
-                    </div>
+                  <div className="flex gap-1">
+                    <button
+                      type="button"
+                      onClick={() => setTheme('light')}
+                      className={cn(
+                        'inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-medium transition-colors',
+                        theme === 'light'
+                          ? 'bg-forest-800 text-ivory dark:bg-forest-700 dark:text-white'
+                          : 'text-stone-600 hover:text-forest-900 dark:text-stone-300 dark:hover:text-white',
+                      )}
+                    >
+                      <Sun className="h-3.5 w-3.5" aria-hidden /> Light
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setTheme('dark')}
+                      className={cn(
+                        'inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-medium transition-colors',
+                        theme === 'dark'
+                          ? 'bg-forest-800 text-ivory dark:bg-forest-700 dark:text-white'
+                          : 'text-stone-600 hover:text-forest-900 dark:text-stone-300 dark:hover:text-white',
+                      )}
+                    >
+                      <Moon className="h-3.5 w-3.5" aria-hidden /> Dark
+                    </button>
                   </div>
                 </div>
-              </div>
-            )}
 
-            {/* Accessibility Tab */}
-            {activeTab === 'accessibility' && (
-              <div className="p-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-8 flex items-center gap-3">
-                  <FaUniversalAccess className="w-6 h-6 text-purple-600 dark:text-purple-400" />
-                  Accessibility Features
+                <div className="flex items-center justify-between gap-4">
+                  <div>
+                    <p className="text-sm font-semibold text-forest-950 dark:text-sage-50">Text size</p>
+                    <p className="text-sm text-stone-500 dark:text-stone-400">Changes how large everything reads.</p>
+                  </div>
+                  <Segmented
+                    label="Text size"
+                    options={TEXT_SIZES.map((s) => ({ value: s.value, label: s.value === 'small' ? 'S' : s.value === 'medium' ? 'M' : s.value === 'large' ? 'L' : 'XL' }))}
+                    value={fontSize}
+                    onChange={setFontSize}
+                  />
+                </div>
+              </div>
+            </Card>
+
+            <Card padding="lg">
+              <div className="flex items-center gap-3">
+                <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-peach-100 text-peach-800 dark:bg-peach-300/20 dark:text-peach-200">
+                  <Accessibility className="h-5 w-5" strokeWidth={1.75} aria-hidden />
+                </span>
+                <h2 className="font-display text-xl font-semibold text-forest-950 dark:text-sage-50">
+                  Reading & accessibility
                 </h2>
-
-                <div className="space-y-6">
-                  {/* Reduce Motion */}
-                  <div className="flex items-center justify-between p-6 bg-gray-50 dark:bg-gray-700/50 rounded-xl border border-gray-100 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-700 transition-colors">
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center">
-                        <FaEye className="w-6 h-6 text-blue-600 dark:text-blue-400" />
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-gray-900 dark:text-white text-lg">Reduce Motion</h3>
-                        <p className="text-gray-600 dark:text-gray-300">Minimize animations and movement</p>
-                      </div>
-                    </div>
-                    <button
-                      onClick={() => setReduceMotion(!reduceMotion)}
-                      className={`relative inline-flex h-8 w-16 items-center rounded-full transition-colors cursor-pointer ${reduceMotion ? 'bg-blue-600' : 'bg-gray-300 dark:bg-gray-600'}`}
-                    >
-                      <span className={`inline-block h-6 w-6 transform rounded-full bg-white transition-transform ${reduceMotion ? 'translate-x-9' : 'translate-x-1'}`} />
-                    </button>
-                  </div>
-
-                  {/* Dyslexia Font */}
-                  <div className="flex items-center justify-between p-6 bg-gray-50 dark:bg-gray-700/50 rounded-xl border border-gray-100 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-700 transition-colors">
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 bg-orange-100 dark:bg-orange-900/30 rounded-full flex items-center justify-center">
-                        <FaFont className="w-6 h-6 text-orange-600 dark:text-orange-400" />
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-gray-900 dark:text-white text-lg">Dyslexia Friendly Font</h3>
-                        <p className="text-gray-600 dark:text-gray-300">Use a font designed for better readability</p>
-                      </div>
-                    </div>
-                    <button
-                      onClick={() => setDyslexiaFont(!dyslexiaFont)}
-                      className={`relative inline-flex h-8 w-16 items-center rounded-full transition-colors cursor-pointer ${dyslexiaFont ? 'bg-blue-600' : 'bg-gray-300 dark:bg-gray-600'}`}
-                    >
-                      <span className={`inline-block h-6 w-6 transform rounded-full bg-white transition-transform ${dyslexiaFont ? 'translate-x-9' : 'translate-x-1'}`} />
-                    </button>
-                  </div>
-
-                  {/* High Contrast */}
-                  <div className="flex items-center justify-between p-6 bg-gray-50 dark:bg-gray-700/50 rounded-xl border border-gray-100 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-700 transition-colors">
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 bg-gray-200 dark:bg-gray-600 rounded-full flex items-center justify-center">
-                        <FaMoon className="w-6 h-6 text-gray-800 dark:text-white" />
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-gray-900 dark:text-white text-lg">High Contrast</h3>
-                        <p className="text-gray-600 dark:text-gray-300">Increase contrast for better visibility</p>
-                      </div>
-                    </div>
-                    <button
-                      onClick={() => setHighContrast(!highContrast)}
-                      className={`relative inline-flex h-8 w-16 items-center rounded-full transition-colors cursor-pointer ${highContrast ? 'bg-blue-600' : 'bg-gray-300 dark:bg-gray-600'}`}
-                    >
-                      <span className={`inline-block h-6 w-6 transform rounded-full bg-white transition-transform ${highContrast ? 'translate-x-9' : 'translate-x-1'}`} />
-                    </button>
-                  </div>
-
-                  {/* Crisis Button Size */}
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Crisis Button Size</h3>
-                    <div className="grid grid-cols-3 gap-3">
-                      {['small', 'normal', 'large'].map((size) => (
-                        <button
-                          key={size}
-                          onClick={() => setCrisisButtonSize(size)}
-                          className={`inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none cursor-pointer p-4 border text-center ${crisisButtonSize === size
-                            ? 'border-purple-500 bg-purple-50 dark:bg-purple-900/20 text-gray-900 dark:text-white'
-                            : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-500 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300'
-                            }`}
-                        >
-                          <div className="font-medium capitalize mb-2">{size}</div>
-                          <div className={`mx-auto rounded-lg bg-red-500 ${size === 'small' ? 'w-10 h-6' :
-                            size === 'normal' ? 'w-16 h-8' :
-                              'w-24 h-10'
-                            }`}></div>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </div>
               </div>
-            )}
+              <div className="mt-5 space-y-3">
+                <SettingRow
+                  icon={Eye}
+                  title="Reduce animations"
+                  body="Calms all motion in the app, and honours your system\u2019s reduced-motion setting."
+                >
+                  <Toggle checked={reduceMotion} onChange={setReduceMotion} label="Reduce animations" />
+                </SettingRow>
+                <SettingRow
+                  icon={Type}
+                  title="Dyslexia-friendly type"
+                  body="Switches to a plainer, more widely spaced typeface."
+                >
+                  <Toggle checked={dyslexiaFont} onChange={setDyslexiaFont} label="Dyslexia-friendly type" />
+                </SettingRow>
+                <SettingRow
+                  icon={Database}
+                  title="Higher contrast"
+                  body="Darkens light text and strengthens focus outlines for easier reading."
+                >
+                  <Toggle checked={highContrast} onChange={setHighContrast} label="Higher contrast" />
+                </SettingRow>
+              </div>
+            </Card>
 
-            {/* Privacy Tab */}
-            {activeTab === 'privacy' && (
-              <div className="p-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-8 flex items-center gap-3">
-                  <FaLock className="w-6 h-6 text-green-600 dark:text-green-400" />
-                  Privacy & Data
+            <Card padding="lg">
+              <div className="flex items-center gap-3">
+                <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-forest-800 text-ivory dark:bg-forest-700 dark:text-white">
+                  <ShieldCheck className="h-5 w-5" strokeWidth={1.75} aria-hidden />
+                </span>
+                <h2 className="font-display text-xl font-semibold text-forest-950 dark:text-sage-50">
+                  Your data, on your device
                 </h2>
-
-                <div className="space-y-8">
-                  {/* Privacy Mode */}
-                  <div className="flex items-center justify-between p-6 bg-gray-50 dark:bg-gray-700/50 rounded-xl border border-transparent dark:border-gray-700">
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
-                        <FaLock className="w-6 h-6 text-green-600 dark:text-green-400" />
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-gray-900 dark:text-white">Privacy Mode</h3>
-                        <p className="text-gray-600 dark:text-gray-300">Hide sensitive content from screen (Mock)</p>
-                      </div>
-                    </div>
-                    <button
-                      onClick={() => setPrivacyMode(!privacyMode)}
-                      className={`relative inline-flex h-8 w-16 items-center rounded-full transition-colors cursor-pointer ${privacyMode ? 'bg-green-500' : 'bg-gray-300'
-                        }`}
-                    >
-                      <span
-                        className={`inline-block h-6 w-6 transform rounded-full bg-white transition-transform ${privacyMode ? 'translate-x-9' : 'translate-x-1'
-                          }`}
-                      />
-                    </button>
-                  </div>
-
-                  {/* Data Management */}
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Manage Your Data</h3>
-                    <div className="space-y-4">
-                      <button
-                        onClick={exportData}
-                        className="inline-flex items-center justify-between font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none cursor-pointer w-full p-4 border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-blue-300 dark:hover:border-blue-500 group"
-                      >
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center">
-                            <FaDownload className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-                          </div>
-                          <div className="text-left">
-                            <h4 className="font-medium text-gray-900 dark:text-white">Export Your Data</h4>
-                            <p className="text-sm text-gray-600 dark:text-gray-400">Download JSON backup</p>
-                          </div>
-                        </div>
-                        <div className="text-blue-600 group-hover:translate-x-1 transition-transform">
-                          →
-                        </div>
-                      </button>
-
-                      <button
-                        onClick={clearAllData}
-                        className="inline-flex items-center justify-between font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none cursor-pointer w-full p-4 border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-red-300 dark:hover:border-red-500 group"
-                      >
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center">
-                            <FaTrash className="w-5 h-5 text-red-600 dark:text-red-400" />
-                          </div>
-                          <div className="text-left">
-                            <h4 className="font-medium text-gray-900 dark:text-white">Clear All Data</h4>
-                            <p className="text-sm text-gray-600 dark:text-gray-400">Permanently delete everything</p>
-                          </div>
-                        </div>
-                        <div className="text-red-600 group-hover:translate-x-1 transition-transform">
-                          →
-                        </div>
-                      </button>
-                    </div>
-                  </div>
-                </div>
               </div>
-            )}
+              <p className="mt-4 text-sm leading-relaxed text-stone-600 dark:text-stone-300">
+                MindShift has no account and no server. Everything it makes — check-ins, screenings,
+                journal entries, programme progress, your support plan — lives in this browser, on
+                this device. Nothing is uploaded, shared or sold, and there’s nothing to delete on
+                our side.
+              </p>
+
+              <div className="mt-5 rounded-soft bg-ivory p-4 dark:bg-forest-900">
+                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-stone-400 dark:text-stone-500">
+                  Stored on this device
+                </p>
+                <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 text-sm sm:grid-cols-3">
+                  <dt className="text-stone-500 dark:text-stone-400">Mood check-ins</dt>
+                  <dd className="font-semibold text-forest-950 dark:text-sage-50">{moodHistory.length}</dd>
+                  <dt className="text-stone-500 dark:text-stone-400">Screenings</dt>
+                  <dd className="font-semibold text-forest-950 dark:text-sage-50">{assessmentHistory.length}</dd>
+                  <dt className="text-stone-500 dark:text-stone-400">Journal entries</dt>
+                  <dd className="font-semibold text-forest-950 dark:text-sage-50">{journalEntries.length}</dd>
+                  <dt className="text-stone-500 dark:text-stone-400">Programme sessions</dt>
+                  <dd className="font-semibold text-forest-950 dark:text-sage-50">
+                    {Object.values(programmeProgress).reduce((sum, ids) => sum + ids.length, 0)}
+                  </dd>
+                  <dt className="text-stone-500 dark:text-stone-400">Support plan</dt>
+                  <dd className="font-semibold text-forest-950 dark:text-sage-50">{supportFilled ? 'Yes' : 'No'}</dd>
+                </dl>
+              </div>
+
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+                <Button onClick={exportData} variant="secondary" className="flex-1">
+                  <Download className="mr-1.5 h-4 w-4" aria-hidden /> Export everything
+                </Button>
+                <Button onClick={() => setConfirmClear(true)} variant="danger" className="flex-1">
+                  <Trash2 className="mr-1.5 h-4 w-4" aria-hidden /> Clear everything
+                </Button>
+              </div>
+              <p className="mt-3 text-xs leading-relaxed text-stone-400 dark:text-stone-500">
+                Export saves a readable copy you could take anywhere. Clear removes everything stored
+                in this browser — including these preferences — and can\u2019t be undone.
+              </p>
+            </Card>
           </div>
         </div>
-      </div>
-    </div>
+      </section>
+      <Landscape className="-mb-px h-24 w-full text-sage-200/80 dark:text-forest-900" aria-hidden />
+      <ConfirmDialog
+        isOpen={confirmClear}
+        onClose={() => setConfirmClear(false)}
+        onConfirm={clearAll}
+        title="Clear everything?"
+        body="This deletes every piece of data MindShift has stored on this device — mood history, screenings, journal entries, programme progress, your support plan, and your preferences. It can\u2019t be undone."
+        confirmLabel="Clear everything"
+      />
+    </>
   );
 }
