@@ -1,339 +1,272 @@
-import { useState } from 'react';
-import TherapistCard from '../components/TherapistCard.jsx';
-import TherapistFilter from '../components/TherapistFilter.jsx';
-import { FaSearch, FaFilter, FaMapMarkerAlt, FaStar, FaVideo, FaUserCheck } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
+import {
+  Stethoscope,
+  ShieldCheck,
+  Briefcase,
+  HandCoins,
+  ExternalLink,
+  CheckCircle2,
+  PhoneCall,
+  CreditCard,
+  MessageCircleQuestion,
+  HeartPulse,
+  SearchCheck,
+} from 'lucide-react';
+import SectionHeader from '../components/ui/SectionHeader';
+import Card from '../components/ui/Card';
+import Badge from '../components/ui/Badge';
+import Landscape from '../components/ui/Landscape';
+
+const PATHS = [
+  {
+    icon: Stethoscope,
+    title: 'Start with your doctor',
+    body: 'Your GP or primary care doctor is a trusted first step. They know the services in your area, can check whether anything physical is affecting your mood, and can refer you onward.',
+  },
+  {
+    icon: ShieldCheck,
+    title: 'Your insurance',
+    body: 'Most plans list in-network therapists you can filter by distance and specialty. Ask about copays, session limits, and whether telehealth is covered before you book.',
+  },
+  {
+    icon: Briefcase,
+    title: 'Through work (EAP)',
+    body: 'Employee Assistance Programs offer a handful of free, confidential counselling sessions and can steer you to longer-term care. Check what your employer provides.',
+  },
+  {
+    icon: HandCoins,
+    title: 'Sliding scale & community care',
+    body: 'Community mental-health clinics, university training clinics, and directories like Open Path offer sessions priced by what you earn. Waiting lists are common — get on them early.',
+  },
+];
+
+const DIRECTORIES = [
+  {
+    name: 'Psychology Today directory',
+    note: "One of the largest directories — search by postcode, specialty, insurance and approach.",
+    href: 'https://www.psychologytoday.com/us/therapists',
+  },
+  {
+    name: 'Open Path Collective',
+    note: 'A network of therapists offering reduced-fee sessions on a sliding scale.',
+    href: 'https://www.openpathcollective.org',
+  },
+  {
+    name: 'NAMI resources',
+    note: "The National Alliance on Mental Illness keeps provider and support finders for every area of the US.",
+    href: 'https://www.nami.org',
+  },
+];
+
+const CHECKLIST = [
+  'Licensed in your state or country — search their registry, not just their site.',
+  'Experience with your specific concern, not generic talk alone.',
+  'A way to work that suits you — online, in person, or a mix.',
+  'Fees you can actually sustain, including a clear sliding scale.',
+  'Availability that fits your weeks — evening or weekend slots if you need them.',
+  'Someone who makes you feel safe. This is the one that outranks all the rest.',
+];
+
+const FIRST_CALL = [
+  'What do you usually help people with, and how?',
+  'How does your approach work week to week?',
+  'How are fees, sliding scales, and cancellations handled?',
+  'Do you take my insurance, and do you do telehealth?',
+  'How do you handle anything I\u2019m worried about sharing?',
+];
+
+function ResourceLink({ name, note, href }) {
+  return (
+    <Card padding="lg" className="items-start">
+      <div className="flex items-center gap-3">
+        <h2 className="font-display text-lg font-semibold text-forest-950 dark:text-sage-50">
+          {name}
+        </h2>
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-forest-700 underline-offset-2 hover:underline dark:text-sage-300"
+        >
+          Visit site <ExternalLink className="h-3 w-3" aria-hidden />
+        </a>
+      </div>
+      <p className="mt-2 text-sm leading-relaxed text-stone-600 dark:text-stone-300">{note}</p>
+    </Card>
+  );
+}
 
 export default function FindTherapist() {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [showFilters, setShowFilters] = useState(false);
-  const [filters, setFilters] = useState({
-    specialties: [],
-    insurance: [],
-    approaches: [],
-    priceRange: [0, 300],
-    virtualOnly: false,
-    acceptsInsurance: false,
-    newClients: true,
-    search: ''
-  });
-
-  const therapists = [
-    {
-      id: 1,
-      name: 'Dr. Sarah Johnson',
-      credentials: 'PhD, LCSW',
-      specialties: ['Anxiety', 'Depression', 'Trauma', 'Stress'],
-      location: 'New York, NY',
-      acceptsInsurance: true,
-      virtualAvailable: true,
-      rating: 4.8,
-      price: 150,
-      languages: ['English', 'Spanish'],
-      bio: 'Specialized in cognitive behavioral therapy with 12+ years of experience helping clients overcome anxiety and depression.',
-      approaches: ['Cognitive Behavioral Therapy (CBT)', 'Mindfulness-Based Therapy', 'Trauma-Informed Therapy'],
-      photoUrl: null
-    },
-    {
-      id: 2,
-      name: 'Michael Chen',
-      credentials: 'LMFT',
-      specialties: ['Relationship Issues', 'Family Therapy', 'Couples Counseling'],
-      location: 'Los Angeles, CA',
-      acceptsInsurance: true,
-      virtualAvailable: true,
-      rating: 4.6,
-      price: 120,
-      languages: ['English', 'Mandarin'],
-      bio: 'Focused on family systems and relationship counseling with a compassionate, culturally-sensitive approach.',
-      approaches: ['Family Systems Therapy', 'Humanistic Therapy', 'Gottman Method'],
-      photoUrl: null
-    },
-    {
-      id: 3,
-      name: 'Dr. Maya Patel',
-      credentials: 'PsyD, Clinical Psychologist',
-      specialties: ['PTSD', 'Trauma', 'Anxiety', 'LGBTQ+'],
-      location: 'Chicago, IL',
-      acceptsInsurance: false,
-      virtualAvailable: true,
-      rating: 4.9,
-      price: 180,
-      languages: ['English', 'Hindi', 'Gujarati'],
-      bio: 'Trauma-informed therapist specializing in PTSD and LGBTQ+ mental health with 8+ years of experience.',
-      approaches: ['EMDR', 'Trauma-Informed Therapy', 'Acceptance and Commitment Therapy (ACT)'],
-      photoUrl: null
-    },
-    {
-      id: 4,
-      name: 'James Wilson',
-      credentials: 'LCSW-R',
-      specialties: ['Addiction', 'Depression', 'Life Transitions'],
-      location: 'Remote Only',
-      acceptsInsurance: true,
-      virtualAvailable: true,
-      rating: 4.7,
-      price: 135,
-      languages: ['English'],
-      bio: 'Specializing in addiction recovery and life transition support with a holistic approach to wellness.',
-      approaches: ['Motivational Interviewing', 'Cognitive Behavioral Therapy (CBT)', 'Mindfulness'],
-      photoUrl: null
-    },
-    {
-      id: 5,
-      name: 'Dr. Elena Rodriguez',
-      credentials: 'PhD, Clinical Psychologist',
-      specialties: ['Eating Disorders', 'Body Image', 'Anxiety'],
-      location: 'Miami, FL',
-      acceptsInsurance: true,
-      virtualAvailable: false,
-      rating: 4.8,
-      price: 160,
-      languages: ['English', 'Spanish'],
-      bio: 'Eating disorder specialist with 15+ years experience in evidence-based treatment approaches.',
-      approaches: ['Cognitive Behavioral Therapy (CBT)', 'Dialectical Behavior Therapy (DBT)', 'Family-Based Therapy'],
-      photoUrl: null
-    },
-    {
-      id: 6,
-      name: 'Alex Morgan',
-      credentials: 'LMHC, Art Therapist',
-      specialties: ['Trauma', 'Children & Teens', 'Creative Arts'],
-      location: 'Portland, OR',
-      acceptsInsurance: false,
-      virtualAvailable: true,
-      rating: 4.5,
-      price: 110,
-      languages: ['English'],
-      bio: 'Creative arts therapist specializing in trauma work with children and adolescents.',
-      approaches: ['Art Therapy', 'Play Therapy', 'Trauma-Focused CBT'],
-      photoUrl: null
-    }
-  ];
-
-  const handleFilterChange = (key, value) => {
-    setFilters(prev => ({
-      ...prev,
-      [key]: value
-    }));
-  };
-
-  const clearFilters = () => {
-    setFilters({
-      specialties: [],
-      insurance: [],
-      approaches: [],
-      priceRange: [0, 300],
-      virtualOnly: false,
-      acceptsInsurance: false,
-      newClients: true,
-      search: ''
-    });
-  };
-
-  const filteredTherapists = therapists.filter(therapist => {
-    // Search filter
-    if (filters.search && !therapist.name.toLowerCase().includes(filters.search.toLowerCase()) &&
-      !therapist.specialties.some(s => s.toLowerCase().includes(filters.search.toLowerCase()))) {
-      return false;
-    }
-
-    // Specialties filter
-    if (filters.specialties.length > 0 && !filters.specialties.some(s => therapist.specialties.includes(s))) {
-      return false;
-    }
-
-    // Virtual only filter
-    if (filters.virtualOnly && !therapist.virtualAvailable) {
-      return false;
-    }
-
-    // Insurance filter
-    if (filters.acceptsInsurance && !therapist.acceptsInsurance) {
-      return false;
-    }
-
-    // Price filter
-    if (therapist.price > filters.priceRange[1]) {
-      return false;
-    }
-
-    return true;
-  });
-
   return (
-    <div className="min-h-screen bg-linear-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-900 transition-colors duration-300">
-      {/* Hero Section */}
-      <div className="bg-linear-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-800 dark:via-gray-800 dark:to-gray-900 py-12 border-b dark:border-gray-800 transition-colors duration-300">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-              Find Your <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-600 to-purple-600">Therapist</span>
-            </h1>
-            <p className="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
-              Connect with licensed mental health professionals who understand your needs.
-              Start your healing journey today.
-            </p>
+    <>
+      <section className="relative overflow-hidden px-6 pb-16 pt-14 sm:pt-20">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -right-32 top-8 h-96 w-96 rounded-blob bg-sage-200/50 blur-3xl dark:bg-sage-300/10"
+        />
+        <div className="relative mx-auto max-w-6xl">
+          <SectionHeader
+            eyebrow="Find support"
+            as="h1"
+            title="Finding a therapist who fits you"
+            description="MindShift doesn\u2019t run a therapist directory or take referral fees — that\u2019s a decision between you and a professional. What we can offer is an honest, practical map of the real paths people use to find one."
+          />
 
-            {/* Search Bar */}
-            <div className="relative max-w-2xl mx-auto mb-8">
-              <div className="relative">
-                <FaSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => {
-                    setSearchQuery(e.target.value);
-                    handleFilterChange('search', e.target.value);
-                  }}
-                  placeholder="Search..."
-                  className="w-full pl-12 pr-4 py-4 text-lg border border-gray-300 dark:border-gray-600 rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent md:pr-40 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
-                />
-                <button
-                  onClick={() => setShowFilters(!showFilters)}
-                  className="mt-4 w-full md:mt-0 md:absolute md:right-3 md:top-1/2 md:transform md:-translate-y-1/2 flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-                >
-                  <FaFilter className="w-4 h-4" />
-                  Filters
-                </button>
-              </div>
-            </div>
-
-            {/* Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto">
-              <div className="bg-white dark:bg-gray-700 p-4 rounded-xl shadow-sm text-center transition-colors">
-                <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">{therapists.length}+</div>
-                <div className="text-sm text-gray-600 dark:text-gray-300">Verified Therapists</div>
-              </div>
-              <div className="bg-white dark:bg-gray-700 p-4 rounded-xl shadow-sm text-center transition-colors">
-                <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">24/7</div>
-                <div className="text-sm text-gray-600 dark:text-gray-300">Booking Available</div>
-              </div>
-              <div className="bg-white dark:bg-gray-700 p-4 rounded-xl shadow-sm text-center transition-colors">
-                <div className="text-2xl font-bold text-green-600 dark:text-green-400">100%</div>
-                <div className="text-sm text-gray-600 dark:text-gray-300">Confidential</div>
-              </div>
-              <div className="bg-white dark:bg-gray-700 p-4 rounded-xl shadow-sm text-center transition-colors">
-                <div className="text-2xl font-bold text-pink-600 dark:text-pink-400">50+</div>
-                <div className="text-sm text-gray-600 dark:text-gray-300">Specialties Covered</div>
-              </div>
-            </div>
+          <div className="mt-12 grid gap-4 sm:grid-cols-2">
+            {PATHS.map((path) => (
+              <Card key={path.title} padding="lg" className="items-start">
+                <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-forest-800 text-ivory dark:bg-forest-700 dark:text-white">
+                  <path.icon className="h-5 w-5" strokeWidth={1.75} aria-hidden />
+                </span>
+                <h2 className="mt-4 font-display text-xl font-semibold text-forest-950 dark:text-sage-50">
+                  {path.title}
+                </h2>
+                <p className="mt-1.5 text-sm leading-relaxed text-stone-600 dark:text-stone-300">
+                  {path.body}
+                </p>
+              </Card>
+            ))}
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Main Content */}
-      <div className="container mx-auto px-4 py-12">
-        <div className="flex flex-col lg:flex-row gap-8">
-          {/* Filters Sidebar */}
-          <div className="lg:w-1/4">
-            <div className="sticky top-24">
-              <TherapistFilter
-                filters={filters}
-                onFilterChange={handleFilterChange}
-                onClearFilters={clearFilters}
-              />
-
-              {/* Quick Tips */}
-              <div className="mt-8 p-6 bg-linear-to-br from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-800 rounded-xl border border-blue-100 dark:border-gray-700 transition-colors">
-                <h4 className="font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
-                  <FaUserCheck className="w-5 h-5 text-blue-600" />
-                  Finding the Right Fit
-                </h4>
-                <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-300">
-                  <li>• Look for therapists with expertise in your specific concerns</li>
-                  <li>• Consider virtual vs in-person preferences</li>
-                  <li>• Check insurance acceptance if needed</li>
-                  <li>• Read therapist bios and approach styles</li>
-                  <li>• Don't hesitate to schedule a consultation</li>
-                </ul>
-              </div>
+      <section className="px-6 pb-24 pt-4">
+        <div className="mx-auto max-w-6xl">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <h2 className="font-display text-2xl font-semibold text-forest-950 dark:text-sage-50">
+              Well-known directories to try
+            </h2>
+            <div className="flex flex-wrap items-center gap-2">
+              <Badge tone="sand">Independent sites</Badge>
+              <span className="text-xs text-stone-400 dark:text-stone-500">
+                Not vetted or endorsed by MindShift — check they\u2019re current.
+              </span>
             </div>
           </div>
+          <div className="mt-6 grid gap-4 md:grid-cols-3">
+            {DIRECTORIES.map((d) => (
+              <ResourceLink key={d.name} {...d} />
+            ))}
+          </div>
 
-          {/* Therapist Listings */}
-          <div className="lg:w-3/4">
-            <div className="flex justify-between items-center mb-8">
-              <div>
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-                  Available Therapists
+          <div className="mt-16 grid gap-5 lg:grid-cols-2">
+            <Card padding="lg" className="bg-sage-50/70 dark:bg-white/5">
+              <div className="flex items-center gap-3">
+                <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-sage-100 text-forest-800 dark:bg-sage-300/20 dark:text-sage-200">
+                  <SearchCheck className="h-5 w-5" strokeWidth={1.75} aria-hidden />
+                </span>
+                <h2 className="font-display text-xl font-semibold text-forest-950 dark:text-sage-50">
+                  What to look for
                 </h2>
-                <p className="text-gray-600 dark:text-gray-400">
-                  {filteredTherapists.length} therapist{filteredTherapists.length !== 1 ? 's' : ''} match your criteria
+              </div>
+              <ul className="mt-4 space-y-2.5">
+                {CHECKLIST.map((item) => (
+                  <li key={item} className="flex items-start gap-2.5 text-sm leading-relaxed text-stone-700 dark:text-stone-200">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-sage-700 dark:text-sage-300" aria-hidden />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </Card>
+
+            <Card padding="lg" className="bg-peach-50/70 dark:bg-white/5">
+              <div className="flex items-center gap-3">
+                <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-peach-100 text-peach-800 dark:bg-peach-300/20 dark:text-peach-200">
+                  <MessageCircleQuestion className="h-5 w-5" strokeWidth={1.75} aria-hidden />
+                </span>
+                <h2 className="font-display text-xl font-semibold text-forest-950 dark:text-sage-50">
+                  A good first call
+                </h2>
+              </div>
+              <p className="mt-3 text-sm leading-relaxed text-stone-600 dark:text-stone-300">
+                Most therapists offer a short introductory call. You\u2019re interviewing each other,
+                so ask without apology:
+              </p>
+              <ul className="mt-4 space-y-2.5">
+                {FIRST_CALL.map((q) => (
+                  <li key={q} className="flex items-start gap-2.5 text-sm leading-relaxed text-stone-700 dark:text-stone-200">
+                    <MessageCircleQuestion className="mt-0.5 h-4 w-4 shrink-0 text-peach-700 dark:text-peach-300" aria-hidden />
+                    “{q}”
+                  </li>
+                ))}
+              </ul>
+            </Card>
+          </div>
+
+          <div className="mt-8 grid gap-4 sm:grid-cols-2">
+            <Card padding="lg" className="items-start">
+              <div className="flex items-center gap-3">
+                <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-sand text-forest-900 dark:bg-sand-200 dark:text-forest-950">
+                  <CreditCard className="h-5 w-5" strokeWidth={1.75} aria-hidden />
+                </span>
+                <h2 className="font-display text-xl font-semibold text-forest-950 dark:text-sage-50">
+                  The cost reality
+                </h2>
+              </div>
+              <p className="mt-3 text-sm leading-relaxed text-stone-600 dark:text-stone-300">
+                Out-of-pocket, individual therapy often runs roughly $100–$250 a session and varies
+                a lot by area and specialism. That\u2019s why the first three paths matter: insurance
+                copays, EAP sessions, and sliding scales can bring the real price down sharply. Ask
+                about all three before you decide anything.
+              </p>
+            </Card>
+            <Card padding="lg" className="items-start">
+              <div className="flex items-center gap-3">
+                <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-sand text-forest-900 dark:bg-sand-200 dark:text-forest-950">
+                  <PhoneCall className="h-5 w-5" strokeWidth={1.75} aria-hidden />
+                </span>
+                <h2 className="font-display text-xl font-semibold text-forest-950 dark:text-sage-50">
+                  Phone first, book later
+                </h2>
+              </div>
+              <p className="mt-3 text-sm leading-relaxed text-stone-600 dark:text-stone-300">
+                Send the same short message to two or three therapists — who you\u2019re, roughly what
+                you\u2019re navigating, and what you can pay. Real therapists respond professionally, don\u2019t
+                pressure, and tell you plainly if they\u2019re not the right fit.
+              </p>
+            </Card>
+          </div>
+
+          <div className="mt-12 rounded-card bg-forest-800 p-6 sm:p-8 dark:bg-forest-900">
+            <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+              <div className="max-w-xl">
+                <h2 className="font-display text-xl font-semibold text-ivory dark:text-white">
+                  If the search can\u2019t wait
+                </h2>
+                <p className="mt-2 text-sm leading-relaxed text-ivory/80 dark:text-white/70">
+                  For persistent distress, thoughts of harming yourself or others, or moments that
+                  feel unbearable, a search can wait — but you shouldn\u2019t. Clinics, emergency
+                  departments, and crisis lines exist for exactly this, and using them is strength.
                 </p>
               </div>
-
-              <div className="flex items-center gap-4">
-                <div className="hidden md:flex items-center gap-2 text-sm">
-                  <FaMapMarkerAlt className="w-4 h-4 text-gray-400" />
-                  <span className="text-gray-600">Multiple locations</span>
-                </div>
-                <div className="hidden md:flex items-center gap-2 text-sm">
-                  <FaVideo className="w-4 h-4 text-blue-500" />
-                  <span className="text-gray-600">Virtual available</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Therapists Grid */}
-            <div className="space-y-6">
-              {filteredTherapists.length > 0 ? (
-                filteredTherapists.map(therapist => (
-                  <TherapistCard
-                    key={therapist.id}
-                    therapist={therapist}
-                  />
-                ))
-              ) : (
-                <div className="text-center py-16">
-                  <div className="w-24 h-24 mx-auto mb-6 bg-linear-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center">
-                    <FaSearch className="w-12 h-12 text-gray-400" />
-                  </div>
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">
-                    No therapists match your filters
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-400 mb-8 max-w-md mx-auto">
-                    Try adjusting your search criteria or clear filters to see all available therapists.
-                  </p>
-                  <button
-                    onClick={clearFilters}
-                    className="inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none cursor-pointer hover:scale-105 bg-linear-to-r from-blue-500 to-purple-500 text-white shadow-lg hover:shadow-xl focus:ring-blue-500 px-6 py-3"
-                  >
-                    Clear All Filters
-                  </button>
-                </div>
-              )}
-            </div>
-
-            {/* How It Works */}
-            <div className="mt-16 pt-12 border-t">
-              <h3 className="text-2xl font-bold text-center mb-10">How It Works</h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div className="text-center p-6">
-                  <div className="w-16 h-16 mx-auto mb-4 bg-linear-to-br from-blue-100 to-blue-200 rounded-full flex items-center justify-center text-2xl font-bold text-blue-600">
-                    1
-                  </div>
-                  <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Browse & Filter</h4>
-                  <p className="text-gray-600 dark:text-gray-400">Find therapists by specialty, location, insurance, and approach.</p>
-                </div>
-                <div className="text-center p-6">
-                  <div className="w-16 h-16 mx-auto mb-4 bg-linear-to-br from-purple-100 to-purple-200 rounded-full flex items-center justify-center text-2xl font-bold text-purple-600">
-                    2
-                  </div>
-                  <h4 className="font-semibold text-gray-900 dark:text-white mb-2">View Profiles</h4>
-                  <p className="text-gray-600 dark:text-gray-400">Read detailed bios, credentials, and therapeutic approaches.</p>
-                </div>
-                <div className="text-center p-6">
-                  <div className="w-16 h-16 mx-auto mb-4 bg-linear-to-br from-pink-100 to-pink-200 rounded-full flex items-center justify-center text-2xl font-bold text-pink-600">
-                    3
-                  </div>
-                  <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Book Session</h4>
-                  <p className="text-gray-600 dark:text-gray-400">Schedule a consultation or regular sessions directly.</p>
-                </div>
+              <div className="flex shrink-0 flex-wrap gap-3">
+                <Link
+                  to="/crisis"
+                  className="inline-flex items-center gap-2 rounded-full bg-peach-200 px-5 py-2.5 text-sm font-semibold text-forest-950 transition-colors hover:bg-peach-100 dark:bg-peach-300 dark:hover:bg-peach-200"
+                >
+                  <HeartPulse className="h-4 w-4" aria-hidden /> If you\u2019re in crisis now
+                </Link>
               </div>
             </div>
           </div>
+
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
+            <Link
+              to="/learn-more"
+              className="inline-flex items-center gap-2 rounded-full border border-stone-300 px-5 py-2.5 text-sm font-semibold text-stone-700 transition-colors hover:border-forest-700 hover:text-forest-900 dark:border-white/20 dark:text-stone-200 dark:hover:border-sage-300 dark:hover:text-white"
+            >
+              Learn about mental health
+            </Link>
+            <Link
+              to="/tools/assessment"
+              className="inline-flex items-center gap-2 rounded-full border border-stone-300 px-5 py-2.5 text-sm font-semibold text-stone-700 transition-colors hover:border-forest-700 hover:text-forest-900 dark:border-white/20 dark:text-stone-200 dark:hover:border-sage-300 dark:hover:text-white"
+            >
+              Run a private screening
+            </Link>
+          </div>
         </div>
-      </div>
-    </div>
+      </section>
+      <Landscape className="-mb-px h-24 w-full text-peach-200/80 dark:text-forest-900" aria-hidden />
+    </>
   );
 }
