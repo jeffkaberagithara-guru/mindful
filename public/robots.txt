@@ -1,0 +1,9 @@
+# MindShift robots.txt
+# TODO(deploy): replace the placeholder sitemap URL with the production domain.
+
+User-agent: *
+Allow: /
+Disallow: /settings
+Disallow: /you
+
+Sitemap: https://mindshift.example.com/sitemap.xml
