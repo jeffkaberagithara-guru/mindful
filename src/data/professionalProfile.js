@@ -5,8 +5,8 @@ export const PROFESSIONAL = {
   desktopRole: 'Founder & Psychologist',
   phone: '+254 722 731 337',
   telLink: 'tel:+254722731337',
-  email: 'wagroh@gmail.com',
-  mailto: 'mailto:wagroh@gmail.com',
+  email: 'githarabernadatte@gmail.com',
+  mailto: 'mailto:githarabernadatte@gmail.com',
   slug: 'bernadatte-wanjiru-githara',
   shortIntro:
     'Bernadatte Wanjiru Githara is the founder and psychologist behind MindShift. Her work focuses on creating a welcoming space where individuals can better understand their emotions, navigate personal challenges and access practical psychological guidance and counselling.',
