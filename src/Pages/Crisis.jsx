@@ -1,293 +1,223 @@
-import { FaPhone, FaComment, FaAmbulance, FaHospital, FaUserFriends, FaShieldAlt, FaClock, FaGlobe } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
+import {
+  AlertTriangle,
+  ArrowRight,
+  PhoneCall,
+  MessageSquare,
+  HeartPulse,
+  Siren,
+  ShieldPlus,
+  BookOpen,
+  Clock,
+  CheckCircle2,
+} from 'lucide-react';
+import SectionHeader from '../components/ui/SectionHeader';
+import Card from '../components/ui/Card';
+import Badge from '../components/ui/Badge';
+import Landscape from '../components/ui/Landscape';
+import { CRISIS_LINES, INTERNATIONAL } from '../data/crisis';
+
+const EXPECT = [
+  'A trained person answers. You don\u2019t have to be \u201cbad enough\u201d to call — reaching out is enough on its own.',
+  'It can be anonymous and confidential. You decide how much to say.',
+  'You can say the hard words. Crisis counsellors hear them every day and stay calm.',
+  'They\u2019ll listen first, then gently help you take the next small step — even just \u201cbreathe with me for a minute.\u201d',
+];
 
 export default function Crisis() {
-  const emergencyResources = [
-    {
-      category: 'Immediate Crisis Lines',
-      items: [
-        {
-          name: 'National Suicide Prevention Lifeline',
-          number: '988',
-          description: 'Free, confidential support 24/7',
-          icon: <FaPhone className="w-6 h-6" />,
-          color: 'bg-red-500',
-          hours: '24/7',
-          type: 'call'
-        },
-        {
-          name: 'Crisis Text Line',
-          number: 'Text HOME to 741741',
-          description: 'Free 24/7 crisis counseling via text',
-          icon: <FaComment className="w-6 h-6" />,
-          color: 'bg-green-500',
-          hours: '24/7',
-          type: 'text'
-        },
-        {
-          name: 'Trevor Project (LGBTQ+)',
-          number: '1-866-488-7386',
-          description: 'Crisis intervention for LGBTQ youth',
-          icon: <FaUserFriends className="w-6 h-6" />,
-          color: 'bg-purple-500',
-          hours: '24/7',
-          type: 'call'
-        }
-      ]
-    },
-    {
-      category: 'Emergency Services',
-      items: [
-        {
-          name: 'Local Emergency Services',
-          number: '911',
-          description: 'Police, Fire, Ambulance',
-          icon: <FaAmbulance className="w-6 h-6" />,
-          color: 'bg-blue-500',
-          hours: '24/7',
-          type: 'call'
-        },
-        {
-          name: 'Emergency Room',
-          number: 'Go to nearest hospital',
-          description: 'Immediate medical attention',
-          icon: <FaHospital className="w-6 h-6" />,
-          color: 'bg-orange-500',
-          hours: '24/7',
-          type: 'location'
-        }
-      ]
-    }
-  ];
-
-  const internationalHelplines = [
-    { country: 'Canada', number: '1-833-456-4566', service: 'Crisis Services Canada' },
-    { country: 'UK', number: '116 123', service: 'Samaritans' },
-    { country: 'Australia', number: '13 11 14', service: 'Lifeline Australia' },
-    { country: 'New Zealand', number: '0800 543 354', service: 'Lifeline Aotearoa' }
-  ];
-
-  const safetyPlanning = [
-    { step: 1, title: 'Recognize Warning Signs', description: 'Identify personal triggers and early signs of crisis' },
-    { step: 2, title: 'Use Coping Strategies', description: 'Practice grounding techniques and distraction methods' },
-    { step: 3, title: 'Contact Support Network', description: 'Reach out to trusted friends, family, or professionals' },
-    { step: 4, title: 'Make Environment Safe', description: 'Remove access to means of self-harm' },
-    { step: 5, title: 'Seek Professional Help', description: 'Contact mental health professionals or crisis services' }
-  ];
-
   return (
-    <div className="min-h-screen bg-linear-to-b from-red-50 via-white to-blue-50 dark:from-red-950 dark:via-gray-900 dark:to-blue-950 transition-colors duration-300">
-      {/* Hero Section */}
-      <div className="bg-linear-to-br from-red-500 via-orange-500 to-red-600 dark:from-red-800 dark:via-red-700 dark:to-red-900 text-white py-16 transition-colors duration-300">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full mb-6">
-              <span className="w-3 h-3 bg-white rounded-full animate-pulse"></span>
-              <span className="font-medium">Immediate Support Available</span>
-            </div>
+    <>
+      <section className="relative overflow-hidden px-6 pb-24 pt-14 sm:pt-20">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -right-28 -top-16 h-80 w-80 rounded-blob bg-rose-200/40 blur-3xl dark:bg-rose-300/10"
+        />
+        <div className="relative mx-auto max-w-6xl">
+          <SectionHeader
+            eyebrow="Immediate support"
+            as="h1"
+            title="Hard moments deserve a real voice"
+            description="If the moment is unbearable, stop reading and call. There are people whose whole job is answering right now. This page is honest — the numbers below are real, free, and 24/7."
+            align="center"
+          />
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-              You Are Not Alone
-              <span className="block">Help Is Here</span>
-            </h1>
-
-            <p className="text-xl opacity-90 mb-8 max-w-3xl mx-auto text-white dark:text-gray-200">
-              Immediate, confidential crisis support available 24/7. Your safety and wellbeing are our priority.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="tel:988"
-                className="inline-flex items-center justify-center font-medium rounded-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none cursor-pointer hover:scale-105 gap-3 px-8 py-4 bg-white text-red-600 shadow-2xl hover:bg-gray-100 text-lg mx-2"
-              >
-                <FaPhone className="w-6 h-6" />
-                Call 988 Now
-              </a>
-              <a
-                href="tel:911"
-                className="inline-flex items-center justify-center font-medium rounded-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none cursor-pointer hover:scale-105 gap-3 px-8 py-4 bg-transparent border-2 border-white text-white hover:bg-white/10 text-lg mx-2"
-              >
-                <FaAmbulance className="w-6 h-6" />
-                Emergency: 911
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Emergency Resources */}
-      <div className="container mx-auto px-4 py-12">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-              Immediate Crisis Resources
-            </h2>
-            <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              These services are available 24/7 and are completely confidential.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-            {emergencyResources.map((section) => (
-              <div key={section.category}>
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-2">
-                  <FaShieldAlt className="w-5 h-5 text-red-500" />
-                  {section.category}
-                </h3>
-
-                <div className="space-y-4">
-                  {section.items.map((resource, index) => (
-                    <div
-                      key={index}
-                      className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-lg transition-all duration-300"
-                    >
-                      <div className="p-6">
-                        <div className="flex items-start gap-4">
-                          <div className={`p-3 ${resource.color} rounded-lg text-white`}>
-                            {resource.icon}
-                          </div>
-                          <div className="flex-1">
-                            <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">
-                              {resource.name}
-                            </h4>
-                            <p className="text-gray-600 dark:text-gray-300 mb-3">{resource.description}</p>
-
-                            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                              <div className="text-2xl font-bold text-gray-900 dark:text-white">
-                                {resource.number}
-                              </div>
-                              <div className="flex items-center gap-4">
-                                <span className="flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400">
-                                  <FaClock className="w-4 h-4" />
-                                  {resource.hours}
-                                </span>
-                                {resource.type === 'call' ? (
-                                  <a
-                                    href={`tel:${resource.number.replace(/\D/g, '')}`}
-                                    className="inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none cursor-pointer hover:scale-105 px-4 py-2 bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300 hover:bg-red-200 dark:hover:bg-red-900/60"
-                                  >
-                                    Call Now
-                                  </a>
-                                ) : resource.type === 'text' ? (
-                                  <button className="inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none cursor-pointer hover:scale-105 px-4 py-2 bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300 hover:bg-green-200 dark:hover:bg-green-900/60">
-                                    Text Now
-                                  </button>
-                                ) : (
-                                  <span className="px-4 py-2 bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 rounded-lg font-medium">
-                                    Find Location
-                                  </span>
-                                )}
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+          <Card
+            padding="lg"
+            className="mt-10 border border-rose-300 bg-rose-50/70 dark:border-rose-400/40 dark:bg-rose-400/10"
+          >
+            <div className="flex flex-col items-start justify-between gap-5 sm:flex-row sm:items-center">
+              <div className="flex items-start gap-4">
+                <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-rose-600 text-white">
+                  <Siren className="h-6 w-6" aria-hidden />
+                </span>
+                <div>
+                  <p className="font-display text-xl font-semibold text-rose-950 dark:text-rose-50">
+                    If you are unsafe right now
+                  </p>
+                  <p className="mt-1 max-w-xl text-sm leading-relaxed text-rose-900/90 dark:text-rose-100/90">
+                    Call <strong>112</strong> — or your local emergency number (911 in the US and
+                    Canada) — or go to the nearest emergency room. Struggling to be safe beats
+                    trying to be strong. Every single time.
+                  </p>
                 </div>
               </div>
-            ))}
-          </div>
+              <a
+                href="tel:112"
+                className="inline-flex shrink-0 items-center gap-2 rounded-full bg-rose-600 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-rose-700"
+              >
+                <PhoneCall className="h-4 w-4" aria-hidden /> Call now
+              </a>
+            </div>
+          </Card>
 
-          {/* Safety Planning */}
-          <div className="mb-16">
-            <div className="bg-linear-to-r from-blue-50 to-indigo-50 dark:from-gray-800 dark:to-indigo-900/30 rounded-2xl p-8 border dark:border-gray-700 transition-colors">
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">
-                Safety Planning Guide
-              </h3>
+          <div className="mt-14">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <h2 className="font-display text-2xl font-semibold text-forest-950 dark:text-sage-50">
+                Crisis lines that answer right now
+              </h2>
+              <Badge tone="mist">Free · confidential · 24/7</Badge>
+            </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-                {safetyPlanning.map((plan) => (
-                  <div
-                    key={plan.step}
-                    className="bg-white dark:bg-gray-800 rounded-xl p-6 text-center hover:shadow-md transition-all duration-300"
-                  >
-                    <div className="w-12 h-12 mx-auto mb-4 bg-linear-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold text-xl">
-                      {plan.step}
-                    </div>
-                    <h4 className="font-semibold text-gray-900 dark:text-white mb-2">{plan.title}</h4>
-                    <p className="text-sm text-gray-600 dark:text-gray-300">{plan.description}</p>
+            <div className="mt-6 grid gap-4 sm:grid-cols-2">
+              {CRISIS_LINES.map((line) => (
+                <Card key={line.name} padding="lg" className="items-start">
+                  <div className="flex items-start justify-between gap-3">
+                    <h3 className="font-display text-lg font-semibold leading-snug text-forest-950 dark:text-sage-50">
+                      {line.name}
+                    </h3>
+                    <Clock className="h-4 w-4 shrink-0 text-sage-600 dark:text-sage-400" aria-hidden />
                   </div>
-                ))}
-              </div>
+                  <p className="mt-0.5 text-xs font-medium text-stone-400 dark:text-stone-500">
+                    {line.where}
+                  </p>
+                  <p className="mt-2 text-sm leading-relaxed text-stone-600 dark:text-stone-300">
+                    {line.note}
+                  </p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {line.call && (
+                      <a
+                        href={`tel:${line.call.replace(/\s/g, '')}`}
+                        className="inline-flex items-center gap-1.5 rounded-full bg-forest-800 px-4 py-2 text-sm font-semibold text-ivory transition-colors hover:bg-forest-900 dark:bg-forest-700 dark:hover:bg-forest-600"
+                      >
+                        <PhoneCall className="h-3.5 w-3.5" aria-hidden /> {line.call}
+                      </a>
+                    )}
+                    {line.text && (
+                      <span className="inline-flex items-center gap-1.5 rounded-full border border-stone-300 px-4 py-2 text-sm font-medium text-stone-700 dark:border-white/20 dark:text-stone-200">
+                        <MessageSquare className="h-3.5 w-3.5 text-sage-700 dark:text-sage-300" aria-hidden />
+                        {line.text}
+                      </span>
+                    )}
+                  </div>
+                </Card>
+              ))}
             </div>
           </div>
 
-          {/* International Support */}
-          <div className="mb-16">
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-2">
-              <FaGlobe className="w-6 h-6 text-blue-500" />
-              International Crisis Lines
-            </h3>
-
-            <div className="bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 overflow-hidden">
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead className="bg-gray-50 dark:bg-gray-900/50">
-                    <tr>
-                      <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900 dark:text-white">Country</th>
-                      <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900 dark:text-white">Helpline Number</th>
-                      <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900 dark:text-white">Service</th>
-                      <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900 dark:text-white">Action</th>
+          <div className="mt-12">
+            <h2 className="font-display text-2xl font-semibold text-forest-950 dark:text-sage-50">
+              Outside the US
+            </h2>
+            <div className="mt-5 overflow-x-auto rounded-card border border-stone-200 dark:border-white/10">
+              <table className="w-full min-w-[30rem] text-left text-sm">
+                <thead className="bg-stone-100 text-stone-500 dark:bg-white/5 dark:text-stone-400">
+                  <tr>
+                    <th className="px-4 py-3 font-medium">Country</th>
+                    <th className="px-4 py-3 font-medium">Number</th>
+                    <th className="hidden px-4 py-3 font-medium sm:table-cell">Service</th>
+                    <th className="px-4 py-3 font-medium">Call</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-stone-100 dark:divide-white/5">
+                  {INTERNATIONAL.map((line) => (
+                    <tr key={line.service} className="bg-white dark:bg-forest-900">
+                      <td className="px-4 py-3 font-medium text-forest-950 dark:text-sage-50">{line.country}</td>
+                      <td className="px-4 py-3 text-forest-950 dark:text-sage-50">{line.number}</td>
+                      <td className="hidden px-4 py-3 text-stone-500 dark:text-stone-400 sm:table-cell">{line.service}</td>
+                      <td className="px-4 py-3">
+                        <a
+                          href={`tel:${line.number.replace(/\D/g, '')}`}
+                          className="inline-flex items-center gap-1.5 text-sm font-semibold text-forest-700 hover:underline dark:text-sage-300"
+                        >
+                          <PhoneCall className="h-3.5 w-3.5" aria-hidden /> Call
+                        </a>
+                      </td>
                     </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-                    {internationalHelplines.map((line, index) => (
-                      <tr key={index} className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                        <td className="px-6 py-4 font-medium text-gray-900 dark:text-white">{line.country}</td>
-                        <td className="px-6 py-4">
-                          <div className="text-lg font-semibold text-gray-900 dark:text-white">{line.number}</div>
-                        </td>
-                        <td className="px-6 py-4 text-gray-600 dark:text-gray-300">{line.service}</td>
-                        <td className="px-6 py-4">
-                          <a
-                            href={`tel:${line.number.replace(/\D/g, '')}`}
-                            className="inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none cursor-pointer hover:scale-105 gap-2 px-4 py-2 bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 hover:bg-blue-200 dark:hover:bg-blue-900/60"
-                          >
-                            <FaPhone className="w-4 h-4" />
-                            Call
-                          </a>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                  ))}
+                </tbody>
+              </table>
             </div>
+            <p className="mt-3 text-xs leading-relaxed text-stone-400 dark:text-stone-500">
+              MindShift checks these lines carefully, but services move. If one doesn\u2019t go
+              through, try another, or call 112 — and please double-check anything before relying
+              on it.
+            </p>
           </div>
 
-          {/* Important Information */}
-          <div className="space-y-6">
-            <div className="p-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-2xl transition-colors">
-              <h4 className="font-bold text-red-800 dark:text-red-300 mb-3">⚠️ In Immediate Danger?</h4>
-              <ul className="text-red-700 dark:text-red-200 space-y-2">
-                <li>• Call your local emergency services immediately (911 in US/Canada)</li>
-                <li>• Go to the nearest hospital emergency room</li>
-                <li>• Do not hesitate to ask for help from people around you</li>
-                <li>• Stay with someone you trust until help arrives</li>
-              </ul>
-            </div>
+          <div className="mt-12">
+            <h2 className="font-display text-2xl font-semibold text-forest-950 dark:text-sage-50">
+              What to expect when you call
+            </h2>
+            <ul className="mt-5 grid gap-3 sm:grid-cols-2">
+              {EXPECT.map((item) => (
+                <li key={item} className="flex items-start gap-3 rounded-soft bg-sage-50/70 p-4 dark:bg-white/5">
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-sage-700 dark:text-sage-300" aria-hidden />
+                  <span className="text-sm leading-relaxed text-stone-700 dark:text-stone-200">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-            <div className="p-6 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-2xl transition-colors">
-              <h4 className="font-bold text-blue-800 dark:text-blue-300 mb-3">What to Expect When Calling</h4>
-              <ul className="text-blue-700 dark:text-blue-200 space-y-2">
-                <li>• A trained crisis counselor will answer your call</li>
-                <li>• The conversation is completely confidential</li>
-                <li>• You can remain anonymous if you prefer</li>
-                <li>• Counselors are there to listen, not judge</li>
-                <li>• They can help you develop a safety plan</li>
-              </ul>
-            </div>
+          <div className="mt-12 grid gap-4 sm:grid-cols-3">
+            <Link to="/support-plan" className="group sm:col-span-2">
+              <Card padding="lg" className="flex h-full items-start justify-between gap-4 transition-shadow hover:shadow-card">
+                <div className="flex items-start gap-4">
+                  <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-forest-800 text-ivory dark:bg-forest-700 dark:text-white">
+                    <ShieldPlus className="h-5 w-5" strokeWidth={1.75} aria-hidden />
+                  </span>
+                  <div>
+                    <h3 className="font-display text-lg font-semibold text-forest-950 dark:text-sage-50">
+                      Plan ahead, on the good days
+                    </h3>
+                    <p className="mt-1 text-sm leading-relaxed text-stone-600 dark:text-stone-300">
+                      Build your own support plan — warning signs, calming things, people and
+                      professionals to call — before you need it. It stays on your device.
+                    </p>
+                  </div>
+                </div>
+                <span className="inline-flex shrink-0 items-center gap-1 text-sm font-semibold text-forest-700 transition-transform group-hover:translate-x-1 dark:text-sage-300">
+                  Open <ArrowRight className="h-3.5 w-3.5" aria-hidden />
+                </span>
+              </Card>
+            </Link>
+            <Link to="/find-therapist" className="group">
+              <Card padding="lg" className="flex h-full flex-col items-start transition-shadow hover:shadow-card">
+                <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-sand text-forest-900 dark:bg-sand-200 dark:text-forest-950">
+                  <BookOpen className="h-5 w-5" strokeWidth={1.75} aria-hidden />
+                </span>
+                <h3 className="mt-3 font-display text-lg font-semibold text-forest-950 dark:text-sage-50">
+                  Not an emergency, but need care soon
+                </h3>
+                <p className="mt-1 text-sm leading-relaxed text-stone-600 dark:text-stone-300">
+                  Start with your doctor, then a therapist that fits.
+                </p>
+                <span className="mt-auto inline-flex items-center gap-1 pt-3 text-sm font-semibold text-forest-700 transition-transform group-hover:translate-x-1 dark:text-sage-300">
+                  The finding-a-therapist guide <ArrowRight className="h-3.5 w-3.5" aria-hidden />
+                </span>
+              </Card>
+            </Link>
+          </div>
 
-            <div className="text-center p-8">
-              <p className="text-gray-600 dark:text-gray-300 mb-6">
-                Remember: Reaching out for help is a sign of strength, not weakness.
-                You deserve support, and people care about your wellbeing.
-              </p>
-              <div className="text-4xl">💙</div>
-            </div>
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
+            <span className="inline-flex items-center gap-2 rounded-full border border-stone-200 px-4 py-2 text-xs text-stone-500 dark:border-white/10 dark:text-stone-400">
+              <AlertTriangle className="h-3.5 w-3.5 text-rose-500" aria-hidden />
+              If someone else is unsafe: stay with them, remove immediate danger if it\u2019s safe to,
+              and call 112 — they don\u2019t have to be \u201cdoing it\u201d to get help.
+            </span>
           </div>
         </div>
-      </div>
-    </div>
+      </section>
+      <Landscape className="-mb-px h-24 w-full text-rose-200/70 dark:text-forest-900" aria-hidden />
+    </>
   );
 }
