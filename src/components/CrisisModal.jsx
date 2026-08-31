@@ -1,6 +1,6 @@
 import { AlertTriangle, MessageSquare, PhoneCall } from 'lucide-react';
 import Modal from './ui/Modal';
-import { CRISIS_LINES } from '../data/crisis';
+import { CRISIS_LINES, KENYA_LINES } from '../data/crisis';
 
 export default function CrisisModal({ isOpen, onClose }) {
   return (
@@ -16,8 +16,8 @@ export default function CrisisModal({ isOpen, onClose }) {
                 If you are unsafe right now
               </p>
               <p className="mt-1 text-sm leading-relaxed text-rose-900/90 dark:text-rose-100/90">
-                Call <strong>112</strong> — or your local emergency number (911 in the US and
-                Canada) — or go to the nearest emergency room.
+                Call <strong>112</strong> — or your local emergency number (999 or 112 in Kenya,
+                911 in the US and Canada) — or go to the nearest emergency room.
               </p>
               <a
                 href="tel:112"
@@ -31,7 +31,41 @@ export default function CrisisModal({ isOpen, onClose }) {
 
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-stone-400 dark:text-stone-500">
-            Real lines that answer right now
+            Support in Kenya
+          </p>
+          <ul className="mt-3 space-y-3">
+            {KENYA_LINES.map((line) => (
+              <li
+                key={line.name}
+                className="rounded-soft border border-forest-800/10 bg-forest-50/40 p-4 dark:border-sage-400/20 dark:bg-forest-900"
+              >
+                <p className="font-display text-base font-semibold text-forest-950 dark:text-sage-50">
+                  {line.name}
+                </p>
+                <p className="mt-0.5 text-xs font-medium text-stone-400 dark:text-stone-500">
+                  {line.where}
+                </p>
+                <p className="mt-1.5 text-sm leading-relaxed text-stone-600 dark:text-stone-300">
+                  {line.note}
+                </p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {line.call && (
+                    <a
+                      href={`tel:${line.call.replace(/\s/g, '')}`}
+                      className="inline-flex items-center gap-1.5 rounded-full bg-forest-800 px-4 py-2 text-sm font-semibold text-ivory transition-colors hover:bg-forest-900 dark:bg-forest-700 dark:hover:bg-forest-600"
+                    >
+                      <PhoneCall className="h-3.5 w-3.5" aria-hidden /> {line.call}
+                    </a>
+                  )}
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-stone-400 dark:text-stone-500">
+            US &amp; international lines
           </p>
           <ul className="mt-3 space-y-3">
             {CRISIS_LINES.map((line) => (

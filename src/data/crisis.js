@@ -1,3 +1,34 @@
+export const KENYA_LINES = [
+  {
+    name: 'Kenya Red Cross',
+    where: 'Kenya · free & confidential',
+    call: '1199',
+    text: null,
+    note: 'Toll-free 24/7 mental-health and psychosocial counselling line. Verified on the Kenya Red Cross website.',
+  },
+  {
+    name: 'Befrienders Kenya',
+    where: 'Kenya · suicide & emotional support',
+    call: '+254 722 178 177',
+    text: null,
+    note: 'Free, confidential support for people in distress, despair or thinking of suicide. Reached by phone, SMS or WhatsApp.',
+  },
+  {
+    name: 'National Child Helpline (Childline Kenya)',
+    where: 'Kenya · children & young people',
+    call: '116',
+    text: null,
+    note: '24/7 toll-free help for children and young people in distress — by phone or online chat.',
+  },
+  {
+    name: 'NACADA toll-free helpline',
+    where: 'Kenya · alcohol & substance use',
+    call: '1192',
+    text: null,
+    note: 'National 24/7 toll-free counselling and information line for alcohol and drug concerns. Free on Safaricom and Telkom lines.',
+  },
+];
+
 export const CRISIS_LINES = [
   {
     name: '988 Suicide & Crisis Lifeline',

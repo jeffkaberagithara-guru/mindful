@@ -15,7 +15,7 @@ import SectionHeader from '../components/ui/SectionHeader';
 import Card from '../components/ui/Card';
 import Badge from '../components/ui/Badge';
 import Landscape from '../components/ui/Landscape';
-import { CRISIS_LINES, INTERNATIONAL } from '../data/crisis';
+import { CRISIS_LINES, KENYA_LINES, INTERNATIONAL } from '../data/crisis';
 
 const EXPECT = [
   'A trained person answers. You don\u2019t have to be \u201cbad enough\u201d to call — reaching out is enough on its own.',
@@ -55,9 +55,9 @@ export default function Crisis() {
                     If you are unsafe right now
                   </p>
                   <p className="mt-1 max-w-xl text-sm leading-relaxed text-rose-900/90 dark:text-rose-100/90">
-                    Call <strong>112</strong> — or your local emergency number (911 in the US and
-                    Canada) — or go to the nearest emergency room. Struggling to be safe beats
-                    trying to be strong. Every single time.
+                    Call <strong>112</strong> — or your local emergency number (999 or 112 in
+                    Kenya, 911 in the US and Canada) — or go to the nearest emergency room.
+                    Struggling to be safe beats trying to be strong. Every single time.
                   </p>
                 </div>
               </div>
@@ -71,6 +71,49 @@ export default function Crisis() {
           </Card>
 
           <div className="mt-14">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <h2 className="font-display text-2xl font-semibold text-forest-950 dark:text-sage-50">
+                Support in Kenya
+              </h2>
+              <Badge tone="mist">Free · confidential · local</Badge>
+            </div>
+            <p className="mt-2 max-w-2xl text-sm leading-relaxed text-stone-600 dark:text-stone-300">
+              Local Kenyan numbers for mental-health and psychosocial support. These are checked
+              against the organisations' own public listings. They can be reached in English or
+              Kiswahili.
+            </p>
+
+            <div className="mt-6 grid gap-4 sm:grid-cols-2">
+              {KENYA_LINES.map((line) => (
+                <Card key={line.name} padding="lg" className="items-start">
+                  <div className="flex items-start justify-between gap-3">
+                    <h3 className="font-display text-lg font-semibold leading-snug text-forest-950 dark:text-sage-50">
+                      {line.name}
+                    </h3>
+                    <Clock className="h-4 w-4 shrink-0 text-sage-600 dark:text-sage-400" aria-hidden />
+                  </div>
+                  <p className="mt-0.5 text-xs font-medium text-stone-400 dark:text-stone-500">
+                    {line.where}
+                  </p>
+                  <p className="mt-2 text-sm leading-relaxed text-stone-600 dark:text-stone-300">
+                    {line.note}
+                  </p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {line.call && (
+                      <a
+                        href={`tel:${line.call.replace(/\s/g, '')}`}
+                        className="inline-flex items-center gap-1.5 rounded-full bg-forest-800 px-4 py-2 text-sm font-semibold text-ivory transition-colors hover:bg-forest-900 dark:bg-forest-700 dark:hover:bg-forest-600"
+                      >
+                        <PhoneCall className="h-3.5 w-3.5" aria-hidden /> {line.call}
+                      </a>
+                    )}
+                  </div>
+                </Card>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-12">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <h2 className="font-display text-2xl font-semibold text-forest-950 dark:text-sage-50">
                 Crisis lines that answer right now

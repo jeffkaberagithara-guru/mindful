@@ -16,6 +16,7 @@ import SectionHeader from '../components/ui/SectionHeader';
 import Card from '../components/ui/Card';
 import Badge from '../components/ui/Badge';
 import Landscape from '../components/ui/Landscape';
+import FounderCard from '../components/professional/FounderCard';
 
 const PATHS = [
   {
@@ -106,11 +107,23 @@ export default function FindTherapist() {
         />
         <div className="relative mx-auto max-w-6xl">
           <SectionHeader
-            eyebrow="Find support"
+            eyebrow="Human support"
             as="h1"
-            title="Finding a therapist who fits you"
-            description="MindShift doesn\u2019t run a therapist directory or take referral fees — that\u2019s a decision between you and a professional. What we can offer is an honest, practical map of the real paths people use to find one."
+            title="Talk to a real person"
+            description="MindShift is here for self-guided wellbeing, and it is also the doorway to professional human support. Our founder and psychologist is available to you directly — and when you need wider choice, we offer an honest, practical map of the other real paths people use to find the right therapist."
           />
+
+          <div className="mx-auto mt-10 max-w-4xl">
+            <FounderCard tone="sage" />
+          </div>
+
+          <div className="mt-16">
+            <SectionHeader
+              eyebrow="Wider options"
+              title="Finding a therapist who fits you"
+              description="Beyond MindShift's own founder, here are the real paths people use to find a therapist who fits their circumstances."
+            />
+          </div>
 
           <div className="mt-12 grid gap-4 sm:grid-cols-2">
             {PATHS.map((path) => (
@@ -148,6 +161,40 @@ export default function FindTherapist() {
               <ResourceLink key={d.name} {...d} />
             ))}
           </div>
+
+          <Card padding="lg" className="mt-8 items-start bg-sand-50/60 dark:bg-white/5">
+            <div className="flex items-center gap-3">
+              <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-sand text-forest-900 dark:bg-sand-200 dark:text-forest-950">
+                <ShieldCheck className="h-5 w-5" strokeWidth={1.75} aria-hidden />
+              </span>
+              <h2 className="font-display text-xl font-semibold text-forest-950 dark:text-sage-50">
+                If you\u2019re in Kenya
+              </h2>
+            </div>
+            <p className="mt-3 text-sm leading-relaxed text-stone-600 dark:text-stone-300">
+              Many of the directories and insurance paths above are US- or UK-shaped. In Kenya,
+              counselling is often accessed through private practitioners, hospitals and
+              university clinics, faith- and community-based services, and NGOs. The same rule
+              applies everywhere: verify that the person is licensed to practise before you book.
+              In Kenya, that means checking the practitioner against the official medical register.
+            </p>
+            <div className="mt-4 flex flex-wrap gap-3">
+              <a
+                href="https://kmpdc.go.ke"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 rounded-full bg-forest-800 px-4 py-2 text-sm font-semibold text-ivory transition-colors hover:bg-forest-900 dark:bg-forest-700 dark:hover:bg-forest-600"
+              >
+                Kenya Medical Practitioners & Dentists Council <ExternalLink className="h-3 w-3" aria-hidden />
+              </a>
+              <Link
+                to="/crisis"
+                className="inline-flex items-center gap-1.5 rounded-full border border-stone-300 px-4 py-2 text-sm font-semibold text-stone-700 transition-colors hover:border-forest-700 hover:text-forest-900 dark:border-white/20 dark:text-stone-200 dark:hover:border-sage-300 dark:hover:text-white"
+              >
+                Verify support lines <PhoneCall className="h-3 w-3" aria-hidden />
+              </Link>
+            </div>
+          </Card>
 
           <div className="mt-16 grid gap-5 lg:grid-cols-2">
             <Card padding="lg" className="bg-sage-50/70 dark:bg-white/5">
