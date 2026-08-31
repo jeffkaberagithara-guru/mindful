@@ -1,218 +1,490 @@
-import { FaHeartbeat, FaUserMd, FaBrain, FaHandsHelping } from 'react-icons/fa';
-import { useNavigate, Link } from 'react-router-dom';
-import ResourceCard from '../components/ResourceCard';
-import MoodTracker from '../components/MoodTracker';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { AnimatePresence, motion } from 'framer-motion';
+import {
+  Anchor,
+  Wind,
+  Moon,
+  Feather,
+  Laugh,
+  Compass,
+  TrendingUp,
+  UserRound,
+  HeartHandshake,
+  ArrowRight,
+  Check,
+} from 'lucide-react';
+import MoodSelector from '../components/ui/MoodSelector';
+import Button from '../components/ui/Button';
+import Card from '../components/ui/Card';
+import Badge from '../components/ui/Badge';
+import OrganicCircle from '../components/ui/OrganicCircle';
+import Landscape from '../components/ui/Landscape';
+import { Textarea } from '../components/ui/Field';
+import { useToast } from '../components/ui/ToastContext';
+import { useLocalStorage } from '../hooks/useLocalStorage';
+
+const MOOD_LABELS = {
+  5: 'Bright',
+  4: 'Good',
+  3: 'Okay',
+  2: 'Low',
+  1: 'Very low',
+};
+
+const INTENTS = [
+  {
+    id: 'ground',
+    icon: Anchor,
+    label: 'Ground me',
+    tone: 'bg-sage-100 text-sage-800 dark:bg-sage-300/20 dark:text-sage-200',
+    title: '5 · 4 · 3 · 2 · 1',
+    kind: 'A grounding moment, right now',
+    body: 'These senses-bring-you back to the present — not to escape the feeling, but to stand beside it.',
+    steps: [
+      'Name 5 things you can see around you.',
+      '4 things you can touch — notice their texture.',
+      '3 sounds you can hear, nearby or far.',
+      '2 smells you notice in the air.',
+      '1 thing you can taste, or feel in your mouth.',
+    ],
+    links: [
+      { to: '/tools/grounding', label: 'Try the guided grounding' },
+      { to: '/learn-more', label: 'Why grounding works' },
+    ],
+  },
+  {
+    id: 'anxiety',
+    icon: Wind,
+    label: 'Settle my anxiety',
+    tone: 'bg-mist-100 text-mist-800 dark:bg-mist-300/20 dark:text-mist-200',
+    title: 'Unhurried breathing',
+    kind: '4 · 7 · 8',
+    body: 'Slow exhales signal the nervous system to settle. Gently — this is not a test of breath-holding.',
+    steps: [
+      'Breathe in slowly through your nose for a count of 4.',
+      'Hold, softly, for a count of 7.',
+      'Breathe out gently through your mouth for a count of 8.',
+      'Repeat 3–4 rounds, then let your breath fall back to normal.',
+    ],
+    links: [
+      { to: '/tools/breathing', label: 'Try the breathing tool' },
+      { to: '/learn-more', label: 'Understand anxiety' },
+    ],
+  },
+  {
+    id: 'sleep',
+    icon: Moon,
+    label: 'Help me sleep',
+    tone: 'bg-lilac-100 text-lilac-800 dark:bg-lilac-300/20 dark:text-lilac-200',
+    title: 'A softer wind-down',
+    kind: 'Tonight, keep it small',
+    body: 'Sleep prefers a gentle runway. One small change tonight is enough.',
+    steps: [
+      'Dim the lights half an hour before bed — light tells your brain to stay awake.',
+      'Set the phone aside; screens dampen the sleepy signal.',
+      'Write down what is circling in your head — parking it on paper helps you let it go.',
+    ],
+    links: [
+      { to: '/tools/breathing', label: 'Wind-down breathing' },
+      { to: '/learn-more', label: 'Sleep & your mind' },
+    ],
+  },
+  {
+    id: 'comfort',
+    icon: Feather,
+    label: 'Comfort me',
+    tone: 'bg-peach-100 text-peach-800 dark:bg-peach-300/20 dark:text-peach-200',
+    title: 'A quiet word',
+    kind: 'Read this slowly',
+    body: 'You are allowed to not be okay. Whatever brought you here today — you just showed up for yourself, and that counts. You don\u2019t have to solve everything tonight.',
+    steps: [
+      'Say one true thing to yourself, out loud, the way you\u2019d say it to a friend: \u201cI am having a hard time, and I am handling this moment.\u201d',
+    ],
+    links: [
+      { to: '/talk', label: 'A reflection space' },
+      { to: '/you', label: 'Your space' },
+    ],
+  },
+  {
+    id: 'laugh',
+    icon: Laugh,
+    label: 'Make me laugh',
+    tone: 'bg-sand-100 text-sand-800 dark:bg-sand-300/20 dark:text-sand-200',
+    title: 'The honest version',
+    kind: 'No canned humor',
+    body: 'We won\u2019t fake you a laugh — manufactured jokes fall flat when you\u2019re low. Real laughter usually comes from real people or real stories.',
+    steps: [
+      'Text a friend the funniest thing you\u2019ve seen this week.',
+      'Or watch a clip you already know makes you laugh. Three minutes is the whole ask.',
+    ],
+    links: [{ to: '/resources', label: 'Go to resources' }],
+  },
+  {
+    id: 'focus',
+    icon: Compass,
+    label: 'Help me focus',
+    tone: 'bg-forest-100 text-forest-800 dark:bg-forest-800 dark:text-sage-100',
+    title: 'The two-minute dump',
+    kind: 'Clear the deck',
+    body: 'Before focusing, the head needs an empty desk. This takes two minutes.',
+    steps: [
+      'Start a timer for 2 minutes.',
+      'Write down every task, worry and thought — unsorted, no judgment.',
+      'When the timer rings, circle the single most important item.',
+      'Do only that item next. Nothing else counts yet.',
+    ],
+    links: [{ to: '/resources', label: 'More focus help' }],
+  },
+  {
+    id: 'motivate',
+    icon: TrendingUp,
+    label: 'Motivate me',
+    tone: 'bg-mist-100 text-mist-800 dark:bg-mist-300/20 dark:text-mist-200',
+    title: 'Move first, feel later',
+    kind: 'A small real start',
+    body: 'Motivation rarely rings the doorbell — it usually arrives after you move first. The gap is always the hardest part.',
+    steps: [
+      'Shrink the task until it\u2019s embarrassing to say no. \u201cWrite one line.\u201d \u201cPut on my shoes.\u201d',
+      'Do that tiny first step now — then let momentum carry the next one.',
+    ],
+    links: [{ to: '/tools', label: 'Browse tools' }],
+  },
+  {
+    id: 'talk',
+    icon: UserRound,
+    label: 'Let me talk to someone',
+    tone: 'bg-sand-100 text-sand-800 dark:bg-sand-300/20 dark:text-sand-200',
+    title: 'Talking beats solving alone',
+    kind: 'Real people, real options',
+    body: 'The most honest help is a person — a therapist you can meet, or crisis support if this moment is urgent. MindShift stays with you either way.',
+    steps: [
+      'Take the next step whenever you\u2019re ready — there\u2019s no wrong pace.',
+    ],
+    links: [
+      { to: '/find-therapist', label: 'Find a therapist' },
+      { to: '/crisis', label: 'If this is urgent' },
+    ],
+  },
+];
+
+function todayStamp(date = new Date()) {
+  const d = date instanceof Date ? date : new Date(date);
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+}
 
 export default function Home() {
-  const navigate = useNavigate();
-  const features = [
-    {
-      icon: <FaHeartbeat className="w-7 h-7" />,
-      title: "Mood Check-in",
-      description: "Track your emotional wellbeing with our gentle, daily check-in tool.",
-      link: "/tools/mood-tracker",
-      color: "blue"
-    },
-    {
-      icon: <FaBrain className="w-7 h-7" />,
-      title: "Self-Assessment",
-      description: "Anonymous screening tools to understand your mental health.",
-      link: "/tools/assessment",
-      color: "green"
-    },
-    {
-      icon: <FaUserMd className="w-7 h-7" />,
-      title: "Find a Counselor",
-      description: "Connect with licensed therapists in your area or online.",
-      link: "/find-therapist",
-      color: "purple"
-    },
-    {
-      icon: <FaHandsHelping className="w-7 h-7" />,
-      title: "Crisis Support",
-      description: "Immediate, confidential support when you need it most.",
-      link: "/crisis",
-      color: "orange"
+  const toast = useToast();
+  const [moodHistory, setMoodHistory] = useLocalStorage('moodHistory', []);
+  const [mood, setMood] = useState(null);
+  const [note, setNote] = useState('');
+  const [activeIntent, setActiveIntent] = useState(null);
+
+  const today = todayStamp();
+  const todaysEntry = moodHistory.find((e) => todayStamp(new Date(e.date)) === today);
+  const trending = [...moodHistory].slice(0, 7);
+
+  const saveCheckIn = () => {
+    if (!mood) return;
+    const keepOthers = todaysEntry ? moodHistory.filter((e) => e !== todaysEntry) : moodHistory;
+    const entry = {
+      id: Date.now(),
+      mood,
+      note: note.trim(),
+      date: new Date().toISOString(),
+    };
+    setMoodHistory([entry, ...keepOthers]);
+    toast.success('Checked in — thank you for showing up for yourself.');
+    if (todaysEntry) {
+      setMood(null);
+      setNote('');
     }
-  ];
+  };
+
+  const active = INTENTS.find((i) => i.id === activeIntent) || null;
 
   return (
-    <div className="bg-linear-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 min-h-screen transition-colors duration-500 overflow-x-hidden">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden bg-linear-to-br from-blue-50 via-white to-indigo-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-12 md:py-20 transition-colors duration-500">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="max-w-3xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm px-4 py-2 rounded-full mb-8 shadow-sm border border-gray-200 dark:border-gray-700">
-              <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-              <span className="text-sm font-medium text-green-600 dark:text-green-400">Free & Anonymous</span>
-            </div>
+    <>
+      <section className="relative overflow-hidden px-6 pb-16 pt-14 sm:pb-24 sm:pt-20">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -right-32 -top-24 opacity-80 sm:-right-16"
+        >
+          <OrganicCircle size={420} tone="sage" className="opacity-70" />
+        </div>
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -left-24 bottom-0 hidden opacity-70 lg:block"
+        >
+          <OrganicCircle size={280} tone="sand" />
+        </div>
 
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
-              Your mental health
-              <span className="block text-blue-600 dark:text-blue-400 mt-2">matters here</span>
+        <div className="relative mx-auto max-w-6xl">
+          <div className="mx-auto max-w-3xl text-center">
+            <span className="inline-flex items-center gap-2 rounded-full border border-stone-900/10 bg-white/70 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-forest-800 backdrop-blur-sm dark:border-white/10 dark:bg-white/5 dark:text-sage-300">
+              MindShift · your space for mental wellbeing
+            </span>
+            <h1 className="mt-6 font-display text-4xl font-semibold leading-[1.1] tracking-tight text-forest-950 sm:text-5xl lg:text-6xl dark:text-sage-50">
+              A quieter place to
+              <span className="block text-forest-600 dark:text-sage-300">carry your mind</span>
             </h1>
-
-            <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-10 max-w-2xl mx-auto">
-              A safe, private space where you can find support without judgment or pressure.
+            <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-stone-600 sm:text-lg dark:text-stone-300">
+              No urgency, no pressure — just private tools, honest knowledge and a gentle way to
+              meet yourself where you are today.
             </p>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button
-                onClick={() => navigate('/tools/mood-tracker')}
-                className="inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 cursor-pointer hover:scale-[1.02] bg-linear-to-r from-blue-500 to-purple-500 text-white shadow-lg hover:shadow-xl focus:ring-blue-500 text-base sm:text-lg px-6 py-3.5 sm:px-8 sm:py-4"
-              >
-                Check in with yourself
-              </button>
-              <button
-                onClick={() => navigate('/crisis')}
-                className="inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 cursor-pointer hover:scale-[1.02] bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-400 dark:hover:border-gray-600 focus:ring-gray-300 dark:focus:ring-gray-600 text-base sm:text-lg px-6 py-3.5 sm:px-8 sm:py-4"
-              >
-                I need help now →
-              </button>
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+              <Button to="/tools/mood-tracker">Check in with yourself</Button>
+              <Button to="/find-therapist" variant="soft">
+                Find a therapist
+              </Button>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Features Grid */}
-      <section className="py-16 md:py-20">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="text-center mb-12">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4">
-              Find the Support You Need
-            </h2>
-            <p className="text-base md:text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              Explore our range of tools and resources designed to support your mental wellbeing journey.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {features.map((feature, index) => (
-              <div key={index} className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-700 hover:-translate-y-1">
-                <Link
-                  to={feature.link}
-                  className={`inline-flex items-center justify-center w-12 h-12 rounded-lg mb-4 bg-linear-to-br ${feature.color === 'blue' ? 'from-blue-500 to-blue-600' : feature.color === 'green' ? 'from-green-500 to-green-600' : feature.color === 'purple' ? 'from-purple-500 to-purple-600' : 'from-orange-500 to-orange-600'} text-white cursor-pointer hover:scale-110 transition-transform duration-200`}
-                >
-                  {feature.icon}
-                </Link>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
-                  {feature.description}
+      <section className="relative px-6">
+        <div className="relative mx-auto max-w-4xl">
+          <Card padding="lg" className="shadow-card">
+            <div className="flex flex-col gap-1.5 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <h2 className="font-display text-2xl font-semibold text-forest-950 dark:text-sage-50">
+                  {todaysEntry
+                    ? `You checked in — ${MOOD_LABELS[todaysEntry.mood]?.toLowerCase()}.`
+                    : 'How are you feeling right now?'}
+                </h2>
+                <p className="mt-1 text-sm text-stone-500 dark:text-stone-400">
+                  {todaysEntry
+                    ? 'You already chose once today. You can update it, or leave it be.'
+                    : 'A moment for yourself — one tap, kept privately on this device.'}
                 </p>
+              </div>
+              {trending.length > 0 && (
                 <Link
-                  to={feature.link}
-                  className="inline-flex items-center text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
+                  to="/tools/mood-tracker"
+                  className="inline-flex items-center gap-1 text-sm font-semibold text-forest-700 hover:underline dark:text-sage-300"
                 >
-                  Learn more →
+                  View history <ArrowRight className="h-3.5 w-3.5" aria-hidden />
                 </Link>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+              )}
+            </div>
 
-      {/* Mood Tracker Section */}
-      <section className="py-16 md:py-20 bg-linear-to-r from-blue-50/50 to-indigo-50/50 dark:from-gray-800/50 dark:to-gray-900/50">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="max-w-4xl mx-auto">
-            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 md:p-8 border border-gray-200 dark:border-gray-700">
-              <div className="flex flex-col md:flex-row md:items-center justify-between mb-6">
-                <div>
-                  <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">How are you feeling today?</h2>
-                  <p className="text-gray-600 dark:text-gray-300">Track your mood and see patterns over time</p>
-                </div>
-                <button
-                  onClick={() => navigate('/tools/mood-tracker')}
-                  className="mt-4 md:mt-0 inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 cursor-pointer bg-linear-to-r from-blue-500 to-purple-500 text-white hover:shadow-lg px-5 py-2.5 text-sm"
+            <div className="mt-7">
+              <MoodSelector value={mood ?? todaysEntry?.mood} onChange={setMood} size="lg" />
+            </div>
+
+            <AnimatePresence initial={false}>
+              {mood !== null && mood !== todaysEntry?.mood && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.25, ease: 'easeInOut' }}
+                  className="overflow-hidden"
                 >
-                  View History
-                </button>
-              </div>
-              <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 mb-8">
-                {['😢 Very Low', '😔 Low', '😐 Neutral', '🙂 Good', '😊 Great'].map((mood, index) => (
-                  <button
-                    key={index}
-                    className="flex flex-col items-center justify-center p-4 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600 transition-colors bg-white dark:bg-gray-900 hover:bg-blue-50 dark:hover:bg-gray-700"
-                  >
-                    <span className="text-2xl mb-2">{mood.split(' ')[0]}</span>
-                    <span className="text-xs text-gray-600 dark:text-gray-300">{mood.split(' ')[1]}</span>
-                  </button>
-                ))}
-              </div>
-              <div className="bg-gray-50 dark:bg-gray-900 rounded-xl p-4">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Your weekly mood trend</span>
-                  <span className="text-xs text-gray-500">Last 7 days</span>
-                </div>
-                <div className="flex items-end h-32 gap-1">
-                  {[30, 45, 60, 75, 65, 80, 90].map((height, index) => (
-                    <div key={index} className="flex-1 flex flex-col items-center">
-                      <div
-                        className="w-full rounded-t-lg bg-linear-to-t from-blue-400 to-blue-500"
-                        style={{ height: `${height}%` }}
-                      ></div>
-                      <span className="text-xs text-gray-500 dark:text-gray-400 mt-1">{['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'][index]}</span>
+                  <div className="pt-5">
+                    <Textarea
+                      id="checkin-note"
+                      label={false}
+                      placeholder="A note for yourself (optional)…"
+                      rows={2}
+                      value={note}
+                      onChange={(e) => setNote(e.target.value)}
+                    />
+                    <div className="mt-4 flex flex-wrap items-center gap-3">
+                      <Button onClick={saveCheckIn}>
+                        <Check className="mr-1.5 h-4 w-4" aria-hidden />
+                        Save check-in
+                      </Button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setMood(null);
+                          setNote('');
+                        }}
+                        className="text-sm font-medium text-stone-500 hover:text-stone-700 dark:text-stone-400 dark:hover:text-stone-200"
+                      >
+                        Cancel
+                      </button>
                     </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </Card>
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-16 md:py-20">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
-            {[
-              { number: '10k+', label: 'People Helped' },
-              { number: '24/7', label: 'Support Available' },
-              { number: '100%', label: 'Anonymous' },
-              { number: '50+', label: 'Expert Partners' },
-            ].map((stat, index) => (
-              <div key={index} className="text-center p-4 rounded-xl bg-white dark:bg-gray-800 shadow-md border border-gray-200 dark:border-gray-700">
-                <div className="text-3xl md:text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2">
-                  {stat.number}
-                </div>
-                <div className="text-sm md:text-base text-gray-600 dark:text-gray-300">{stat.label}</div>
-              </div>
+      <section className="px-6 py-20 sm:py-24">
+        <div className="mx-auto max-w-6xl">
+          <div className="mx-auto max-w-2xl text-center">
+            <h2 className="font-display text-3xl font-semibold leading-tight text-forest-950 sm:text-4xl dark:text-sage-50">
+              Help me feel better, right now
+            </h2>
+            <p className="mt-4 text-base leading-relaxed text-stone-600 dark:text-stone-300">
+              Tell us what you need — we'll hand you the thing that actually helps, no sifting.
+            </p>
+          </div>
+
+          <div className="mt-12 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {INTENTS.map((intent, index) => (
+              <motion.button
+                key={intent.id}
+                type="button"
+                initial={{ opacity: 0, y: 14 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-40px' }}
+                transition={{ duration: 0.35, delay: (index % 4) * 0.06 }}
+                onClick={() => setActiveIntent(intent.id)}
+                aria-pressed={activeIntent === intent.id}
+                className={`flex flex-col items-start gap-3 rounded-card border p-5 text-left transition-all duration-200 ${
+                  activeIntent === intent.id
+                    ? 'border-forest-700 bg-forest-800 text-ivory shadow-card dark:border-sage-300 dark:bg-forest-700'
+                    : 'border-stone-900/8 bg-white/60 hover:border-forest-700/40 hover:bg-white dark:border-white/10 dark:bg-white/5 dark:hover:bg-white/[0.08]'
+                }`}
+              >
+                <span
+                  className={`inline-flex h-10 w-10 items-center justify-center rounded-full transition-colors ${
+                    activeIntent === intent.id ? 'bg-ivory/15 text-ivory' : intent.tone
+                  }`}
+                >
+                  <intent.icon className="h-5 w-5" strokeWidth={1.75} aria-hidden />
+                </span>
+                <span
+                  className={`font-display text-lg font-semibold transition-colors ${
+                    activeIntent === intent.id ? 'text-ivory' : 'text-forest-950 dark:text-sage-50'
+                  }`}
+                >
+                  {intent.label}
+                </span>
+                <span
+                  className={`text-sm transition-colors ${
+                    activeIntent === intent.id ? 'text-ivory/80' : 'text-stone-500 dark:text-stone-400'
+                  }`}
+                >
+                  {intent.kind}
+                </span>
+              </motion.button>
             ))}
           </div>
+
+          <AnimatePresence mode="wait">
+            {active && (
+              <motion.div
+                key={active.id}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.25 }}
+                className="mt-8"
+              >
+                <Card padding="lg" className="bg-white/70 dark:bg-white/5">
+                  <div className="flex flex-col gap-6 sm:flex-row sm:gap-8">
+                    <div className="shrink-0 sm:w-56">
+                      <span
+                        className={`inline-flex h-12 w-12 items-center justify-center rounded-full ${active.tone}`}
+                      >
+                        <active.icon className="h-6 w-6" strokeWidth={1.75} aria-hidden />
+                      </span>
+                      <Badge tone="sage" size="md" className="mt-4">
+                        {active.kind}
+                      </Badge>
+                      <h3 className="mt-3 font-display text-2xl font-semibold text-forest-950 dark:text-sage-50">
+                        {active.title}
+                      </h3>
+                      <p className="mt-2 text-sm leading-relaxed text-stone-600 dark:text-stone-300">
+                        {active.body}
+                      </p>
+                    </div>
+                    <div className="flex-1">
+                      <ol className="space-y-3.5">
+                        {active.steps.map((step, i) => (
+                          <li key={i} className="flex items-start gap-3">
+                            <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-forest-800 font-display text-xs font-semibold text-ivory dark:bg-forest-700 dark:text-white">
+                              {i + 1}
+                            </span>
+                            <span className="text-base leading-relaxed text-stone-700 dark:text-stone-200">
+                              {step}
+                            </span>
+                          </li>
+                        ))}
+                      </ol>
+                      <div className="mt-6 flex flex-wrap gap-3">
+                        {active.links.map((link) => (
+                          <Button
+                            key={link.to + link.label}
+                            to={link.to}
+                            variant={link.label.startsWith('If this is') ? 'danger' : 'secondary'}
+                            size="sm"
+                          >
+                            {link.label} <ArrowRight className="ml-1 h-3.5 w-3.5" aria-hidden />
+                          </Button>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </Card>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-16 md:py-20">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="max-w-3xl mx-auto text-center">
-            <div className="bg-linear-to-r from-blue-500 to-purple-500 rounded-2xl p-8 md:p-10 shadow-xl">
-              <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
-                Ready to start your wellness journey?
-              </h2>
-              <p className="text-blue-100 mb-8 text-base md:text-lg">
-                Join thousands who have found support and understanding here.
+      <section className="px-6 pb-24">
+        <div className="mx-auto grid max-w-6xl gap-4 sm:grid-cols-3">
+          <Link to="/learn-more" className="group">
+            <Card padding="lg" className="h-full items-start transition-shadow hover:shadow-card">
+              <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-sage-100 text-forest-800 dark:bg-sage-300/20 dark:text-sage-200">
+                <Compass className="h-5 w-5" strokeWidth={1.75} aria-hidden />
+              </span>
+              <h3 className="mt-4 font-display text-xl font-semibold text-forest-950 dark:text-sage-50">
+                Understand what you feel
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-stone-600 dark:text-stone-300">
+                Plain-language knowledge about emotions, anxiety, stress and sleep — no jargon, no
+                prescriptions.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button
-                  onClick={() => navigate('/settings')}
-                  className="inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 cursor-pointer hover:scale-[1.02] bg-white text-blue-600 hover:bg-gray-100 shadow-lg hover:shadow-xl text-base sm:text-lg px-6 py-3.5 sm:px-8 sm:py-4"
-                >
-                  Create Account
-                </button>
-                <button
-                  onClick={() => navigate('/learn-more')}
-                  className="inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 cursor-pointer hover:scale-[1.02] bg-transparent border-2 border-white text-white hover:bg-white/10 text-base sm:text-lg px-6 py-3.5 sm:px-8 sm:py-4"
-                >
-                  Learn More
-                </button>
-              </div>
-            </div>
-          </div>
+              <span className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-forest-700 group-hover:translate-x-1 dark:text-sage-300">
+                Learn more <ArrowRight className="h-3.5 w-3.5" aria-hidden />
+              </span>
+            </Card>
+          </Link>
+          <Link to="/find-therapist" className="group">
+            <Card padding="lg" className="h-full items-start transition-shadow hover:shadow-card">
+              <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-forest-800 text-ivory dark:bg-forest-700 dark:text-white">
+                <UserRound className="h-5 w-5" strokeWidth={1.75} aria-hidden />
+              </span>
+              <h3 className="mt-4 font-display text-xl font-semibold text-forest-950 dark:text-sage-50">
+                Talk to a real person
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-stone-600 dark:text-stone-300">
+                A therapist you can actually meet — because app support works best beside human
+                support.
+              </p>
+              <span className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-forest-700 group-hover:translate-x-1 dark:text-sage-300">
+                Find a therapist <ArrowRight className="h-3.5 w-3.5" aria-hidden />
+              </span>
+            </Card>
+          </Link>
+          <Link to="/crisis" className="group">
+            <Card padding="lg" className="h-full items-start transition-shadow hover:shadow-card">
+              <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-peach-100 text-peach-800 dark:bg-peach-300/20 dark:text-peach-200">
+                <HeartHandshake className="h-5 w-5" strokeWidth={1.75} aria-hidden />
+              </span>
+              <h3 className="mt-4 font-display text-xl font-semibold text-forest-950 dark:text-sage-50">
+                If this moment is urgent
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-stone-600 dark:text-stone-300">
+                Clear, immediate steps and real places for help — reached with one tap, any time.
+              </p>
+              <span className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-forest-700 group-hover:translate-x-1 dark:text-sage-300">
+                Get support <ArrowRight className="h-3.5 w-3.5" aria-hidden />
+              </span>
+            </Card>
+          </Link>
         </div>
       </section>
-    </div>
+
+      <Landscape className="-mb-px h-28 w-full text-sage-200/80 dark:text-forest-900" aria-hidden />
+    </>
   );
 }
