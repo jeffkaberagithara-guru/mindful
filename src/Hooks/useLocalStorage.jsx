@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 
 export const useLocalStorage = (key, initialValue) => {
   const [storedValue, setStoredValue] = useState(() => {
+    if (typeof window === 'undefined') return initialValue;
     try {
       const item = window.localStorage.getItem(key);
       return item ? JSON.parse(item) : initialValue;
@@ -47,14 +48,6 @@ export const useLocalStorage = (key, initialValue) => {
         if (sizeMap[storedValue]) {
           element.classList.add(sizeMap[storedValue]);
         }
-      }
-    }
-
-    if (key === 'reduceMotion') {
-      if (storedValue === true) {
-        element.classList.add('motion-reduce');
-      } else {
-        element.classList.remove('motion-reduce');
       }
     }
 
