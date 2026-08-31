@@ -33,6 +33,12 @@ export default function SiteFooter() {
               Find a therapist
             </Link>
             <Link
+              to="/professionals/bernadatte-wanjiru-githara"
+              className="text-stone-600 transition-colors hover:text-forest-900 dark:text-stone-300 dark:hover:text-white"
+            >
+              Meet the founder
+            </Link>
+            <Link
               to="/crisis"
               className="text-stone-600 transition-colors hover:text-forest-900 dark:text-stone-300 dark:hover:text-white"
             >

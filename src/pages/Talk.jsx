@@ -5,6 +5,7 @@ import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
 import OrganicCircle from '../components/ui/OrganicCircle';
 import Landscape from '../components/ui/Landscape';
+import FounderCard from '../components/professional/FounderCard';
 
 const INTENTS = [
   {
@@ -44,7 +45,7 @@ export default function Talk() {
             align="center"
             as="h1"
             title="Sort it out, out loud"
-            description="Talk is the space to open up and be guided through what's on your mind — to understand it, calm it, or decide what to do next. It's an AI support guide, not a therapist, and never a replacement for talking to a real person."
+            description="Choose the kind of support you need. Use the self-guided reflection below, or reach a real person when you'd rather speak with a professional."
           />
 
           <div className="mx-auto mt-12 grid max-w-4xl gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -64,28 +65,28 @@ export default function Talk() {
               </Card>
             ))}
 
-            <Link
-              to="/find-therapist"
-              className="group flex flex-col justify-between rounded-card bg-sand p-6 transition-colors hover:bg-sand-300 dark:bg-sand-200 dark:hover:bg-sand-100"
-            >
+            <div className="flex flex-col justify-between rounded-card bg-sand p-6 dark:bg-sand-200">
               <div>
                 <UserPlus
                   className="h-5 w-5 text-forest-800 dark:text-forest-900"
                   strokeWidth={1.75}
                   aria-hidden
                 />
-                <h2 className="mt-4 font-display text-lg font-semibold text-forest-950 dark:text-forest-950">
-                  Prefer a person?
+                <h2 className="mt-4 font-display text-lg font-semibold text-forest-950">
+                  Self-guided, on your device
                 </h2>
-                <p className="mt-1.5 text-sm leading-relaxed text-forest-950/80 dark:text-forest-950/80">
-                  Find a therapist you can actually meet. MindShift supports your real conversations —
-                  it doesn't replace them.
+                <p className="mt-1.5 text-sm leading-relaxed text-forest-950/80">
+                  These are quiet reflection tools — a guide, not a person. For a human
+                  conversation, choose professional support below.
                 </p>
               </div>
-              <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-forest-800 transition-transform group-hover:translate-x-1 dark:text-forest-900">
-                Find a therapist <ArrowRight className="h-3.5 w-3.5" aria-hidden />
-              </span>
-            </Link>
+              <Link
+                to="/tools"
+                className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-forest-800 transition-transform hover:translate-x-1 dark:text-forest-900"
+              >
+                Browse tools <ArrowRight className="h-3.5 w-3.5" aria-hidden />
+              </Link>
+            </div>
           </div>
 
           <div className="mx-auto mt-14 max-w-4xl rounded-card border border-stone-900/8 bg-white/60 p-6 sm:p-8 dark:border-white/10 dark:bg-white/5">
@@ -123,8 +124,24 @@ export default function Talk() {
                     meantime, the tools below are ready now.
                   </p>
                 </div>
+                </div>
               </div>
             </div>
+
+          <div className="mx-auto mt-14 max-w-4xl">
+            <div className="mb-6 flex flex-col gap-2">
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-sage-700 dark:text-sage-400">
+                Professional support
+              </p>
+              <h2 className="font-display text-2xl font-semibold text-forest-950 sm:text-3xl dark:text-sage-50">
+                Prefer a real person?
+              </h2>
+              <p className="max-w-2xl text-base leading-relaxed text-stone-600 dark:text-stone-300">
+                When self-guided tools aren't enough, professional support is here. Speak privately
+                with a real psychologist about what you're experiencing.
+              </p>
+            </div>
+            <FounderCard tone="sage" surface="default" />
           </div>
 
 <div className="mx-auto mt-12 flex max-w-4xl flex-wrap items-center justify-center gap-3 text-center">

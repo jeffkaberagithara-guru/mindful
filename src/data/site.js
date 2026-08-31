@@ -1,5 +1,6 @@
 import { ARTICLES, getArticle } from './articles.js';
 import { PROGRAMMES, getProgramme } from './programmes.js';
+import { PROFESSIONAL } from './professionalProfile.js';
 
 export const SITE = {
   name: 'MindShift',
@@ -78,6 +79,10 @@ const STATIC_META = {
     title: 'Find a therapist — MindShift',
     description:
       'An honest, practical guide to finding a therapist — doctor referrals, insurance, sliding-scale options, and good first questions.',
+  },
+  [`/professionals/${PROFESSIONAL.slug}`]: {
+    title: `${PROFESSIONAL.name} | Psychologist & Founder`,
+    description: `Meet ${PROFESSIONAL.name}, founder and psychologist providing psychological guidance, counselling and emotional wellbeing support.`,
   },
   '/crisis': {
     title: 'Crisis support — MindShift',

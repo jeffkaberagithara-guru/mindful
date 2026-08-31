@@ -25,6 +25,7 @@ import ArticlePage from './pages/ArticlePage.jsx';
 import Programmes from './pages/Programmes.jsx';
 import ProgrammeDetail from './pages/ProgrammeDetail.jsx';
 import SupportPlan from './pages/SupportPlan.jsx';
+import ProfessionalProfile from './pages/ProfessionalProfile.jsx';
 import { useLocalStorage } from './hooks/useLocalStorage.jsx';
 
 const ROUTES = [
@@ -44,6 +45,7 @@ const ROUTES = [
   { path: '/learn-more', element: <LearnMore /> },
   { path: '/resources', element: <Resources /> },
   { path: '/find-therapist', element: <FindTherapist /> },
+  { path: '/professionals/:slug', element: <ProfessionalProfile /> },
   { path: '/crisis', element: <Crisis /> },
   { path: '/you', element: <You /> },
   { path: '/settings', element: <UserSettings /> },
