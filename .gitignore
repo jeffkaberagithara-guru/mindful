@@ -12,6 +12,14 @@ dist
 dist-ssr
 *.local
 
+# Environment and secrets (never commit)
+.env
+.env.*
+!.env.example
+
+# Stale nested duplicate project (removed submodule entry)
+mindshift/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
